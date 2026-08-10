@@ -10,7 +10,6 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   <section class="hero-title">
     <div class="container">
       <h1 class="reveal">Brothers</h1>
-      <p class="lede center reveal">{memberCount} builders across {roster.classes.length} classes. Every headshot links to that brother's LinkedIn.</p>
       <nav class="classnav reveal" aria-label="Jump to class">
         {roster.classes.map((c) => (
           <a href={`#${slug(c.name)}`}>{c.name}</a>

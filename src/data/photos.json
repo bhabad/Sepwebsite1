@@ -3,10 +3,8 @@
   "hero": { "src": "/photos/hero-lakehouse-1200.webp", "alt": "The full SEP chapter at the Fall 2025 lake house retreat at sunset" },
   "homeBand": [
     { "src": "/photos/band-volleyball-800.webp", "alt": "Brothers playing beach volleyball at the spring retreat" },
-    { "src": "/photos/band-beach-group-800.webp", "alt": "Members arm-in-arm on the beach at golden hour" },
     { "src": "/photos/band-pitch-800.webp", "alt": "Members presenting a startup pitch deck in class" },
-    { "src": "/photos/band-deandome-800.webp", "alt": "Brothers at a UNC basketball game in the Dean Dome" },
-    { "src": "/photos/band-laughing-800.webp", "alt": "Members laughing together on the beach" }
+    { "src": "/photos/band-deandome-800.webp", "alt": "Brothers at a UNC basketball game in the Dean Dome" }
   ],
   "about": [
     { "src": "/photos/about-meeting-800.webp", "alt": "A full chapter meeting with guest speakers in a UNC lecture hall" },
