@@ -1,0 +1,19 @@
+{
+  "_comment": "Global site facts. Edit here, never in components. See MAINTENANCE.md.",
+  "name": "Sigma Eta Pi at UNC",
+  "shortName": "SEP UNC",
+  "tagline": "UNC's Co-Ed Entrepreneurship Fraternity",
+  "email": "uncsigmaetapi@gmail.com",
+  "socials": {
+    "instagram": "https://www.instagram.com/uncsep/",
+    "tiktok": "https://www.tiktok.com/@unc.sep",
+    "linkedin": "https://www.linkedin.com/company/unc-sigma-eta-pi/"
+  },
+  "recruitmentGroupMe": "",
+  "_recruitmentGroupMe_note": "Paste the current GroupMe invite link each recruitment cycle; the Recruitment page shows the button only when this is non-empty.",
+  "chapter": {
+    "founded": "Spring 2020",
+    "nationalFounded": "2010, UCLA",
+    "chapterLetter": "Iota chapter"
+  }
+}

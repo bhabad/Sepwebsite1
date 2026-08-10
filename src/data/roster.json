@@ -1,0 +1,560 @@
+{
+  "_comment": "One entry per member. To promote new members: add a new class block at the top and update newestClassNote. See MAINTENANCE.md.",
+  "classes": [
+    {
+      "name": "Iota",
+      "members": [
+        {
+          "name": "Leah Klaus",
+          "linkedin": "https://www.linkedin.com/in/leah-klaus/",
+          "headshot": "/headshots/leah-klaus.webp"
+        },
+        {
+          "name": "Aki Bhabad",
+          "linkedin": "https://www.linkedin.com/in/aki-bhabad/",
+          "headshot": "/headshots/aki-bhabad.webp"
+        },
+        {
+          "name": "Madison Watts",
+          "linkedin": "https://www.linkedin.com/in/madisoncwatts/",
+          "headshot": "/headshots/madison-watts.webp"
+        },
+        {
+          "name": "Charles Dockendorf",
+          "linkedin": "https://www.linkedin.com/in/charlie-dockendorf-3818782a2/",
+          "headshot": "/headshots/charles-dockendorf.webp"
+        },
+        {
+          "name": "Harveer Kamboj",
+          "linkedin": "https://www.linkedin.com/in/harveer-kamboj/",
+          "headshot": "/headshots/harveer-kamboj.webp"
+        },
+        {
+          "name": "Joe Scioli",
+          "linkedin": "https://www.linkedin.com/in/joe-scioli-/",
+          "headshot": "/headshots/joe-scioli.webp"
+        },
+        {
+          "name": "Delaney Schwartz",
+          "linkedin": "https://www.linkedin.com/in/delaney-schwartz-681052346/",
+          "headshot": "/headshots/delaney-schwartz.webp"
+        },
+        {
+          "name": "Harper Sinha",
+          "linkedin": "https://www.linkedin.com/in/harper-sinha-b6456922b/",
+          "headshot": "/headshots/harper-sinha.webp"
+        },
+        {
+          "name": "David White",
+          "linkedin": "https://www.linkedin.com/in/david-j-white-641219381/",
+          "headshot": "/headshots/david-white.webp"
+        },
+        {
+          "name": "Hudson Kimm",
+          "linkedin": "https://www.linkedin.com/in/hudson-kimm/",
+          "headshot": "/headshots/hudson-kimm.webp"
+        },
+        {
+          "name": "Adele Kattenfeld",
+          "linkedin": "https://www.linkedin.com/in/adelekattenfeld/",
+          "headshot": "/headshots/adele-kattenfeld.webp"
+        },
+        {
+          "name": "Sumayah (Mayah) Lodhi",
+          "linkedin": "https://www.linkedin.com/in/sumayah-lodhi-615abb246/",
+          "headshot": "/headshots/sumayah-mayah-lodhi.webp"
+        },
+        {
+          "name": "Evan Gackstetter",
+          "linkedin": "https://www.linkedin.com/in/evangackstetter/",
+          "headshot": "/headshots/evan-gackstetter.webp"
+        },
+        {
+          "name": "Diya Parikh",
+          "linkedin": "https://www.linkedin.com/in/diya-parikh-479a94287/",
+          "headshot": "/headshots/diya-parikh.webp"
+        },
+        {
+          "name": "Arjun Bhonsle",
+          "linkedin": "https://www.linkedin.com/in/arjun-bhonsle/",
+          "headshot": "/headshots/arjun-bhonsle.webp"
+        },
+        {
+          "name": "Elizabeth Peele",
+          "linkedin": "https://www.linkedin.com/in/elizabeth-peele-3454532b8/",
+          "headshot": "/headshots/elizabeth-peele.webp"
+        },
+        {
+          "name": "Erin Holloway",
+          "linkedin": "https://www.linkedin.com/in/erin-holloway/",
+          "headshot": "/headshots/erin-holloway.webp"
+        },
+        {
+          "name": "Maya Ciocian",
+          "linkedin": "https://www.linkedin.com/in/maya-ciocian-ab8503339/",
+          "headshot": "/headshots/maya-ciocian.webp"
+        },
+        {
+          "name": "Thomas Shieck",
+          "linkedin": "https://www.linkedin.com/in/thomas-schieck/",
+          "headshot": "/headshots/thomas-shieck.webp"
+        },
+        {
+          "name": "Colin Duffy",
+          "linkedin": "https://www.linkedin.com/in/colin-duffy-1b2339360/",
+          "headshot": "/headshots/colin-duffy.webp"
+        }
+      ]
+    },
+    {
+      "name": "Theta",
+      "members": [
+        {
+          "name": "Tate Jackson",
+          "linkedin": "https://www.linkedin.com/in/tate-jackson1/",
+          "headshot": "/headshots/tate-jackson.webp"
+        },
+        {
+          "name": "Emerson Mann",
+          "linkedin": "https://www.linkedin.com/in/emerson-mann/",
+          "headshot": "/headshots/emerson-mann.webp"
+        },
+        {
+          "name": "Jada Simpson",
+          "linkedin": "https://www.linkedin.com/in/jada-simpson-a65081382/",
+          "headshot": "/headshots/jada-simpson.webp"
+        },
+        {
+          "name": "Aria Rao",
+          "linkedin": "https://www.linkedin.com/in/ariarao/",
+          "headshot": "/headshots/aria-rao.webp"
+        },
+        {
+          "name": "Isaac Carter",
+          "linkedin": "https://www.linkedin.com/in/isaac-carter-683170327/",
+          "headshot": "/headshots/isaac-carter.webp"
+        },
+        {
+          "name": "Lilian Rempel",
+          "linkedin": "https://www.linkedin.com/in/lilian-rempel-/",
+          "headshot": "/headshots/lilian-rempel.webp"
+        },
+        {
+          "name": "Victoria Kirova",
+          "linkedin": "https://www.linkedin.com/in/victoria-kirova-/",
+          "headshot": "/headshots/victoria-kirova.webp"
+        },
+        {
+          "name": "Sadie Romero",
+          "linkedin": "https://www.linkedin.com/in/sadie-jo-romero/",
+          "headshot": "/headshots/sadie-romero.webp"
+        },
+        {
+          "name": "Justin Jackson",
+          "linkedin": "https://www.linkedin.com/in/justincjackson10/",
+          "headshot": "/headshots/justin-jackson.webp"
+        },
+        {
+          "name": "Cate Bourbeau",
+          "linkedin": "https://www.linkedin.com/in/catherine-bourbeau/",
+          "headshot": "/headshots/cate-bourbeau.webp"
+        },
+        {
+          "name": "David Katsman",
+          "linkedin": "https://www.linkedin.com/in/davidkatsman/",
+          "headshot": "/headshots/david-katsman.webp"
+        },
+        {
+          "name": "Linsey Shen",
+          "linkedin": "https://www.linkedin.com/in/linseyshenunc/",
+          "headshot": "/headshots/linsey-shen.webp"
+        },
+        {
+          "name": "Jack Sangster",
+          "linkedin": "https://www.linkedin.com/in/jack-sangster/",
+          "headshot": "/headshots/jack-sangster.webp"
+        },
+        {
+          "name": "Ada Telford",
+          "linkedin": "https://www.linkedin.com/in/ada-telford/",
+          "headshot": "/headshots/ada-telford.webp"
+        },
+        {
+          "name": "Cooper Gray",
+          "linkedin": "https://www.linkedin.com/in/coopergray/",
+          "headshot": "/headshots/cooper-gray.webp"
+        },
+        {
+          "name": "Sydney Asermely",
+          "linkedin": "https://www.linkedin.com/in/sydneyasermely/",
+          "headshot": "/headshots/sydney-asermely.webp"
+        },
+        {
+          "name": "Ashley Weil",
+          "linkedin": "https://www.linkedin.com/in/ashleyweil/",
+          "headshot": "/headshots/ashley-weil.webp"
+        },
+        {
+          "name": "Luke Garner",
+          "linkedin": "https://www.linkedin.com/in/luke-garner-/",
+          "headshot": "/headshots/luke-garner.webp"
+        },
+        {
+          "name": "Joseph Wagner",
+          "linkedin": "https://www.linkedin.com/in/joseph-wagner17/",
+          "headshot": "/headshots/joseph-wagner.webp"
+        },
+        {
+          "name": "Alexis Karahalios",
+          "linkedin": "https://www.linkedin.com/in/alexis-karahalios/",
+          "headshot": "/headshots/alexis-karahalios.webp"
+        }
+      ]
+    },
+    {
+      "name": "Eta",
+      "members": [
+        {
+          "name": "Isabella Antunes",
+          "linkedin": "https://www.linkedin.com/in/isabella-m-antunes/",
+          "headshot": "/headshots/isabella-antunes-2.webp"
+        },
+        {
+          "name": "Nikki Gogineni",
+          "linkedin": "https://www.linkedin.com/in/nikki-gogineni/",
+          "headshot": "/headshots/nikki-gogineni-2.webp"
+        },
+        {
+          "name": "Olivia Kuo",
+          "linkedin": "https://www.linkedin.com/in/olivia-a-kuo/",
+          "headshot": "/headshots/olivia-kuo.webp"
+        },
+        {
+          "name": "Morgan Monk",
+          "linkedin": "https://www.linkedin.com/in/morganmonk/",
+          "headshot": "/headshots/morgan-monk.webp"
+        },
+        {
+          "name": "Owen Weber",
+          "linkedin": "https://www.linkedin.com/in/owen-t-weber/",
+          "headshot": "/headshots/owen-weber.webp"
+        },
+        {
+          "name": "Daniela Bourdeth",
+          "linkedin": "https://www.linkedin.com/in/daniela-trochez/",
+          "headshot": "/headshots/daniela-bourdeth.webp"
+        },
+        {
+          "name": "Alysa Grillo",
+          "linkedin": "https://www.linkedin.com/in/alysagrillo/",
+          "headshot": "/headshots/alysa-grillo.webp"
+        },
+        {
+          "name": "Jonathan Lan",
+          "linkedin": "https://www.linkedin.com/in/jonathan-y-lan/",
+          "headshot": "/headshots/jonathan-lan.webp"
+        },
+        {
+          "name": "Cristina Nardiello",
+          "linkedin": "https://www.linkedin.com/in/caroline-zedek/",
+          "headshot": "/headshots/cristina-nardiello.webp"
+        },
+        {
+          "name": "Nathan Burgin",
+          "linkedin": "https://www.linkedin.com/in/nathan-burgin/",
+          "headshot": "/headshots/nathan-burgin.webp"
+        },
+        {
+          "name": "Parker Hausmann",
+          "linkedin": "https://www.linkedin.com/in/parker-hausmann/",
+          "headshot": "/headshots/parker-hausmann.webp"
+        },
+        {
+          "name": "Fion Lin",
+          "linkedin": "https://www.linkedin.com/in/fion-lin318/",
+          "headshot": "/headshots/fion-lin-2.webp"
+        },
+        {
+          "name": "Geneva Paisan",
+          "linkedin": "https://www.linkedin.com/in/geneva-paisan/",
+          "headshot": "/headshots/geneva-paisan.webp"
+        },
+        {
+          "name": "Emily Feddersen",
+          "linkedin": "https://www.linkedin.com/in/emilyfeddersen/",
+          "headshot": "/headshots/emily-feddersen.webp"
+        },
+        {
+          "name": "Layla Hunter",
+          "linkedin": "https://www.linkedin.com/in/layla-jazz-hunter-483383262/",
+          "headshot": "/headshots/layla-hunter.webp"
+        },
+        {
+          "name": "Dylan Gigler",
+          "linkedin": "https://www.linkedin.com/in/dylan-gigler/",
+          "headshot": "/headshots/dylan-gigler.webp"
+        },
+        {
+          "name": "Azhar Jivani",
+          "linkedin": "https://www.linkedin.com/in/azhar-jivani/",
+          "headshot": "/headshots/azhar-jivani-2.webp"
+        },
+        {
+          "name": "Aaryan Mehta",
+          "linkedin": "https://www.linkedin.com/in/aaryankmehta/",
+          "headshot": "/headshots/aaryan-mehta.webp"
+        },
+        {
+          "name": "Sanjana Ram",
+          "linkedin": "https://www.linkedin.com/in/sanjana-ram1/",
+          "headshot": "/headshots/sanjana-ram.webp"
+        }
+      ]
+    },
+    {
+      "name": "Zeta",
+      "members": [
+        {
+          "name": "Jackson Crawford",
+          "linkedin": "https://www.linkedin.com/in/jacksoncrawf/",
+          "headshot": "/headshots/jackson-crawford.webp"
+        },
+        {
+          "name": "Ishon Liao",
+          "linkedin": "https://www.linkedin.com/in/ishon-liao/",
+          "headshot": "/headshots/ishon-liao-2.webp"
+        },
+        {
+          "name": "Tai Stephan",
+          "linkedin": "https://www.linkedin.com/in/ctnstephan/",
+          "headshot": "/headshots/tai-stephan.webp"
+        },
+        {
+          "name": "Keenan Curtis",
+          "linkedin": "https://www.linkedin.com/in/keenancurtis/",
+          "headshot": "/headshots/keenan-curtis-2.webp"
+        },
+        {
+          "name": "Arth Patel",
+          "linkedin": "https://www.linkedin.com/in/arth-p/",
+          "headshot": "/headshots/arth-patel.webp"
+        },
+        {
+          "name": "Anna Yi",
+          "linkedin": "https://www.linkedin.com/in/annayi445/",
+          "headshot": "/headshots/anna-yi-2.webp"
+        },
+        {
+          "name": "Taylor Duffie",
+          "linkedin": "https://www.linkedin.com/in/taylorduffie/",
+          "headshot": "/headshots/taylor-duffie.webp"
+        },
+        {
+          "name": "Dina Sadig",
+          "linkedin": "https://www.linkedin.com/in/dinasadig/",
+          "headshot": "/headshots/dina-sadig-2.webp"
+        },
+        {
+          "name": "Sidney Yoder",
+          "linkedin": "https://www.linkedin.com/in/sidney-yoder-b02aba2b2/",
+          "headshot": "/headshots/sidney-yoder-2.webp"
+        },
+        {
+          "name": "Impana Gopinath",
+          "linkedin": "https://www.linkedin.com/in/impana-gopinath/",
+          "headshot": "/headshots/impana-gopinath.webp"
+        },
+        {
+          "name": "Rylan Santos",
+          "linkedin": "https://www.linkedin.com/in/oscar-rylan-santos/",
+          "headshot": "/headshots/rylan-santos-2.webp"
+        },
+        {
+          "name": "Cullen Haggerty",
+          "linkedin": "https://www.linkedin.com/in/cqhagg/",
+          "headshot": "/headshots/cullen-haggerty-2.webp"
+        },
+        {
+          "name": "Piya Scielzo",
+          "linkedin": "https://www.linkedin.com/in/piya-scielzo-5088a1242/",
+          "headshot": "/headshots/piya-scielzo-2.webp"
+        }
+      ]
+    },
+    {
+      "name": "Epsilon",
+      "members": [
+        {
+          "name": "Preston Aldridge",
+          "linkedin": "https://www.linkedin.com/in/prestonaldridge/",
+          "headshot": "/headshots/preston-aldridge.webp"
+        },
+        {
+          "name": "Daniela Paris",
+          "linkedin": "https://www.linkedin.com/in/daniela-i-paris/",
+          "headshot": "/headshots/daniela-paris.webp"
+        },
+        {
+          "name": "Hayden LaRocque Green",
+          "linkedin": "https://www.linkedin.com/in/hayden-larocque-green/",
+          "headshot": "/headshots/hayden-larocque-green.webp"
+        },
+        {
+          "name": "Gia Bondi",
+          "linkedin": "https://www.linkedin.com/in/giavanna-bondi-lemoine/",
+          "headshot": "/headshots/gia-bondi-2.webp"
+        },
+        {
+          "name": "Josh Paulson",
+          "linkedin": "https://www.linkedin.com/in/joshbpaulson/",
+          "headshot": "/headshots/josh-paulson.webp"
+        },
+        {
+          "name": "Elizabeth Wong",
+          "linkedin": "https://www.linkedin.com/in/elizabeth-m-wong/",
+          "headshot": "/headshots/elizabeth-wong.webp"
+        },
+        {
+          "name": "Leila Dahir",
+          "linkedin": "https://www.linkedin.com/in/leiladahir/",
+          "headshot": "/headshots/leila-dahir.webp"
+        },
+        {
+          "name": "Enya Pinjani",
+          "linkedin": "https://www.linkedin.com/in/enya-pinjani/",
+          "headshot": "/headshots/enya-pinjani.webp"
+        },
+        {
+          "name": "Caden Ryan",
+          "linkedin": "https://www.linkedin.com/in/caden-ryan/",
+          "headshot": "/headshots/caden-ryan-2.webp"
+        },
+        {
+          "name": "Wesley Hanes",
+          "linkedin": "https://www.linkedin.com/in/wesleyhanes/",
+          "headshot": "/headshots/wesley-hanes-2.webp"
+        },
+        {
+          "name": "Riley Sutter",
+          "linkedin": "https://www.linkedin.com/in/riley-sutter/",
+          "headshot": "/headshots/riley-sutter.webp"
+        },
+        {
+          "name": "Caroline Zedek",
+          "linkedin": "https://www.linkedin.com/in/caroline-zedek/",
+          "headshot": "/headshots/caroline-zedek.webp"
+        },
+        {
+          "name": "James Moffett",
+          "linkedin": "https://www.linkedin.com/in/james-moffett1/",
+          "headshot": "/headshots/james-moffett-2.webp"
+        },
+        {
+          "name": "Jacob Vergara",
+          "linkedin": "https://www.linkedin.com/in/jacob-vergara-5145162b6/",
+          "headshot": "/headshots/jacob-vergara.webp"
+        }
+      ]
+    },
+    {
+      "name": "Delta",
+      "members": [
+        {
+          "name": "Keira Berkaw",
+          "linkedin": "https://www.linkedin.com/in/keiraberkaw/",
+          "headshot": "/headshots/keira-berkaw.webp"
+        },
+        {
+          "name": "Nihaanth Kaggere",
+          "linkedin": "https://www.linkedin.com/in/nihaanthkaggere/",
+          "headshot": "/headshots/nihaanth-kaggere.webp"
+        },
+        {
+          "name": "Oluwole Omolafe",
+          "linkedin": "https://www.linkedin.com/in/oluwole-omolafe/",
+          "headshot": "/headshots/oluwole-omolafe.webp"
+        },
+        {
+          "name": "Corey Brandon",
+          "linkedin": "https://www.linkedin.com/in/coreymbrandon/",
+          "headshot": "/headshots/corey-brandon.webp"
+        },
+        {
+          "name": "Xander Luzniak",
+          "linkedin": "https://www.linkedin.com/in/alexanderluzniak/",
+          "headshot": "/headshots/xander-luzniak.webp"
+        },
+        {
+          "name": "Zoe Schruckmayr",
+          "linkedin": "https://www.linkedin.com/in/zoe-schruckmayr/",
+          "headshot": "/headshots/zoe-schruckmayr.webp"
+        },
+        {
+          "name": "Lauren Deering",
+          "linkedin": "https://www.linkedin.com/in/laurendeering/",
+          "headshot": "/headshots/lauren-deering.webp"
+        },
+        {
+          "name": "Megan Macdonald",
+          "linkedin": "https://www.linkedin.com/in/megangmacdonald/",
+          "headshot": "/headshots/megan-macdonald.webp"
+        },
+        {
+          "name": "India Thomas",
+          "linkedin": "https://www.linkedin.com/in/india-thomas1/",
+          "headshot": "/headshots/india-thomas.webp"
+        },
+        {
+          "name": "Luke Dunne",
+          "linkedin": "https://www.linkedin.com/in/luke54/",
+          "headshot": "/headshots/luke-dunne.webp"
+        },
+        {
+          "name": "Molly Malek",
+          "linkedin": "https://www.linkedin.com/in/mollymalek/",
+          "headshot": "/headshots/molly-malek.webp"
+        },
+        {
+          "name": "Jacob Dyer",
+          "linkedin": "https://www.linkedin.com/in/jacobldyer/",
+          "headshot": "/headshots/jacob-dyer.webp"
+        },
+        {
+          "name": "Max Marlow",
+          "linkedin": "https://www.linkedin.com/in/max-marlow2003/",
+          "headshot": "/headshots/max-marlow.webp"
+        }
+      ]
+    },
+    {
+      "name": "Gamma",
+      "members": [
+        {
+          "name": "Christie Chen",
+          "linkedin": "https://www.linkedin.com/in/christiefchen/",
+          "headshot": "/headshots/christie-chen.webp"
+        },
+        {
+          "name": "Jackson Scullion",
+          "linkedin": "https://www.linkedin.com/in/jax-scullion/",
+          "headshot": "/headshots/jackson-scullion.webp"
+        },
+        {
+          "name": "Max Slesinski",
+          "linkedin": "https://www.linkedin.com/in/maxslesinski/",
+          "headshot": "/headshots/max-slesinski.webp"
+        },
+        {
+          "name": "Christina Steiner",
+          "linkedin": "https://www.linkedin.com/in/casteiner/",
+          "headshot": "/headshots/christina-steiner.webp"
+        },
+        {
+          "name": "Sam Thoma",
+          "linkedin": "https://www.linkedin.com/in/sam-thoma-7a45a1252/",
+          "headshot": "/headshots/sam-thoma.webp"
+        }
+      ]
+    }
+  ]
+}

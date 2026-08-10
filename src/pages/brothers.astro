@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import MemberCard from '../components/MemberCard.astro';
+import roster from '../data/roster.json';
+
+const memberCount = roster.classes.reduce((n, c) => n + c.members.length, 0);
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+---
+<Base title="Brothers" description={`Meet the ${memberCount} brothers of Sigma Eta Pi at UNC, from the newest class to the founders.`}>
+  <section class="hero-title">
+    <div class="container">
+      <h1 class="reveal">Brothers</h1>
+      <p class="lede center reveal">{memberCount} builders across {roster.classes.length} classes. Every headshot links to that brother's LinkedIn.</p>
+      <nav class="classnav reveal" aria-label="Jump to class">
+        {roster.classes.map((c) => (
+          <a href={`#${slug(c.name)}`}>{c.name}</a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  <div class="container">
+    {roster.classes.map((c, ci) => (
+      <section class="classblock" id={slug(c.name)} aria-label={`${c.name} class`}>
+        <header class="classblock__head reveal">
+          <h2>{c.name} <span>Class</span></h2>
+          {ci === 0 && <span class="classblock__badge">Newest class</span>}
+        </header>
+        <div class="grid">
+          {c.members.map((m) => (
+            <div class="reveal">
+              <MemberCard name={m.name} linkedin={m.linkedin} headshot={m.headshot} />
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .hero-title { padding-top: clamp(7rem, 14vh, 9.5rem); text-align: center; }
+  .hero-title h1 { font-size: clamp(3rem, 8vw, 5.5rem); }
+  .center { margin-inline: auto; }
+
+  .classnav { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; margin-top: 2rem; }
+  .classnav a {
+    font-family: var(--font-display); font-size: 0.9rem; font-weight: 500;
+    color: var(--muted); text-decoration: none;
+    padding-bottom: 2px; border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .classnav a:hover { color: var(--sky); border-bottom-color: var(--sky); }
+
+  .classblock { padding-top: clamp(3.5rem, 7vw, 5.5rem); scroll-margin-top: 100px; }
+  .classblock__head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.8rem; }
+  .classblock__head h2 { margin: 0; font-size: clamp(1.6rem, 3.2vw, 2.2rem); }
+  .classblock__head h2 span { color: var(--sky); }
+  .classblock__badge {
+    font-family: var(--font-display); font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #04121B; background: var(--sky);
+    padding: 0.3rem 0.8rem; border-radius: 999px;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2rem 1.3rem; }
+  @media (max-width: 1080px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 860px)  { .grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 600px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+</style>

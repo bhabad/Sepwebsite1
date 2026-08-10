@@ -1,0 +1,101 @@
+{
+  "_comment": "Executive board. Update roles/names each election. See MAINTENANCE.md.",
+  "members": [
+    {
+      "name": "Caden Ryan",
+      "linkedin": "https://www.linkedin.com/in/caden-ryan/",
+      "headshot": "/headshots/caden-ryan.webp",
+      "role": "Co-President"
+    },
+    {
+      "name": "Gia Bondi",
+      "linkedin": "https://www.linkedin.com/in/giavanna-bondi-lemoine/",
+      "headshot": "/headshots/gia-bondi.webp",
+      "role": "Co-President"
+    },
+    {
+      "name": "Dina Sadig",
+      "linkedin": "https://www.linkedin.com/in/dinasadig/",
+      "headshot": "/headshots/dina-sadig.webp",
+      "role": "Secretary"
+    },
+    {
+      "name": "Azhar Jivani",
+      "linkedin": "https://www.linkedin.com/in/azhar-jivani/",
+      "headshot": "/headshots/azhar-jivani.webp",
+      "role": "Treasurer"
+    },
+    {
+      "name": "Keenan Curtis",
+      "linkedin": "https://www.linkedin.com/in/keenancurtis/",
+      "headshot": "/headshots/keenan-curtis.webp",
+      "role": "VP Recruitment"
+    },
+    {
+      "name": "Piya Scielzo",
+      "linkedin": "https://www.linkedin.com/in/piya-scielzo-5088a1242/",
+      "headshot": "/headshots/piya-scielzo.webp",
+      "role": "VP Recruitment"
+    },
+    {
+      "name": "Anna Yi",
+      "linkedin": "https://www.linkedin.com/in/annayi445/",
+      "headshot": "/headshots/anna-yi.webp",
+      "role": "VP Marketing"
+    },
+    {
+      "name": "Sidney Yoder",
+      "linkedin": "https://www.linkedin.com/in/sidney-yoder-b02aba2b2/",
+      "headshot": "/headshots/sidney-yoder.webp",
+      "role": "VP Marketing"
+    },
+    {
+      "name": "Fion Lin",
+      "linkedin": "https://www.linkedin.com/in/fion-lin318/",
+      "headshot": "/headshots/fion-lin.webp",
+      "role": "VP Technology"
+    },
+    {
+      "name": "Cullen Haggerty",
+      "linkedin": "https://www.linkedin.com/in/cqhagg/",
+      "headshot": "/headshots/cullen-haggerty.webp",
+      "role": "Brotherhood Chair"
+    },
+    {
+      "name": "Rylan Santos",
+      "linkedin": "https://www.linkedin.com/in/oscar-rylan-santos/",
+      "headshot": "/headshots/rylan-santos.webp",
+      "role": "Brotherhood Chair"
+    },
+    {
+      "name": "James Moffett",
+      "linkedin": "https://www.linkedin.com/in/james-moffett1/",
+      "headshot": "/headshots/james-moffett.webp",
+      "role": "New Member Educator"
+    },
+    {
+      "name": "Ishon Liao",
+      "linkedin": "https://www.linkedin.com/in/ishon-liao/",
+      "headshot": "/headshots/ishon-liao.webp",
+      "role": "New Member Educator"
+    },
+    {
+      "name": "Nikki Gogineni",
+      "linkedin": "https://www.linkedin.com/in/nikki-gogineni/",
+      "headshot": "/headshots/nikki-gogineni.webp",
+      "role": "VP Philanthropy"
+    },
+    {
+      "name": "Wesley Hanes",
+      "linkedin": "https://www.linkedin.com/in/wesleyhanes/",
+      "headshot": "/headshots/wesley-hanes.webp",
+      "role": "VP Social Affairs"
+    },
+    {
+      "name": "Isabella Antunes",
+      "linkedin": "https://www.linkedin.com/in/isabella-m-antunes/",
+      "headshot": "/headshots/isabella-antunes.webp",
+      "role": "VP Partnerships"
+    }
+  ]
+}

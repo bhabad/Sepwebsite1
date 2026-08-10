@@ -1,0 +1,59 @@
+{
+  "_comment": "Recruitment cycle data. Set 'datesConfirmed': true and fill real dates/venues each cycle. Events render in array order. See MAINTENANCE.md.",
+  "cycle": "Fall 2026",
+  "datesConfirmed": false,
+  "applyUrl": "",
+  "_applyUrl_note": "Paste the application form link when live; the Apply button hides while this is empty.",
+  "events": [
+    {
+      "name": "Info Session",
+      "date": "Coming soon",
+      "time": "TBD",
+      "venue": "TBD",
+      "attire": "Casual",
+      "description": "Meet the chapter, hear what SEP is about, and ask us anything."
+    },
+    {
+      "name": "Meet the Brothers",
+      "date": "Coming soon",
+      "time": "TBD",
+      "venue": "TBD",
+      "attire": "Casual",
+      "description": "Low-key social night. Get to know members across every class."
+    },
+    {
+      "name": "Professional Night",
+      "date": "Coming soon",
+      "time": "TBD",
+      "venue": "TBD",
+      "attire": "Business professional",
+      "description": "Workshops and conversations on ventures, careers, and building things."
+    },
+    {
+      "name": "Final Interviews",
+      "date": "Coming soon",
+      "time": "TBD",
+      "venue": "TBD",
+      "attire": "Business casual",
+      "description": "Invite only. A closing conversation with the chapter."
+    }
+  ],
+  "faq": [
+    {
+      "q": "Who can rush SEP?",
+      "a": "Any UNC undergraduate, any major, any year. We're co-ed and interest in entrepreneurship matters more than experience."
+    },
+    {
+      "q": "Do I need a startup or business background?",
+      "a": "No. Members come from CS, business, design, pre-med, journalism and more. Curiosity and drive are what we look for."
+    },
+    {
+      "q": "When does recruitment happen?",
+      "a": "At the start of each semester. Follow our Instagram and join the recruitment GroupMe for dates the moment they drop."
+    },
+    {
+      "q": "What's the time commitment?",
+      "a": "Weekly chapter meetings plus events you opt into: workshops, socials, and venture work. Most members balance it easily with coursework."
+    }
+  ]
+}

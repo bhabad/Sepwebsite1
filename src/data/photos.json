@@ -1,0 +1,17 @@
+{
+  "_comment": "Photography slots. Each src lives in site/public/photos/ (a -800 and -1600 WebP pair exists for each; components use src as-is). To swap a photo: drop new WebPs in public/photos/ and update src+alt here. See MAINTENANCE.md.",
+  "hero": { "src": "/photos/hero-lakehouse-1200.webp", "alt": "The full SEP chapter at the Fall 2025 lake house retreat at sunset" },
+  "homeBand": [
+    { "src": "/photos/band-volleyball-800.webp", "alt": "Brothers playing beach volleyball at the spring retreat" },
+    { "src": "/photos/band-beach-group-800.webp", "alt": "Members arm-in-arm on the beach at golden hour" },
+    { "src": "/photos/band-pitch-800.webp", "alt": "Members presenting a startup pitch deck in class" },
+    { "src": "/photos/band-deandome-800.webp", "alt": "Brothers at a UNC basketball game in the Dean Dome" },
+    { "src": "/photos/band-laughing-800.webp", "alt": "Members laughing together on the beach" }
+  ],
+  "about": [
+    { "src": "/photos/about-meeting-800.webp", "alt": "A full chapter meeting with guest speakers in a UNC lecture hall" },
+    { "src": "/photos/about-deck-800.webp", "alt": "Brothers gathered on the deck at the spring retreat" },
+    { "src": "/photos/about-chapter-beach-800.webp", "alt": "The chapter posing together on the beach at sunset" }
+  ],
+  "recruitment": { "src": "/photos/recruit-redbull-800.webp", "alt": "SEP members in business attire at the Red Bull Basement event" }
+}

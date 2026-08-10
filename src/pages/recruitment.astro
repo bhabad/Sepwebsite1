@@ -1,0 +1,165 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+import photos from '../data/photos.json';
+import rec from '../data/recruitment.json';
+import { withBase } from '../lib/url';
+
+// deterministic starfield (seeded LCG, stable across builds)
+let seed = 20260810;
+const rand = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+const stars = Array.from({ length: 90 }, () => ({
+  x: +(rand() * 100).toFixed(2),
+  y: +(rand() * 100).toFixed(2),
+  s: +(0.8 + rand() * 1.8).toFixed(2),
+  o: +(0.25 + rand() * 0.65).toFixed(2),
+  d: +(rand() * 6).toFixed(2),
+}));
+---
+<Base title="Recruitment" description={`Rush Sigma Eta Pi at UNC. ${rec.cycle} recruitment events, dates, and FAQ.`}>
+  <!-- Cinematic hero -->
+  <section class="cosmos" aria-label={`${rec.cycle} recruitment`}>
+    <div class="cosmos__glow" aria-hidden="true"></div>
+    <div class="cosmos__stars" aria-hidden="true">
+      {stars.map((st) => (
+        <span style={`left:${st.x}%; top:${st.y}%; width:${st.s}px; height:${st.s}px; opacity:${st.o}; animation-delay:${st.d}s`}></span>
+      ))}
+    </div>
+    <div class="cosmos__content">
+      <img class="cosmos__mark reveal" src={withBase('/sep-mark-white.png')} alt="Sigma Eta Pi" width="190" height="116" />
+      <h1 class="cosmos__cycle reveal">{rec.cycle}</h1>
+      <p class="cosmos__due reveal">
+        {rec.datesConfirmed ? 'Applications open' : 'Dates announced soon on Instagram and the GroupMe'}
+      </p>
+      <div class="cosmos__cta reveal">
+        {rec.applyUrl
+          ? <a class="btn btn--sky" href={rec.applyUrl} target="_blank" rel="noreferrer noopener">Apply</a>
+          : <a class="btn btn--sky" href={site.socials.instagram} target="_blank" rel="noreferrer noopener">Follow @uncsep</a>}
+        {site.recruitmentGroupMe && <a class="btn btn--ghost" href={site.recruitmentGroupMe} target="_blank" rel="noreferrer noopener">Recruitment GroupMe</a>}
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section">
+    <div class="container">
+      <ol class="timeline">
+        {rec.events.map((e, i) => (
+          <li class="reveal">
+            <div class="timeline__date">
+              <strong>{e.date === 'Coming soon' ? 'TBD' : e.date}</strong>
+              <span>{e.time}</span>
+            </div>
+            <div class="timeline__rail" aria-hidden="true">
+              <span class="timeline__dot"></span>
+              {i < rec.events.length - 1 && <span class="timeline__line"></span>}
+            </div>
+            <div class="timeline__body">
+              <h3>{e.name}</h3>
+              <p class="timeline__meta">{e.venue} · {e.attire}</p>
+              <p class="timeline__desc">{e.description}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      {!rec.datesConfirmed && (
+        <p class="tbd-note reveal">This is our usual event lineup. Exact {rec.cycle} dates, times, and venues are coming soon.</p>
+      )}
+    </div>
+  </section>
+
+  <!-- Photo -->
+  <section class="container">
+    <figure class="photo-xl reveal">
+      <img src={withBase(photos.recruitment.src)} alt={photos.recruitment.alt} loading="lazy" decoding="async" style="aspect-ratio: 21/9; object-position: center 35%;" />
+    </figure>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="reveal">Recruitment FAQ</h2>
+      <div class="faq">
+        {rec.faq.map((f) => (
+          <details class="reveal">
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cosmos {
+    position: relative; min-height: 92svh;
+    display: grid; place-items: center;
+    overflow: hidden; text-align: center;
+  }
+  /* blue nebula glow — swap for a real nebula image by putting it in
+     public/photos/nebula.webp and adding a background-image here */
+  .cosmos__glow {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(52rem 20rem at 50% 38%, rgba(110, 207, 246, 0.32), transparent 65%),
+      radial-gradient(80rem 30rem at 50% 40%, rgba(58, 136, 182, 0.25), transparent 70%),
+      radial-gradient(30rem 14rem at 46% 36%, rgba(255, 255, 255, 0.10), transparent 60%),
+      radial-gradient(100rem 60rem at 50% 120%, rgba(43, 86, 114, 0.35), transparent 70%);
+  }
+  .cosmos__stars { position: absolute; inset: 0; }
+  .cosmos__stars span {
+    position: absolute; border-radius: 50%; background: #fff;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .cosmos__stars span { animation: twinkle 5s ease-in-out infinite; }
+    @keyframes twinkle { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.55); } }
+  }
+  .cosmos__content { position: relative; padding: 7rem var(--pad) 4rem; }
+  .cosmos__mark { margin-inline: auto; filter: drop-shadow(0 0 42px rgba(110, 207, 246, 0.55)); }
+  .cosmos__cycle {
+    font-style: italic; font-weight: 600;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    margin: 2rem 0 0.6rem;
+  }
+  .cosmos__due { color: var(--muted); font-size: clamp(1rem, 1.8vw, 1.2rem); margin-bottom: 2.2rem; }
+  .cosmos__cta { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+
+  .timeline { list-style: none; margin: 0; padding: 0; max-width: 52rem; margin-inline: auto; }
+  .timeline li { display: grid; grid-template-columns: 110px 34px 1fr; gap: 0 1.2rem; }
+  .timeline__date { text-align: right; padding-top: 0.1rem; }
+  .timeline__date strong { display: block; font-family: var(--font-display); font-size: clamp(1.3rem, 2.6vw, 1.8rem); color: #fff; line-height: 1.1; }
+  .timeline__date span { font-size: 0.85rem; color: var(--muted); font-style: italic; }
+  .timeline__rail { position: relative; display: grid; justify-items: center; }
+  .timeline__dot {
+    width: 11px; height: 11px; border-radius: 50%; background: var(--sky);
+    box-shadow: 0 0 14px rgba(110, 207, 246, 0.8); margin-top: 0.5rem;
+  }
+  .timeline__line { position: absolute; top: 1.4rem; bottom: -0.5rem; width: 1px; background: var(--line); }
+  .timeline__body { padding-bottom: 2.8rem; }
+  .timeline__body h3 { font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin-bottom: 0.15rem; }
+  .timeline__meta { color: var(--sky); font-size: 0.92rem; margin-bottom: 0.4rem; }
+  .timeline__desc { margin: 0; color: var(--muted); font-size: 0.97rem; }
+  @media (max-width: 600px) {
+    .timeline li { grid-template-columns: 26px 1fr; }
+    .timeline__date { grid-column: 2; text-align: left; order: -1; }
+    .timeline__rail { grid-row: span 2; }
+  }
+  .tbd-note { max-width: 52rem; margin: 1rem auto 0; color: var(--muted); font-size: 0.92rem; font-style: italic; }
+
+  .faq { max-width: 46rem; margin-top: 1.6rem; }
+  .faq details { border-top: 1px solid var(--line); }
+  .faq details:last-child { border-bottom: 1px solid var(--line); }
+  .faq summary {
+    cursor: pointer; padding: 1.05rem 2rem 1.05rem 0;
+    font-family: var(--font-display); font-weight: 600; font-size: 1rem; color: #fff;
+    list-style: none; position: relative;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: '+'; position: absolute; right: 0.2rem; top: 0.9rem;
+    color: var(--sky); font-size: 1.25rem; transition: transform 0.2s;
+  }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq details p { margin: 0; padding: 0 0 1.1rem; color: var(--muted); }
+</style>

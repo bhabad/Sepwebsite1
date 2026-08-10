@@ -1,0 +1,190 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+import photos from '../data/photos.json';
+import roster from '../data/roster.json';
+import { withBase } from '../lib/url';
+
+const memberCount = roster.classes.reduce((n, c) => n + c.members.length, 0);
+const stats = [
+  { value: String(memberCount), label: 'active brothers' },
+  { value: String(roster.classes.length), label: 'member classes' },
+  { value: '2020', label: 'chapter founded' },
+  { value: 'Co-ed', label: 'every major welcome' },
+];
+// 20 mosaic tiles, shuffled deterministically across 3 drifting rows
+const tiles = Array.from({ length: 20 }, (_, i) => withBase(`/photos/mosaic/m${String(i).padStart(2, '0')}.webp`));
+const rows = [
+  [tiles[0], tiles[3], tiles[6], tiles[9], tiles[12], tiles[15], tiles[18]],
+  [tiles[1], tiles[4], tiles[7], tiles[10], tiles[13], tiles[16], tiles[19]],
+  [tiles[2], tiles[5], tiles[8], tiles[11], tiles[14], tiles[17], tiles[0]],
+  [tiles[19], tiles[13], tiles[5], tiles[16], tiles[2], tiles[10], tiles[7]],
+  [tiles[18], tiles[8], tiles[14], tiles[1], tiles[11], tiles[4], tiles[9]],
+];
+---
+<Base title="Home" description={`${site.tagline}. Empowerment through entrepreneurship at UNC-Chapel Hill.`}>
+  <!-- Hero: tilted drifting photo mosaic, centered eagle -->
+  <section class="hero" aria-label="Sigma Eta Pi at UNC">
+    <div class="hero__mosaic" aria-hidden="true">
+      {rows.map((row, ri) => (
+        <div class={`hero__row hero__row--${ri}`}>
+          {[...row, ...row].map((t) => (
+            <div class="hero__tile"><img src={t} alt="" loading="eager" decoding="async" /></div>
+          ))}
+        </div>
+      ))}
+    </div>
+    <div class="hero__veil"></div>
+    <div class="hero__center">
+      <img class="hero__mark" src={withBase('/sep-mark-white.png')} alt="Sigma Eta Pi" width="210" height="128" />
+    </div>
+    <p class="hero__tag">unc's co-ed entrepreneurship fraternity</p>
+  </section>
+
+  <!-- Statement -->
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow reveal">Sigma Eta Pi · Iota Chapter</p>
+      <h1 class="statement reveal">Empowerment through<br />entrepreneurship.</h1>
+      <p class="lede reveal">
+        Our members embody the spirit of independent will and innovation. We build ventures,
+        careers, and each other at Chapel Hill.
+      </p>
+      <div class="statement__cta reveal">
+        <a class="btn btn--sky" href={withBase('/recruitment/')}>Rush SEP</a>
+        <a class="btn btn--ghost" href={withBase('/brothers/')}>Meet the brothers</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats">
+    <div class="container">
+      <ul class="stats__row">
+        {stats.map((s) => (
+          <li class="reveal">
+            <strong>{s.value}</strong>
+            <span>{s.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- What we do -->
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow reveal">What we do</p>
+      <h2 class="reveal">More than a club. A launchpad.</h2>
+      <div class="cols">
+        <div class="reveal">
+          <h3>Build ventures</h3>
+          <p>Pitch nights, venture teams, and workshops that take ideas from a napkin sketch to a launch, alongside brothers who have done it before.</p>
+        </div>
+        <div class="reveal">
+          <h3>Build careers</h3>
+          <p>A tight network across startups, tech, consulting, and finance. Mock interviews, referrals, and honest advice from people who want you to win.</p>
+        </div>
+        <div class="reveal">
+          <h3>Build each other</h3>
+          <p>At SEP, we don't just build ventures. We build each other, through retreats, socials, and a community that shows up.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Big photo -->
+  <section class="container">
+    <figure class="photo-xl reveal">
+      <img src={withBase(photos.hero.src).replace('-1200', '-2400')} alt={photos.hero.alt} loading="lazy" decoding="async" />
+    </figure>
+  </section>
+
+  <!-- Recruitment CTA -->
+  <section class="section">
+    <div class="container cta">
+      <div class="reveal">
+        <p class="eyebrow">Fall 2026 recruitment</p>
+        <h2>Find your future.</h2>
+        <p class="lede cta__lede">Dates drop soon. Follow our Instagram and join the recruitment GroupMe so you don't miss them.</p>
+        <div class="cta__row">
+          <a class="btn btn--sky" href={withBase('/recruitment/')}>Recruitment details</a>
+          <a class="btn btn--ghost" href={site.socials.instagram} target="_blank" rel="noreferrer noopener">@uncsep</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { position: relative; height: 100svh; min-height: 620px; overflow: hidden; }
+  .hero__mosaic {
+    position: absolute; inset: -22%;
+    display: grid; gap: clamp(0.7rem, 1.4vw, 1.2rem);
+    align-content: center;
+    transform: rotate(-14deg);
+  }
+  .hero__row { display: flex; gap: clamp(0.7rem, 1.4vw, 1.2rem); width: max-content; }
+  .hero__tile {
+    width: clamp(200px, 24vw, 340px);
+    aspect-ratio: 4 / 3;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .hero__tile img { width: 100%; height: 100%; object-fit: cover; }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__row--0 { animation: drift-l 70s linear infinite; }
+    .hero__row--1 { animation: drift-r 85s linear infinite; }
+    .hero__row--2 { animation: drift-l 78s linear infinite; }
+    .hero__row--3 { animation: drift-r 92s linear infinite; }
+    .hero__row--4 { animation: drift-l 74s linear infinite; }
+    @keyframes drift-l { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes drift-r { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  }
+  .hero__veil {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(60rem 34rem at 50% 46%, rgba(6, 18, 27, 0.28), rgba(6, 18, 27, 0.82) 75%),
+      linear-gradient(180deg, rgba(6, 18, 27, 0.55), rgba(6, 18, 27, 0.45) 40%, var(--bg) 98%);
+  }
+  .hero__center {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+  }
+  .hero__mark { filter: drop-shadow(0 6px 40px rgba(6, 18, 27, 0.8)); }
+  .hero__tag {
+    position: absolute; right: var(--pad); bottom: 1.6rem; margin: 0;
+    font-family: var(--font-display); font-weight: 500;
+    color: rgba(255, 255, 255, 0.9); font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  }
+
+  .statement { max-width: 16em; }
+  .statement__cta { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 2rem; }
+
+  .stats { border-block: 1px solid var(--line); }
+  .stats__row {
+    list-style: none; margin: 0; padding: 2.6rem 0;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+  }
+  .stats__row li { display: grid; gap: 0.1rem; padding-inline: 1.6rem; border-left: 1px solid var(--line); }
+  .stats__row li:first-child { border-left: 0; padding-left: 0; }
+  .stats__row strong { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.9rem, 3.8vw, 2.8rem); color: var(--sky); line-height: 1.1; }
+  .stats__row span { font-size: 0.9rem; color: var(--muted); }
+  @media (max-width: 720px) {
+    .stats__row { grid-template-columns: 1fr 1fr; gap: 1.4rem 0; }
+    .stats__row li:nth-child(odd) { border-left: 0; padding-left: 0; }
+  }
+
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-top: 2.5rem; }
+  .cols > div { border-top: 2px solid var(--sky); padding-top: 1.3rem; }
+  .cols h3 { margin-bottom: 0.4rem; }
+  .cols p { margin: 0; color: var(--muted); font-size: 0.98rem; }
+  @media (max-width: 840px) { .cols { grid-template-columns: 1fr; gap: 1.8rem; } }
+
+  .photo-xl img { aspect-ratio: 16 / 9; object-position: center 40%; }
+
+  .cta { text-align: center; }
+  .cta__lede { margin-inline: auto; }
+  .cta__row { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+</style>

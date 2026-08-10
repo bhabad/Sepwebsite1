@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+import { withBase } from '../lib/url';
+
+const channels = [
+  { label: 'Email', value: site.email, href: `mailto:${site.email}`, note: 'Best for partnership, sponsorship, and general questions.' },
+  { label: 'Instagram', value: '@uncsep', href: site.socials.instagram, note: 'Recruitment announcements land here first.' },
+  { label: 'LinkedIn', value: 'UNC Sigma Eta Pi', href: site.socials.linkedin, note: 'Follow the chapter and connect with brothers.' },
+  { label: 'TikTok', value: '@unc.sep', href: site.socials.tiktok, note: 'Chapter life, unfiltered.' },
+];
+---
+<Base title="Contact" description="Get in touch with Sigma Eta Pi at UNC. Email, Instagram, LinkedIn, and TikTok.">
+  <section class="hero-title">
+    <div class="container">
+      <h1 class="reveal">Contact</h1>
+      <p class="lede center reveal">Questions about recruitment, partnerships, or the chapter? We're quick to answer.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <ul class="channels">
+        {channels.map((c) => (
+          <li class="reveal">
+            <a
+              href={c.href}
+              target={c.href.startsWith('mailto') ? undefined : '_blank'}
+              rel={c.href.startsWith('mailto') ? undefined : 'noreferrer noopener'}
+            >
+              <span class="channels__label">{c.label}</span>
+              <span class="channels__value">{c.value}</span>
+              <span class="channels__note">{c.note}</span>
+              <span class="channels__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section rush">
+    <div class="container">
+      <h2 class="reveal">find your future.</h2>
+      <a class="btn btn--sky reveal" href={withBase('/recruitment/')}>Rush SEP</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-title { padding-top: clamp(7rem, 14vh, 9.5rem); text-align: center; }
+  .hero-title h1 { font-size: clamp(3rem, 8vw, 5.5rem); }
+  .center { margin-inline: auto; }
+
+  .channels { list-style: none; margin: 0 auto; padding: 0; max-width: 52rem; }
+  .channels li { border-top: 1px solid var(--line); }
+  .channels li:last-child { border-bottom: 1px solid var(--line); }
+  .channels a {
+    display: grid; grid-template-columns: 140px 1fr auto; gap: 0.2rem 1.5rem;
+    padding: 1.5rem 0.3rem; text-decoration: none; align-items: baseline;
+    transition: background 0.15s;
+  }
+  .channels a:hover { background: rgba(110, 207, 246, 0.05); }
+  .channels__label {
+    font-family: var(--font-display); font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+  }
+  .channels__value { font-family: var(--font-display); font-weight: 600; font-size: 1.2rem; color: #fff; }
+  .channels a:hover .channels__value { color: var(--sky); }
+  .channels__note { grid-column: 2; color: var(--muted); font-size: 0.92rem; }
+  .channels__arrow { grid-row: span 2; align-self: center; color: var(--sky); font-size: 1.3rem; }
+  @media (max-width: 560px) {
+    .channels a { grid-template-columns: 1fr auto; }
+    .channels__label { grid-column: 1 / -1; }
+    .channels__note { grid-column: 1; }
+  }
+
+  .rush { text-align: center; }
+  .rush h2 {
+    font-style: italic; font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+    margin-bottom: 1.6rem;
+  }
+</style>
