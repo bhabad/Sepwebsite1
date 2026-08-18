@@ -1,0 +1,179 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sigma Eta Pi at UNC//Recruitment//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:SEP UNC Fall 2026 Recruitment
+X-WR-TIMEZONE:America/New_York
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VTIMEZONE
+TZID:America/New_York
+X-LIC-LOCATION:America/New_York
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+TZNAME:EDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+TZNAME:EST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:interest-meeting-20260819@uncsep.com
+DTSTAMP:20260818T171713Z
+DTSTART;TZID=America/New_York:20260819T190000
+DTEND;TZID=America/New_York:20260819T200000
+SUMMARY:SEP: Interest Meeting
+LOCATION:Bell + Zoom
+DESCRIPTION:The first info session: what SEP is\, how recruitment works\, a
+ nd a Q&A panel of current brothers. In person or on Zoom.\nDetails: https
+ ://bhabad.github.io/Sepwebsite1/recruitment/
+URL:https://bhabad.github.io/Sepwebsite1/recruitment/
+CATEGORIES:SEP UNC Recruitment
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:speed-dating-with-brothers-20260820@uncsep.com
+DTSTAMP:20260818T171713Z
+DTSTART;TZID=America/New_York:20260820T190000
+DTEND;TZID=America/New_York:20260820T200000
+SUMMARY:SEP: Speed Dating with Brothers
+LOCATION:Bell
+DESCRIPTION:Quick one-on-one rotations so you meet as many brothers as poss
+ ible.\nDetails: https://bhabad.github.io/Sepwebsite1/recruitment/
+URL:https://bhabad.github.io/Sepwebsite1/recruitment/
+CATEGORIES:SEP UNC Recruitment
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:game-night-20260824@uncsep.com
+DTSTAMP:20260818T171713Z
+DTSTART;TZID=America/New_York:20260824T190000
+DTEND;TZID=America/New_York:20260824T200000
+SUMMARY:SEP: Game Night
+LOCATION:Bell
+DESCRIPTION:Board games with current members. Low-key\, and the easiest way
+  to see what the chapter is like.\nDetails: https://bhabad.github.io/Sepw
+ ebsite1/recruitment/
+URL:https://bhabad.github.io/Sepwebsite1/recruitment/
+CATEGORIES:SEP UNC Recruitment
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:paint-pass-20260827@uncsep.com
+DTSTAMP:20260818T171713Z
+DTSTART;TZID=America/New_York:20260827T190000
+DTEND;TZID=America/New_York:20260827T200000
+SUMMARY:SEP: Paint & Pass
+LOCATION:Bell
+DESCRIPTION:Paint a canvas while brothers rotate through\, add to it\, and 
+ answer your questions.\nDetails: https://bhabad.github.io/Sepwebsite1/rec
+ ruitment/
+URL:https://bhabad.github.io/Sepwebsite1/recruitment/
+CATEGORIES:SEP UNC Recruitment
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:application-opens-20260828@uncsep.com
+DTSTAMP:20260818T171713Z
+DTSTART;VALUE=DATE:20260828
+DTEND;VALUE=DATE:20260829
+SUMMARY:SEP: Application opens
+LOCATION:Online
+DESCRIPTION:A short written application about you and your interest in entr
+ epreneurship. Any major\, any year — experience is not required.\nDetai
+ ls: https://bhabad.github.io/Sepwebsite1/recruitment/
+URL:https://bhabad.github.io/Sepwebsite1/recruitment/
+CATEGORIES:SEP UNC Recruitment
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:resume-workshop-networking-night-20260903@uncsep.com
+DTSTAMP:20260818T171713Z
+DTSTART;TZID=America/New_York:20260903T190000
+DTEND;TZID=America/New_York:20260903T200000
+SUMMARY:SEP: Résumé Workshop & Networking Night
+LOCATION:Bell
+DESCRIPTION:Résumé tips for internships and recruiting\, then Networking 
+ Bingo with the brothers.\nDetails: https://bhabad.github.io/Sepwebsite1/r
+ ecruitment/
+URL:https://bhabad.github.io/Sepwebsite1/recruitment/
+CATEGORIES:SEP UNC Recruitment
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:application-closes-20260906@uncsep.com
+DTSTAMP:20260818T171713Z
+DTSTART;VALUE=DATE:20260906
+DTEND;VALUE=DATE:20260907
+SUMMARY:SEP: Application closes
+LOCATION:Online
+DESCRIPTION:Last day to submit. Applications are reviewed by committee befo
+ re formal recruitment.\nDetails: https://bhabad.github.io/Sepwebsite1/rec
+ ruitment/
+URL:https://bhabad.github.io/Sepwebsite1/recruitment/
+CATEGORIES:SEP UNC Recruitment
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:formal-recruitment-20260909@uncsep.com
+DTSTAMP:20260818T171713Z
+DTSTART;TZID=America/New_York:20260909T180000
+DTEND;TZID=America/New_York:20260909T203000
+SUMMARY:SEP: Formal Recruitment (night 1 of 2)
+LOCATION:McColl Building
+DESCRIPTION:Two identical nights — attend whichever works for you. Three 
+ rounds: a panel interview with exec\, an elevator pitch\, and a Shark-Tan
+ k-style pitch competition in pairs.\nDetails: https://bhabad.github.io/Se
+ pwebsite1/recruitment/
+URL:https://bhabad.github.io/Sepwebsite1/recruitment/
+CATEGORIES:SEP UNC Recruitment
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:formal-recruitment-20260910@uncsep.com
+DTSTAMP:20260818T171713Z
+DTSTART;TZID=America/New_York:20260910T180000
+DTEND;TZID=America/New_York:20260910T203000
+SUMMARY:SEP: Formal Recruitment (night 2 of 2)
+LOCATION:McColl Building
+DESCRIPTION:Two identical nights — attend whichever works for you. Three 
+ rounds: a panel interview with exec\, an elevator pitch\, and a Shark-Tan
+ k-style pitch competition in pairs.\nDetails: https://bhabad.github.io/Se
+ pwebsite1/recruitment/
+URL:https://bhabad.github.io/Sepwebsite1/recruitment/
+CATEGORIES:SEP UNC Recruitment
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+UID:decisions-sent-20260912@uncsep.com
+DTSTAMP:20260818T171713Z
+DTSTART;VALUE=DATE:20260912
+DTEND;VALUE=DATE:20260913
+SUMMARY:SEP: Decisions sent
+LOCATION:By email
+DESCRIPTION:Check your inbox. New members join the chapter at the first mee
+ ting on Thu Sep 17 in McColl.\nDetails: https://bhabad.github.io/Sepwebsi
+ te1/recruitment/
+URL:https://bhabad.github.io/Sepwebsite1/recruitment/
+CATEGORIES:SEP UNC Recruitment
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
