@@ -29,6 +29,7 @@
 html { scroll-behavior: smooth; background: var(--bg); }
 body {
   margin: 0;
+  overflow-x: clip;             /* never let a wide word/tile widen the mobile viewport */
   font-family: var(--font-body);
   color: var(--text);
   background: var(--bg);

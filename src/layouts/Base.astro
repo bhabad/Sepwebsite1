@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import SocialIcon from '../components/SocialIcon.astro';
 import site from '../data/site.json';
 import { withBase, stripBase } from '../lib/url';
 
@@ -7,7 +8,7 @@ interface Props {
   title: string;
   description?: string;
 }
-const { title, description = `${site.tagline}. Empowerment through entrepreneurship.` } = Astro.props;
+const { title, description = `${site.tagline} — Sigma Eta Pi, Iota chapter, at UNC-Chapel Hill.` } = Astro.props;
 const nav = [
   { href: '/about/', label: 'About' },
   { href: '/brothers/', label: 'Brothers' },
@@ -15,6 +16,9 @@ const nav = [
   { href: '/contact/', label: 'Contact' },
 ];
 const path = stripBase(Astro.url.pathname);
+// Absolute URLs for link previews (Astro.site comes from SITE_URL / astro.config.mjs).
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(withBase('/og.jpg'), Astro.site).href;
 ---
 <!doctype html>
 <html lang="en">
@@ -23,7 +27,25 @@ const path = stripBase(Astro.url.pathname);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} · {site.shortName}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={pageUrl} />
+    <meta name="theme-color" content="#06121B" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <link rel="icon" type="image/png" href={withBase('/favicon.png')} />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+    <!-- Link previews (iMessage, GroupMe, Instagram DMs, LinkedIn, Slack) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={`${title} · ${site.shortName}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Sigma Eta Pi eagle over the chapter at the Fall 2025 lake house retreat" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} · ${site.shortName}`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -36,7 +58,7 @@ const path = stripBase(Astro.url.pathname);
     <header class="nav">
       <div class="container nav__inner">
         <a href={withBase('/')} class="nav__brand" aria-label="SEP UNC home">
-          <img src={withBase('/sep-mark-white.png')} alt="Sigma Eta Pi eagle" width="46" height="28" />
+          <img src={withBase('/sep-mark.svg')} alt="Sigma Eta Pi eagle" width="46" height="28" />
           <span>Sigma<br />Eta Pi <em>UNC</em></span>
         </a>
         <nav class="nav__links" aria-label="Main">
@@ -58,8 +80,8 @@ const path = stripBase(Astro.url.pathname);
     <footer class="footer">
       <div class="container footer__inner">
         <div class="footer__brand">
-          <img src={withBase('/sep-mark-white.png')} alt="" width="52" height="32" />
-          <p>sigma eta pi @ unc<br /><span>empowerment through entrepreneurship.</span></p>
+          <img src={withBase('/sep-mark.svg')} alt="" width="52" height="32" />
+          <p>sigma eta pi @ unc<br /><span>unc's co-ed entrepreneurship fraternity · iota chapter</span></p>
         </div>
         <nav class="footer__links" aria-label="Footer">
           <a href={withBase('/about/')}>About</a>
@@ -68,10 +90,10 @@ const path = stripBase(Astro.url.pathname);
           <a href={withBase('/contact/')}>Contact</a>
         </nav>
         <div class="footer__social">
-          <a href={site.socials.instagram} target="_blank" rel="noreferrer noopener">Instagram</a>
-          <a href={site.socials.tiktok} target="_blank" rel="noreferrer noopener">TikTok</a>
-          <a href={site.socials.linkedin} target="_blank" rel="noreferrer noopener">LinkedIn</a>
-          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <a href={site.socials.instagram} target="_blank" rel="noreferrer noopener"><SocialIcon name="instagram" size={16} /> Instagram</a>
+          <a href={site.socials.tiktok} target="_blank" rel="noreferrer noopener"><SocialIcon name="tiktok" size={16} /> TikTok</a>
+          <a href={site.socials.linkedin} target="_blank" rel="noreferrer noopener"><SocialIcon name="linkedin" size={16} /> LinkedIn</a>
+          <a href={`mailto:${site.email}`}><SocialIcon name="mail" size={16} /> {site.email}</a>
         </div>
       </div>
       <div class="container footer__legal">
@@ -103,11 +125,15 @@ const path = stripBase(Astro.url.pathname);
         }
       };
       revealInView();
+      // solid nav once the page has scrolled past the hero gradient
+      const navEl = document.querySelector('.nav');
+      const updateNav = () => navEl?.classList.toggle('is-scrolled', scrollY > 24);
+      updateNav();
       let ticking = false;
       addEventListener('scroll', () => {
         if (ticking) return;
         ticking = true;
-        requestAnimationFrame(() => { revealInView(); ticking = false; });
+        requestAnimationFrame(() => { revealInView(); updateNav(); ticking = false; });
       }, { passive: true });
     </script>
 
@@ -117,8 +143,17 @@ const path = stripBase(Astro.url.pathname);
         background: linear-gradient(180deg, rgba(6, 18, 27, 0.82), rgba(6, 18, 27, 0));
         backdrop-filter: blur(2px);
         -webkit-backdrop-filter: blur(2px);
+        transition: background 0.25s ease, box-shadow 0.25s ease, backdrop-filter 0.25s ease;
       }
-      .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 86px; }
+      /* once scrolled, page text runs under the bar — give it a real surface */
+      .nav.is-scrolled {
+        background: rgba(6, 18, 27, 0.88);
+        backdrop-filter: blur(14px) saturate(1.2);
+        -webkit-backdrop-filter: blur(14px) saturate(1.2);
+        box-shadow: 0 1px 0 var(--line);
+      }
+      .nav.is-scrolled .nav__inner { height: 68px; }
+      .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 86px; transition: height 0.25s ease; }
       .nav__brand {
         display: flex; align-items: center; gap: 0.9rem;
         text-decoration: none; color: #fff;
@@ -161,6 +196,8 @@ const path = stripBase(Astro.url.pathname);
       .footer__links, .footer__social { display: grid; gap: 0.55rem; align-content: start; }
       .footer a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
       .footer a:hover { color: var(--sky); }
+      .footer__social a { display: inline-flex; align-items: center; gap: 0.55rem; }
+      .footer__social svg { flex: none; opacity: 0.85; }
       .footer__legal { border-top: 1px solid var(--line); padding-block: 1.2rem; }
       .footer__legal p { margin: 0; font-size: 0.85rem; color: var(--muted); }
       @media (max-width: 720px) { .footer__inner { grid-template-columns: 1fr; gap: 1.8rem; } }

@@ -3,14 +3,25 @@ import Base from '../layouts/Base.astro';
 import site from '../data/site.json';
 import photos from '../data/photos.json';
 import roster from '../data/roster.json';
+import rec from '../data/recruitment.json';
 import { withBase } from '../lib/url';
+import { describe, shortDate } from '../lib/events';
+
+const opens = shortDate(rec.applicationWindow.opens);
+const closes = shortDate(rec.applicationWindow.closes);
+const firstEvent = describe(rec.events[0]);
+const recruitLede = rec.applyUrl
+  ? `Applications are open until ${closes}. Come meet us at an interest event first.`
+  : rec.datesConfirmed
+    ? `Interest events start ${firstEvent.dateLabel.split(' – ')[0]}. Applications open ${opens} and close ${closes}.`
+    : "Dates drop soon. Follow our Instagram and join the recruitment GroupMe so you don't miss them.";
 
 const memberCount = roster.classes.reduce((n, c) => n + c.members.length, 0);
 const stats = [
   { value: String(memberCount), label: 'active brothers' },
   { value: String(roster.classes.length), label: 'member classes' },
-  { value: '2020', label: 'chapter founded' },
-  { value: 'Co-ed', label: 'every major welcome' },
+  { value: '2020', label: 'Iota chapter founded at UNC' },
+  { value: '2010', label: 'Sigma Eta Pi founded at UCLA' },
 ];
 // 20 mosaic tiles, shuffled deterministically across 3 drifting rows
 const tiles = Array.from({ length: 20 }, (_, i) => withBase(`/photos/mosaic/m${String(i).padStart(2, '0')}.webp`));
@@ -22,7 +33,7 @@ const rows = [
   [tiles[18], tiles[8], tiles[14], tiles[1], tiles[11], tiles[4], tiles[9]],
 ];
 ---
-<Base title="Home" description={`${site.tagline}. Empowerment through entrepreneurship at UNC-Chapel Hill.`}>
+<Base title="Home" description={`${site.tagline}. ${memberCount} brothers, ${roster.classes.length} classes, founded 2020. Recruitment every semester.`}>
   <!-- Hero: tilted drifting photo mosaic, centered eagle -->
   <section class="hero" aria-label="Sigma Eta Pi at UNC">
     <div class="hero__mosaic" aria-hidden="true">
@@ -36,25 +47,13 @@ const rows = [
     </div>
     <div class="hero__veil"></div>
     <div class="hero__center">
-      <img class="hero__mark" src={withBase('/sep-mark-white.png')} alt="Sigma Eta Pi" width="210" height="128" />
-    </div>
-    <p class="hero__tag">unc's co-ed entrepreneurship fraternity</p>
-  </section>
-
-  <!-- Statement -->
-  <section class="section">
-    <div class="container">
-      <p class="eyebrow reveal">Sigma Eta Pi · Iota Chapter</p>
-      <h1 class="statement reveal">Empowerment through<br />entrepreneurship.</h1>
-      <p class="lede reveal">
-        Our members embody the spirit of independent will and innovation. We build ventures,
-        careers, and each other at Chapel Hill.
-      </p>
-      <div class="statement__cta reveal">
+      <img class="hero__mark" src={withBase('/sep-mark.svg')} alt="Sigma Eta Pi" width="210" height="128" />
+      <div class="hero__cta">
         <a class="btn btn--sky" href={withBase('/recruitment/')}>Rush SEP</a>
         <a class="btn btn--ghost" href={withBase('/brothers/')}>Meet the brothers</a>
       </div>
     </div>
+    <h1 class="hero__tag">unc's co-ed entrepreneurship fraternity</h1>
   </section>
 
   <!-- Stats -->
@@ -71,32 +70,10 @@ const rows = [
     </div>
   </section>
 
-  <!-- What we do -->
-  <section class="section">
-    <div class="container">
-      <p class="eyebrow reveal">What we do</p>
-      <h2 class="reveal">More than a club. A launchpad.</h2>
-      <div class="cols">
-        <div class="reveal">
-          <h3>Build ventures</h3>
-          <p>Pitch nights, venture teams, and workshops that take ideas from a napkin sketch to a launch, alongside brothers who have done it before.</p>
-        </div>
-        <div class="reveal">
-          <h3>Build careers</h3>
-          <p>A tight network across startups, tech, consulting, and finance. Mock interviews, referrals, and honest advice from people who want you to win.</p>
-        </div>
-        <div class="reveal">
-          <h3>Build each other</h3>
-          <p>At SEP, we don't just build ventures. We build each other, through retreats, socials, and a community that shows up.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Big photo -->
-  <section class="container">
+  <section class="container home-photo">
     <figure class="photo-xl reveal">
-      <img src={withBase(photos.hero.src).replace('-1200', '-2400')} alt={photos.hero.alt} loading="lazy" decoding="async" />
+      <img src={withBase(photos.homeFeature.src)} alt={photos.homeFeature.alt} loading="lazy" decoding="async" style={`object-position: ${photos.homeFeature.position}`} />
     </figure>
   </section>
 
@@ -104,9 +81,9 @@ const rows = [
   <section class="section">
     <div class="container cta">
       <div class="reveal">
-        <p class="eyebrow">Fall 2026 recruitment</p>
-        <h2>Find your future.</h2>
-        <p class="lede cta__lede">Dates drop soon. Follow our Instagram and join the recruitment GroupMe so you don't miss them.</p>
+        <p class="eyebrow">{rec.cycle} recruitment</p>
+        <h2>Become a brother.</h2>
+        <p class="lede cta__lede">{recruitLede}</p>
         <div class="cta__row">
           <a class="btn btn--sky" href={withBase('/recruitment/')}>Recruitment details</a>
           <a class="btn btn--ghost" href={site.socials.instagram} target="_blank" rel="noreferrer noopener">@uncsep</a>
@@ -150,17 +127,17 @@ const rows = [
   }
   .hero__center {
     position: absolute; inset: 0;
-    display: grid; place-items: center;
+    display: grid; place-items: center; align-content: center; gap: 2.2rem;
   }
   .hero__mark { filter: drop-shadow(0 6px 40px rgba(6, 18, 27, 0.8)); }
+  .hero__cta { display: flex; gap: 0.9rem; flex-wrap: wrap; justify-content: center; }
+  /* the tagline doubles as the page's h1 — keep it visually small */
   .hero__tag {
     position: absolute; right: var(--pad); bottom: 1.6rem; margin: 0;
-    font-family: var(--font-display); font-weight: 500;
+    font-family: var(--font-display); font-weight: 500; letter-spacing: 0;
     color: rgba(255, 255, 255, 0.9); font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    line-height: 1.3; text-align: right; max-width: 70vw;
   }
-
-  .statement { max-width: 16em; }
-  .statement__cta { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 2rem; }
 
   .stats { border-block: 1px solid var(--line); }
   .stats__row {
@@ -176,12 +153,7 @@ const rows = [
     .stats__row li:nth-child(odd) { border-left: 0; padding-left: 0; }
   }
 
-  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-top: 2.5rem; }
-  .cols > div { border-top: 2px solid var(--sky); padding-top: 1.3rem; }
-  .cols h3 { margin-bottom: 0.4rem; }
-  .cols p { margin: 0; color: var(--muted); font-size: 0.98rem; }
-  @media (max-width: 840px) { .cols { grid-template-columns: 1fr; gap: 1.8rem; } }
-
+  .home-photo { margin-top: var(--gap); }
   .photo-xl img { aspect-ratio: 16 / 9; object-position: center 40%; }
 
   .cta { text-align: center; }

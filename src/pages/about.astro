@@ -5,12 +5,9 @@ import photos from '../data/photos.json';
 import execData from '../data/exec.json';
 import { withBase } from '../lib/url';
 
-const values = [
-  { title: 'Integrity', body: 'We hold ourselves to high standards, in ventures, in class, and with each other.' },
-  { title: 'Creativity', body: 'New ideas are the whole point. We make space for the unconventional ones.' },
-  { title: 'Collaboration', body: 'Co-ed, cross-major, cross-class. The best things we build, we build together.' },
-  { title: 'Grit', body: 'Startups are hard. We push one another to keep going and grow from it.' },
-];
+// The chapter's four values, as named on uncsep.com. No invented blurbs — the sentence
+// under the heading is the chapter's own.
+const values = ['Integrity', 'Creativity', 'Collaboration', 'Grit'];
 ---
 <Base title="About" description="Sigma Eta Pi's mission, history, and values, and the executive board leading UNC's Iota chapter.">
   <!-- Big title + huge rounded photo, the UCLA People treatment -->
@@ -20,7 +17,7 @@ const values = [
     </div>
     <div class="container">
       <figure class="photo-xl hero-photo reveal">
-        <img src={withBase(photos.about[2].src).replace('-800', '-1600')} alt={photos.about[2].alt} fetchpriority="high" />
+        <img src={withBase(photos.aboutHero.src)} alt={photos.aboutHero.alt} style={`object-position: ${photos.aboutHero.position}`} fetchpriority="high" />
       </figure>
     </div>
   </section>
@@ -49,21 +46,20 @@ const values = [
   <section class="section values-band">
     <div class="container">
       <p class="eyebrow reveal">Our values</p>
-      <h2 class="reveal">What we hold ourselves to.</h2>
-      <div class="values">
-        {values.map((v) => (
-          <div class="reveal">
-            <h3>{v.title}</h3>
-            <p>{v.body}</p>
-          </div>
-        ))}
-      </div>
+      <h2 class="reveal">Integrity, creativity, collaboration, and grit.</h2>
+      <p class="big-text values-lede reveal">
+        Whether you're pitching a startup, leading a workshop, or volunteering in the community,
+        we hold ourselves to high standards and push one another to grow as innovators and people.
+      </p>
+      <ul class="values reveal" aria-label="Chapter values">
+        {values.map((v) => <li>{v}</li>)}
+      </ul>
     </div>
   </section>
 
   <section class="container">
     <figure class="photo-xl reveal">
-      <img src={withBase(photos.about[0].src).replace('-800', '-1600')} alt={photos.about[0].alt} loading="lazy" decoding="async" style="aspect-ratio: 21/9; object-position: center 30%;" />
+      <img src={withBase(photos.aboutBody.src)} alt={photos.aboutBody.alt} loading="lazy" decoding="async" style={`aspect-ratio: 21/9; object-position: ${photos.aboutBody.position};`} />
     </figure>
   </section>
 
@@ -92,12 +88,16 @@ const values = [
   @media (max-width: 840px) { .story { grid-template-columns: 1fr; } }
 
   .values-band { border-block: 1px solid var(--line); }
-  .values { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 2.2rem; }
-  .values > div { border-top: 2px solid var(--sky); padding-top: 1.1rem; }
-  .values h3 { color: var(--sky); font-size: 1.1rem; margin-bottom: 0.3rem; }
-  .values p { margin: 0; font-size: 0.93rem; color: var(--muted); }
-  @media (max-width: 940px) { .values { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 520px) { .values { grid-template-columns: 1fr; } }
+  .values-lede { max-width: 40rem; color: var(--muted); }
+  .values {
+    list-style: none; margin: 2.2rem 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem;
+  }
+  .values li {
+    border-top: 2px solid var(--sky); padding-top: 0.9rem;
+    font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; color: #fff;
+  }
+  @media (max-width: 520px) { .values { grid-template-columns: 1fr 1fr; } }
 
   .exec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.2rem 1.4rem; margin-top: 2.2rem; }
   @media (max-width: 1000px) { .exec-grid { grid-template-columns: repeat(3, 1fr); } }

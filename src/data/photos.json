@@ -1,15 +1,12 @@
 {
-  "_comment": "Photography slots. Each src lives in site/public/photos/ (a -800 and -1600 WebP pair exists for each; components use src as-is). To swap a photo: drop new WebPs in public/photos/ and update src+alt here. See MAINTENANCE.md.",
-  "hero": { "src": "/photos/hero-lakehouse-1200.webp", "alt": "The full SEP chapter at the Fall 2025 lake house retreat at sunset" },
-  "homeBand": [
-    { "src": "/photos/band-volleyball-800.webp", "alt": "Brothers playing beach volleyball at the spring retreat" },
-    { "src": "/photos/band-pitch-800.webp", "alt": "Members presenting a startup pitch deck in class" },
-    { "src": "/photos/band-deandome-800.webp", "alt": "Brothers at a UNC basketball game in the Dean Dome" }
-  ],
-  "about": [
-    { "src": "/photos/about-meeting-800.webp", "alt": "A full chapter meeting with guest speakers in a UNC lecture hall" },
-    { "src": "/photos/about-deck-800.webp", "alt": "Brothers gathered on the deck at the spring retreat" },
-    { "src": "/photos/about-chapter-beach-800.webp", "alt": "The chapter posing together on the beach at sunset" }
-  ],
-  "recruitment": { "src": "/photos/recruit-redbull-800.webp", "alt": "SEP members in business attire at the Red Bull Basement event" }
+  "_comment": "Photography slots. Each src lives in site/public/photos/. Every photo on the site should show at least three people. To swap a photo: drop a WebP in public/photos/ and update src+alt here. See MAINTENANCE.md.",
+  "homeFeature": { "src": "/photos/home-atrium-1200.webp", "alt": "Brothers in business attire on the atrium stairs before a professional event", "position": "center 82%" },
+  "aboutHero": { "src": "/photos/hero-lakehouse-2400.webp", "alt": "The full SEP chapter at the Fall 2025 lake house retreat at sunset", "position": "center 45%" },
+  "aboutBody": { "src": "/photos/about-meeting-1600.webp", "alt": "A full chapter meeting with guest speakers in a UNC lecture hall", "position": "center 30%" },
+  "recruitment": { "src": "/photos/recruit-redbull-800.webp", "alt": "SEP members in business attire at the Red Bull Basement event" },
+  "_unused_but_kept": [
+    "/photos/about-chapter-beach-*.webp (portrait; too soft when cropped wide)",
+    "/photos/about-deck-*.webp",
+    "/photos/band-*.webp"
+  ]
 }
