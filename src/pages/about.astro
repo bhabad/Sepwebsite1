@@ -67,10 +67,14 @@ import { withBase } from '../lib/url';
     display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.9rem, 1.8vw, 1.4rem);
     margin-top: clamp(1.6rem, 3.5vh, 2.6rem);
   }
-  .intro__photo img { aspect-ratio: 16 / 10; max-height: 44svh; width: 100%; }
+  .intro__photo { margin: 0; }  /* kill the browser's default figure side margins */
+  .intro__photo img { aspect-ratio: 16 / 10; width: 100%; object-fit: cover; }
 
   @media (max-width: 840px) {
     .story { grid-template-columns: 1fr; gap: 1.4rem; }
+    /* phones: stack the photos full-width so they stay big */
+    .intro__photos { grid-template-columns: 1fr; }
+    .intro__photo img { aspect-ratio: 3 / 2; }
   }
   .exec-year { color: var(--muted); font-weight: 400; }
   .exec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.2rem 1.4rem; margin-top: 2.2rem; }
