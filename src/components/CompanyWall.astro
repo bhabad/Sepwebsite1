@@ -1,0 +1,50 @@
+---
+/**
+ * "Where brothers have worked": the companies from src/data/companies.json, set as
+ * a run-in list in the display serif. Static on purpose (no marquee). A company
+ * with a `logo` shows the monochrome SVG instead of its name.
+ */
+import { withBase } from '../lib/url';
+import data from '../data/companies.json';
+
+type Company = { name: string; logo?: string };
+const companies = data.companies as Company[];
+---
+{companies.length > 0 && (
+  <section class="section wall" aria-labelledby="wall-title">
+    <div class="container">
+      <hr class="rule" />
+      <div class="head wall__head">
+        <p class="label">{data.eyebrow}</p>
+        <h2 id="wall-title">{data.title}</h2>
+      </div>
+      <ul class="wall__list">
+        {companies.map((c) => (
+          <li>
+            {c.logo
+              ? <img src={withBase(c.logo)} alt={c.name} loading="lazy" decoding="async" />
+              : <span>{c.name}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .wall { padding-bottom: 0; }
+  .wall__head { padding-top: var(--gap-s); }
+  /* run-in list: names flow like a sentence, separated by a middle dot, indented to the content column */
+  .wall__list {
+    list-style: none; margin: var(--gap-s) 0 0; padding: 0;
+    padding-left: calc((100% - 11 * var(--col-gap)) / 12 * 3 + 3 * var(--col-gap));
+  }
+  .wall__list li {
+    display: inline;
+    font-family: var(--font-display); font-size: clamp(1.35rem, 2.4vw, 2.1rem); line-height: 1.4;
+    letter-spacing: -0.01em; font-variation-settings: 'opsz' 36;
+  }
+  .wall__list li:not(:last-child)::after { content: '\00a0\00a0·  '; color: var(--ink-3); }
+  .wall__list img { display: inline-block; height: 1em; width: auto; vertical-align: -0.12em; }
+  @media (max-width: 860px) { .wall__list { padding-left: 0; } }
+</style>

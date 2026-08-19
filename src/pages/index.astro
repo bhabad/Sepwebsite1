@@ -1,167 +1,96 @@
 ---
 import Base from '../layouts/Base.astro';
+import CompanyWall from '../components/CompanyWall.astro';
 import site from '../data/site.json';
 import photos from '../data/photos.json';
 import roster from '../data/roster.json';
 import rec from '../data/recruitment.json';
-import LogoMarquee from '../components/LogoMarquee.astro';
 import { withBase } from '../lib/url';
 import { describe, shortDate } from '../lib/events';
 
 const opens = shortDate(rec.applicationWindow.opens);
 const closes = shortDate(rec.applicationWindow.closes);
 const firstEvent = describe(rec.events[0]);
-const recruitLede = rec.applyUrl
-  ? `Applications are open until ${closes}. Come meet us at an interest event first.`
+const firstDate = firstEvent.dateLabel.split(' – ')[0];
+const recruitLine = rec.applyUrl
+  ? `Applications are open until ${closes}.`
   : rec.datesConfirmed
-    ? `Interest events start ${firstEvent.dateLabel.split(' – ')[0]}. Applications open ${opens} and close ${closes}.`
-    : "Dates drop soon. Follow our Instagram and join the recruitment GroupMe so you don't miss them.";
+    ? `Interest events start ${firstDate}. Applications open ${opens} and close ${closes}.`
+    : 'Dates are announced on Instagram and in the recruitment GroupMe.';
 
-// active brothers only — members flagged `alumni` in roster.json don't count
-const memberCount = roster.classes.reduce((n, c) => n + c.members.filter((m: { alumni?: boolean }) => !m.alumni).length, 0);
-const stats = [
-  { value: String(memberCount), label: 'active brothers' },
-  { value: String(roster.classes.length), label: 'member classes' },
-  { value: '2020', label: 'Iota chapter founded at UNC' },
-  { value: '2010', label: 'Sigma Eta Pi founded at UCLA' },
-];
-// 20 mosaic tiles, shuffled deterministically across 3 drifting rows
-const tiles = Array.from({ length: 20 }, (_, i) => withBase(`/photos/mosaic/m${String(i).padStart(2, '0')}.webp`));
-const rows = [
-  [tiles[0], tiles[3], tiles[6], tiles[9], tiles[12], tiles[15], tiles[18]],
-  [tiles[1], tiles[4], tiles[7], tiles[10], tiles[13], tiles[16], tiles[19]],
-  [tiles[2], tiles[5], tiles[8], tiles[11], tiles[14], tiles[17], tiles[0]],
-  [tiles[19], tiles[13], tiles[5], tiles[16], tiles[2], tiles[10], tiles[7]],
-  [tiles[18], tiles[8], tiles[14], tiles[1], tiles[11], tiles[4], tiles[9]],
-];
+// active brothers only: members flagged `alumni` in roster.json don't count
+const activeCount = roster.classes.reduce((n, c) => n + c.members.filter((m: { alumni?: boolean }) => !m.alumni).length, 0);
+const classCount = roster.classes.length;
+const NUM = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+const classWord = NUM[classCount] ?? String(classCount);
 ---
-<Base title="Home" description={`${site.tagline}. ${memberCount} brothers, ${roster.classes.length} classes, founded 2020. Recruitment every semester.`}>
-  <!-- Hero: tilted drifting photo mosaic, centered eagle -->
-  <section class="hero" aria-label="Sigma Eta Pi at UNC">
-    <div class="hero__mosaic" aria-hidden="true">
-      {rows.map((row, ri) => (
-        <div class={`hero__row hero__row--${ri}`}>
-          {[...row, ...row].map((t) => (
-            <div class="hero__tile"><img src={t} alt="" loading="eager" decoding="async" /></div>
-          ))}
-        </div>
-      ))}
-    </div>
-    <div class="hero__veil"></div>
-    <div class="hero__center">
-      <img class="hero__mark" src={withBase('/sep-mark.svg')} alt="Sigma Eta Pi" width="210" height="128" />
-      <div class="hero__cta">
-        <a class="btn btn--sky" href={withBase('/recruitment/')}>Rush SEP</a>
-        <a class="btn btn--ghost" href={withBase('/brothers/')}>Meet the brothers</a>
-      </div>
-    </div>
-    <h1 class="hero__tag">unc's co-ed entrepreneurship fraternity</h1>
-  </section>
-
-  <!-- Stats -->
-  <section class="stats">
+<Base title="Home" description={`${site.tagline}. ${activeCount} active brothers, ${classWord} classes, founded 2020. Recruitment every semester.`}>
+  <!-- Masthead -->
+  <section class="masthead">
     <div class="container">
-      <ul class="stats__row">
-        {stats.map((s) => (
-          <li class="reveal">
-            <strong>{s.value}</strong>
-            <span>{s.label}</span>
-          </li>
-        ))}
-      </ul>
+      <h1>Sigma Eta Pi</h1>
+      <div class="grid masthead__row">
+        <p class="label span-3">{site.tagline}.<br />{site.chapter.chapterLetter}, UNC-Chapel Hill.<br />Founded {site.chapter.founded}.</p>
+        <div class="span-6">
+          <p class="lede">{activeCount} active brothers across {classWord} classes, building ventures, careers, and each other.</p>
+          <div class="btn-row masthead__cta">
+            <a class="btn btn--solid" href={withBase('/recruitment/')}>Rush SEP</a>
+            <a class="btn" href={withBase('/brothers/')}>Meet the brothers</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Where brothers have worked -->
-  <LogoMarquee />
+  <!-- Lead photograph -->
+  <figure class="photo bleed lead">
+    <img src={withBase(photos.homeLead.src)} alt={photos.homeLead.alt} style={`object-position: ${photos.homeLead.position}`} fetchpriority="high" />
+  </figure>
+  <div class="container"><p class="meta lead__cap">{photos.homeLead.alt}.</p></div>
 
-  <!-- Big photo -->
-  <section class="container home-photo">
-    <figure class="photo-xl reveal">
-      <img src={withBase(photos.homeFeature.src)} alt={photos.homeFeature.alt} loading="lazy" decoding="async" style={`object-position: ${photos.homeFeature.position}`} />
-    </figure>
-  </section>
-
-  <!-- Recruitment CTA -->
+  <!-- Recruitment -->
   <section class="section">
-    <div class="container cta">
-      <div class="reveal">
-        <p class="eyebrow">{rec.cycle} recruitment</p>
-        <h2>Become a brother.</h2>
-        <p class="lede cta__lede">{recruitLede}</p>
-        <div class="cta__row">
-          <a class="btn btn--sky" href={withBase('/recruitment/')}>Recruitment details</a>
-          <a class="btn btn--ghost" href={site.socials.instagram} target="_blank" rel="noreferrer noopener">@uncsep</a>
+    <div class="container">
+      <hr class="rule" />
+      <div class="head recruit">
+        <p class="label">{rec.cycle} recruitment</p>
+        <div class="recruit__body">
+          <h2>{recruitLine}</h2>
+          <div class="btn-row">
+            <a class="btn btn--solid" href={withBase('/recruitment/')}>Dates and details</a>
+            {site.recruitmentGroupMe && <a class="btn" href={site.recruitmentGroupMe} target="_blank" rel="noreferrer noopener">Join the recruitment GroupMe</a>}
+          </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <CompanyWall />
+
+  <!-- Second photograph -->
+  <section class="section section--tight">
+    <div class="container grid">
+      <figure class="photo col-right">
+        <img src={withBase(photos.homeSecond.src)} alt={photos.homeSecond.alt} loading="lazy" decoding="async" style={`aspect-ratio: 4 / 3; object-position: ${photos.homeSecond.position}`} />
+        <figcaption>{photos.homeSecond.alt}.</figcaption>
+      </figure>
     </div>
   </section>
 </Base>
 
 <style>
-  .hero { position: relative; height: 100svh; min-height: 620px; overflow: hidden; }
-  .hero__mosaic {
-    position: absolute; inset: -22%;
-    display: grid; gap: clamp(0.7rem, 1.4vw, 1.2rem);
-    align-content: center;
-    transform: rotate(-14deg);
-  }
-  .hero__row { display: flex; gap: clamp(0.7rem, 1.4vw, 1.2rem); width: max-content; }
-  .hero__tile {
-    width: clamp(200px, 24vw, 340px);
-    aspect-ratio: 4 / 3;
-    border-radius: 10px;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-  .hero__tile img { width: 100%; height: 100%; object-fit: cover; }
-  @media (prefers-reduced-motion: no-preference) {
-    .hero__row--0 { animation: drift-l 70s linear infinite; }
-    .hero__row--1 { animation: drift-r 85s linear infinite; }
-    .hero__row--2 { animation: drift-l 78s linear infinite; }
-    .hero__row--3 { animation: drift-r 92s linear infinite; }
-    .hero__row--4 { animation: drift-l 74s linear infinite; }
-    @keyframes drift-l { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    @keyframes drift-r { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-  }
-  .hero__veil {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(60rem 34rem at 50% 46%, rgba(6, 18, 27, 0.28), rgba(6, 18, 27, 0.82) 75%),
-      linear-gradient(180deg, rgba(6, 18, 27, 0.55), rgba(6, 18, 27, 0.45) 40%, var(--bg) 98%);
-  }
-  .hero__center {
-    position: absolute; inset: 0;
-    display: grid; place-items: center; align-content: center; gap: 2.2rem;
-  }
-  .hero__mark { filter: drop-shadow(0 6px 40px rgba(6, 18, 27, 0.8)); }
-  .hero__cta { display: flex; gap: 0.9rem; flex-wrap: wrap; justify-content: center; }
-  /* the tagline doubles as the page's h1 — keep it visually small */
-  .hero__tag {
-    position: absolute; right: var(--pad); bottom: 1.6rem; margin: 0;
-    font-family: var(--font-display); font-weight: 500; letter-spacing: 0;
-    color: rgba(255, 255, 255, 0.9); font-size: clamp(0.95rem, 1.6vw, 1.15rem);
-    line-height: 1.3; text-align: right; max-width: 70vw;
-  }
+  .masthead { padding-top: clamp(3rem, 8vw, 6rem); padding-bottom: var(--gap-s); }
+  .masthead h1 { font-size: clamp(3.25rem, 14vw, 13rem); line-height: 0.9; letter-spacing: -0.035em; margin-left: -0.04em; margin-bottom: 0.08em; }
+  .masthead__row { margin-top: clamp(1.6rem, 3.5vw, 3rem); row-gap: 1.2rem; }
+  .masthead__cta { margin-top: 1.6rem; }
 
-  .stats { border-block: 1px solid var(--line); }
-  .stats__row {
-    list-style: none; margin: 0; padding: 2.6rem 0;
-    display: grid; grid-template-columns: repeat(4, 1fr);
-  }
-  .stats__row li { display: grid; gap: 0.1rem; padding-inline: 1.6rem; border-left: 1px solid var(--line); }
-  .stats__row li:first-child { border-left: 0; padding-left: 0; }
-  .stats__row strong { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.9rem, 3.8vw, 2.8rem); color: var(--sky); line-height: 1.1; }
-  .stats__row span { font-size: 0.9rem; color: var(--muted); }
-  @media (max-width: 720px) {
-    .stats__row { grid-template-columns: 1fr 1fr; gap: 1.4rem 0; }
-    .stats__row li:nth-child(odd) { border-left: 0; padding-left: 0; }
-  }
+  .lead img { aspect-ratio: 16 / 7; }
+  @media (max-width: 860px) { .lead img { aspect-ratio: 4 / 3; } }
+  .lead__cap { margin-top: 0.7rem; }
 
-  .home-photo { margin-top: var(--gap); }
-  .photo-xl img { aspect-ratio: 16 / 9; object-position: center 40%; }
-
-  .cta { text-align: center; }
-  .cta__lede { margin-inline: auto; }
-  .cta__row { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+  .recruit { padding-top: var(--gap-s); }
+  .recruit__body { grid-column: 4 / -1; }
+  .recruit__body h2 { max-width: 18em; }
+  .recruit__body .btn-row { margin-top: 1.8rem; }
+  @media (max-width: 860px) { .recruit__body { grid-column: 1 / -1; } }
 </style>

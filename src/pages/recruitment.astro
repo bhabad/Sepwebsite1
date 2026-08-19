@@ -24,208 +24,100 @@ const status = rec.applyUrl
     : 'Dates will be announced on Instagram and in the recruitment GroupMe.';
 ---
 <Base title="Recruitment" description={`Rush Sigma Eta Pi at UNC. ${rec.cycle} recruitment schedule and application dates.`}>
-  <!-- Plain hero -->
-  <section class="hero-title">
+  <section class="title">
     <div class="container">
-      <p class="eyebrow reveal">{rec.cycle} recruitment</p>
-      <h1 class="reveal">Rush SEP.</h1>
-      <p class="lede reveal">
-        Recruitment happens at the start of each semester: a run of relaxed interest events, a
-        short written application, and one evening of formal recruitment. {status}
-      </p>
-      <div class="hero-cta reveal">
-        {rec.applyUrl
-          ? <a class="btn btn--sky" href={rec.applyUrl} target="_blank" rel="noreferrer noopener">Apply</a>
-          : <a class="btn btn--sky" href={site.socials.instagram} target="_blank" rel="noreferrer noopener">Follow @uncsep</a>}
-        {site.recruitmentGroupMe && <a class="btn btn--ghost" href={site.recruitmentGroupMe} target="_blank" rel="noreferrer noopener">Join the recruitment GroupMe</a>}
+      <h1>Recruitment</h1>
+      <div class="grid title__row">
+        <p class="label span-3">{rec.cycle}.<br />Interest events, a short application, one evening of formal recruitment.</p>
+        <div class="span-6">
+          <p class="lede">{status}</p>
+          <div class="btn-row title__cta">
+            {rec.applyUrl
+              ? <a class="btn btn--solid" href={rec.applyUrl} target="_blank" rel="noreferrer noopener">Apply</a>
+              : <a class="btn btn--solid" href={site.socials.instagram} target="_blank" rel="noreferrer noopener">Follow @uncsep</a>}
+            {site.recruitmentGroupMe && <a class="btn" href={site.recruitmentGroupMe} target="_blank" rel="noreferrer noopener">Join the recruitment GroupMe</a>}
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Horizontal schedule -->
+  <!-- Schedule: one row per event, like a listing -->
   <section class="section schedule" aria-labelledby="schedule-title">
-    <div class="container schedule__head reveal">
-      <div>
-        <h2 id="schedule-title">The schedule</h2>
-        <p class="schedule__sub">All times are Chapel Hill local. Scroll sideways to see the whole cycle.</p>
-      </div>
-      <div class="schedule__tools">
-        <div class="cal-links" aria-label="Add the schedule to your calendar">
-          <span class="cal-links__label">Add to your calendar</span>
-          <a class="cal-btn" href={googleUrl} target="_blank" rel="noreferrer noopener">Google Calendar</a>
-          <a class="cal-btn" href={icsPath} download="sep-recruitment.ics">Apple / Outlook (.ics)</a>
-        </div>
-        <div class="schedule__nav" aria-hidden="true">
-          <button type="button" class="schedule__arrow" data-dir="-1" aria-label="Earlier events">←</button>
-          <button type="button" class="schedule__arrow" data-dir="1" aria-label="Later events">→</button>
+    <div class="container">
+      <hr class="rule" />
+      <div class="head schedule__head">
+        <p class="label">Schedule</p>
+        <div class="schedule__intro">
+          <h2 id="schedule-title">{rec.cycle}, in order.</h2>
+          <p class="meta schedule__sub">
+            All times Chapel Hill local. Add the whole schedule to your calendar:
+            <a href={googleUrl} target="_blank" rel="noreferrer noopener">Google Calendar</a> or
+            <a href={icsPath} download="sep-recruitment.ics">Apple / Outlook (.ics)</a>.
+          </p>
         </div>
       </div>
-    </div>
 
-    <div class="strip-wrap reveal">
-      <ol class="strip" id="strip" tabindex="0" aria-label={`${rec.cycle} recruitment events, in order`}>
-        {events.map((e, i) => (
-          <li class={`card card--${e.phase}`} data-phase={e.phase}>
-            <span class="card__phase">{phases[e.phase] ?? e.phase}</span>
-            <span class="card__dot" aria-hidden="true"></span>
-            <div class="card__date">
-              <strong>{e.dateLabel}</strong>
-              <span>{e.whenLabel}</span>
+      <ol class="rows events" aria-label={`${rec.cycle} recruitment events, in order`}>
+        {events.map((e) => (
+          <li class="event">
+            <div class="event__date">
+              <span class="event__day">{e.dateLabel}</span>
+              <span class="meta">{e.whenLabel}</span>
             </div>
-            <h3 class="card__name">{e.name}</h3>
-            {e.meta && <p class="card__meta">{e.meta}</p>}
-            <p class="card__desc">{e.description}</p>
-            <span class="card__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <div class="event__body">
+              <h3 class="event__name">{e.name}</h3>
+              {e.meta && <p class="event__meta">{e.meta}</p>}
+              {e.description && <p class="event__desc">{e.description}</p>}
+            </div>
+            <span class="event__phase meta">{phases[e.phase] ?? e.phase}</span>
           </li>
         ))}
       </ol>
+
+      {!rec.datesConfirmed && (
+        <p class="meta tbd-note">This is the usual event lineup. Exact {rec.cycle} dates, times, and venues are coming soon.</p>
+      )}
     </div>
-
-    {!rec.datesConfirmed && (
-      <p class="container tbd-note reveal">This is the usual event lineup. Exact {rec.cycle} dates, times, and venues are coming soon.</p>
-    )}
   </section>
 
-  <!-- Photo -->
-  <section class="container end-photo">
-    <figure class="photo-xl reveal">
-      <img src={withBase(photos.recruitment.src)} alt={photos.recruitment.alt} loading="lazy" decoding="async" style="aspect-ratio: 21/9; object-position: center 35%;" />
-    </figure>
+  <section class="section section--tight">
+    <div class="container grid">
+      <figure class="photo col-right">
+        <img src={withBase(photos.recruitment.src)} alt={photos.recruitment.alt} loading="lazy" decoding="async" style={`aspect-ratio: 3 / 2; object-position: ${photos.recruitment.position}`} />
+        <figcaption>{photos.recruitment.alt}.</figcaption>
+      </figure>
+    </div>
   </section>
-
 </Base>
 
-<script>
-  // Arrow buttons scroll the strip one card at a time; keyboard arrows work when
-  // the strip is focused. Native horizontal scroll/drag/swipe still works.
-  const strip = document.getElementById('strip');
-  const step = () => {
-    const card = strip?.querySelector<HTMLElement>('.card');
-    return card ? card.offsetWidth + parseFloat(getComputedStyle(strip!).columnGap || '20') : 320;
-  };
-  document.querySelectorAll<HTMLButtonElement>('.schedule__arrow').forEach((b) => {
-    b.addEventListener('click', () => strip?.scrollBy({ left: Number(b.dataset.dir) * step(), behavior: 'smooth' }));
-  });
-  strip?.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') { strip.scrollBy({ left: step(), behavior: 'smooth' }); e.preventDefault(); }
-    if (e.key === 'ArrowLeft') { strip.scrollBy({ left: -step(), behavior: 'smooth' }); e.preventDefault(); }
-  });
-  // Disable arrows at the ends
-  const arrows = Array.from(document.querySelectorAll<HTMLButtonElement>('.schedule__arrow'));
-  const sync = () => {
-    if (!strip) return;
-    const max = strip.scrollWidth - strip.clientWidth - 1;
-    arrows[0].disabled = strip.scrollLeft <= 0;
-    arrows[1].disabled = strip.scrollLeft >= max;
-  };
-  strip?.addEventListener('scroll', sync, { passive: true });
-  addEventListener('resize', sync);
-  sync();
-</script>
-
 <style>
-  .hero-title { padding-top: clamp(7rem, 14vh, 9.5rem); }
-  .hero-title h1 { font-size: clamp(3rem, 8vw, 5.5rem); }
-  .hero-title .lede { margin-top: 0.4rem; }
-  .hero-cta { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 1.8rem; }
+  .title { padding-top: clamp(3rem, 8vw, 6rem); padding-bottom: var(--gap-s); }
+  .title__row { margin-top: clamp(1.6rem, 3.5vw, 3rem); }
+  .title__cta { margin-top: 1.6rem; }
 
-  /* ---- schedule header ---- */
-  .schedule { padding-top: clamp(3rem, 6vw, 4.5rem); }
-  .schedule__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
-  .schedule__head h2 { margin-bottom: 0.2rem; }
-  .schedule__sub { margin: 0; color: var(--muted); font-size: 0.95rem; }
-  .schedule__tools { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
-  .cal-links { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-  .cal-links__label { font-family: var(--font-display); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 0.2rem; }
-  .cal-btn {
-    display: inline-flex; align-items: center; gap: 0.45rem;
-    font-family: var(--font-display); font-weight: 600; font-size: 0.88rem;
-    padding: 0.55rem 1rem; border-radius: 999px; text-decoration: none;
-    color: #fff; border: 1px solid rgba(255, 255, 255, 0.28); background: rgba(255, 255, 255, 0.03);
-    transition: border-color 0.15s, color 0.15s, background 0.15s;
-  }
-  .cal-btn::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--sky); box-shadow: 0 0 10px rgba(110, 207, 246, 0.8); }
-  .cal-btn:hover { border-color: var(--sky); color: var(--sky); background: rgba(110, 207, 246, 0.06); }
-  .schedule__nav { display: flex; gap: 0.4rem; }
-  .schedule__arrow {
-    width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.28); background: transparent; color: #fff; font-size: 1.05rem;
-    transition: border-color 0.15s, color 0.15s, opacity 0.15s;
-  }
-  .schedule__arrow:hover:not(:disabled) { border-color: var(--sky); color: var(--sky); }
-  .schedule__arrow:disabled { opacity: 0.3; cursor: default; }
+  .schedule { padding-top: 0; }
+  .schedule__head { padding-top: var(--gap-s); }
+  .schedule__intro { grid-column: 4 / -1; }
+  .schedule__sub { margin-top: 0.8rem; max-width: 40em; }
+  @media (max-width: 860px) { .schedule__intro { grid-column: 1 / -1; } }
 
-  /* ---- the strip ---- */
-  .strip-wrap { position: relative; }
-  /* soft edges hint there is more to scroll */
-  .strip-wrap::before, .strip-wrap::after {
-    content: ''; position: absolute; top: 0; bottom: 0; width: clamp(1rem, 4vw, 3rem); pointer-events: none; z-index: 2;
+  .events { margin-top: var(--gap-s); }
+  .event {
+    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap);
+    padding-block: 1.4rem; align-items: start;
   }
-  .strip-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
-  .strip-wrap::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
-  .strip {
-    --card-w: clamp(250px, 24vw, 300px);
-    list-style: none; margin: 0; padding: 1.6rem 0 1.4rem;
-    display: grid; grid-auto-flow: column; grid-auto-columns: var(--card-w);
-    column-gap: 20px; overflow-x: auto; overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory; scroll-padding-inline: var(--edge);
-    --edge: max(var(--pad), calc((100vw - var(--maxw)) / 2 + var(--pad)));
-    padding-inline: var(--edge);
-    scrollbar-width: thin; scrollbar-color: rgba(110, 207, 246, 0.35) transparent;
-    position: relative;
+  .event__date { grid-column: span 3; display: grid; gap: 0.15rem; }
+  .event__day { font-family: var(--font-display); font-size: clamp(1.5rem, 2.6vw, 2.1rem); line-height: 1.05; letter-spacing: -0.01em; font-variation-settings: 'opsz' 36; }
+  .event__body { grid-column: 4 / span 7; }
+  .event__name { margin: 0; }
+  .event__meta { margin: 0.35rem 0 0; color: var(--ink-2); font-size: 0.95rem; }
+  .event__desc { margin: 0.5rem 0 0; max-width: 38em; }
+  .event__phase { grid-column: 11 / -1; text-align: right; padding-top: 0.35rem; }
+  @media (max-width: 860px) {
+    .event { row-gap: 0.6rem; }
+    .event__date, .event__body { grid-column: 1 / -1; }
+    .event__phase { grid-column: 1 / -1; text-align: left; padding-top: 0; order: -1; }
   }
-  .strip::-webkit-scrollbar { height: 6px; }
-  .strip::-webkit-scrollbar-thumb { background: rgba(110, 207, 246, 0.35); border-radius: 3px; }
-  .strip:focus-visible { outline: 2px solid var(--sky); outline-offset: -2px; }
-
-  .card {
-    position: relative; scroll-snap-align: start;
-    display: flex; flex-direction: column; gap: 0.35rem;
-    padding: 1.9rem 1.2rem 1.3rem; border-radius: 16px;
-    background: var(--panel); border: 1px solid var(--line);
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .card:hover { border-color: rgba(110, 207, 246, 0.35); transform: translateY(-2px); }
-  /* the rail: a line across the top of every card, with a dot on it */
-  .card::before {
-    content: ''; position: absolute; left: -20px; right: -20px; top: 0;
-    height: 1px; background: var(--line);
-  }
-  .card:first-child::before { left: 0; }
-  .card:last-child::before { right: 0; }
-  .card__dot {
-    position: absolute; top: -5px; left: 1.2rem;
-    width: 11px; height: 11px; border-radius: 50%; background: var(--sky);
-    box-shadow: 0 0 14px rgba(110, 207, 246, 0.8);
-  }
-  .card__phase {
-    align-self: flex-start;
-    font-family: var(--font-display); font-size: 0.68rem; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--sky);
-    padding: 0.2rem 0.6rem; border-radius: 999px; border: 1px solid rgba(110, 207, 246, 0.35);
-    margin-bottom: 0.4rem;
-  }
-  .card--application .card__phase { color: #FFD08A; border-color: rgba(255, 208, 138, 0.4); }
-  .card--application .card__dot { background: #FFD08A; box-shadow: 0 0 14px rgba(255, 208, 138, 0.8); }
-  .card--formal .card__phase { color: #fff; border-color: rgba(255, 255, 255, 0.5); }
-  .card--formal .card__dot { background: #fff; box-shadow: 0 0 14px rgba(255, 255, 255, 0.8); }
-  .card--decision .card__phase { color: #9BE7B4; border-color: rgba(155, 231, 180, 0.4); }
-  .card--decision .card__dot { background: #9BE7B4; box-shadow: 0 0 14px rgba(155, 231, 180, 0.8); }
-  .card__date strong { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.75rem; line-height: 1.05; color: #fff; }
-  .card__date span { display: block; margin-top: 0.15rem; font-size: 0.86rem; color: var(--muted); }
-  .card__name { font-size: 1.12rem; margin: 0.5rem 0 0; line-height: 1.25; }
-  .card__meta { margin: 0; color: var(--sky); font-size: 0.86rem; }
-  .card__desc { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.92rem; line-height: 1.55; }
-  .card__index { position: absolute; right: 1rem; top: 1.1rem; font-family: var(--font-display); font-size: 0.75rem; color: rgba(143, 178, 198, 0.55); }
-
-  @media (max-width: 720px) {
-    .schedule__head { align-items: flex-start; }
-    .schedule__nav { display: none; }   /* swipe on touch */
-    .strip { --card-w: 78vw; column-gap: 14px; }
-    .card::before { left: -14px; right: -14px; }
-  }
-
-  .end-photo { margin-bottom: var(--gap); }
-  .tbd-note { margin-top: 1rem; color: var(--muted); font-size: 0.92rem; font-style: italic; }
-
+  .tbd-note { margin-top: 1rem; }
 </style>

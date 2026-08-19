@@ -1,10 +1,32 @@
 {
-  "_comment": "Photography slots. Each src lives in site/public/photos/. Every photo on the site should show at least three people. To swap a photo: drop a WebP in public/photos/ and update src+alt here. See MAINTENANCE.md.",
-  "homeFeature": { "src": "/photos/home-atrium-1200.webp", "alt": "Brothers in business attire on the atrium stairs before a professional event", "position": "center 82%" },
-  "aboutHero": { "src": "/photos/hero-lakehouse-2400.webp", "alt": "The full SEP chapter at the Fall 2025 lake house retreat at sunset", "position": "center 45%" },
-  "aboutBody": { "src": "/photos/about-meeting-1600.webp", "alt": "A full chapter meeting with guest speakers in a UNC lecture hall", "position": "center 30%" },
-  "recruitment": { "src": "/photos/recruit-redbull-800.webp", "alt": "SEP members in business attire at the Red Bull Basement event" },
+  "_comment": "Photography slots. Each src lives in site/public/photos/. Every photo on the site should show at least three people; use landscape sources for the wide lead slots. To swap a photo: drop a WebP in public/photos/ and update src+alt here (the alt doubles as the printed caption). See MAINTENANCE.md.",
+  "homeLead": {
+    "src": "/photos/hero-lakehouse-2400.webp",
+    "alt": "The full SEP chapter at the Fall 2025 lake house retreat at sunset",
+    "position": "center 45%"
+  },
+  "homeSecond": {
+    "src": "/photos/home-atrium-1200.webp",
+    "alt": "Brothers in business attire on the atrium stairs before a professional event",
+    "position": "center 82%"
+  },
+  "aboutLead": {
+    "src": "/photos/about-meeting-1600.webp",
+    "alt": "A full chapter meeting with guest speakers in a UNC lecture hall",
+    "position": "center 30%"
+  },
+  "aboutEnd": {
+    "src": "/photos/hero-lakehouse-2400.webp",
+    "alt": "The full SEP chapter at the Fall 2025 lake house retreat at sunset",
+    "position": "center 45%"
+  },
+  "recruitment": {
+    "src": "/photos/recruit-redbull-800.webp",
+    "alt": "SEP members in business attire at the Red Bull Basement event",
+    "position": "center 35%"
+  },
   "_unused_but_kept": [
+    "/photos/mosaic/m00–m19.webp (the old home hero tiles)",
     "/photos/about-chapter-beach-*.webp (portrait; too soft when cropped wide)",
     "/photos/about-deck-*.webp",
     "/photos/band-*.webp"

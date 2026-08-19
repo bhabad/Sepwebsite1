@@ -8,7 +8,7 @@ interface Props {
   title: string;
   description?: string;
 }
-const { title, description = `${site.tagline} — Sigma Eta Pi, Iota chapter, at UNC-Chapel Hill.` } = Astro.props;
+const { title, description = `${site.tagline}. Sigma Eta Pi, Iota chapter, at UNC-Chapel Hill.` } = Astro.props;
 const nav = [
   { href: '/about/', label: 'About' },
   { href: '/brothers/', label: 'Brothers' },
@@ -28,7 +28,7 @@ const ogImage = new URL(withBase('/og.jpg'), Astro.site).href;
     <title>{title} · {site.shortName}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={pageUrl} />
-    <meta name="theme-color" content="#06121B" />
+    <meta name="theme-color" content="#FFFFFF" />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <link rel="icon" type="image/png" href={withBase('/favicon.png')} />
     <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
@@ -48,56 +48,54 @@ const ogImage = new URL(withBase('/og.jpg'), Astro.site).href;
     <meta name="twitter:image" content={ogImage} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Literata (display; covers Greek for the class letters) + Archivo (text and interface) -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500&family=Archivo:wght@400;500;600&display=swap"
     />
-    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
     <header class="nav">
       <div class="container nav__inner">
-        <a href={withBase('/')} class="nav__brand" aria-label="SEP UNC home">
-          <img src={withBase('/sep-mark.svg')} alt="Sigma Eta Pi eagle" width="46" height="28" />
-          <span>Sigma<br />Eta Pi <em>UNC</em></span>
+        <a href={withBase('/')} class="nav__brand" aria-label="Sigma Eta Pi at UNC, home">
+          <img src={withBase('/sep-mark-ink.svg')} alt="" width="44" height="27" />
+          <span class="nav__name">Sigma Eta Pi <span class="nav__at">at UNC</span></span>
         </a>
         <nav class="nav__links" aria-label="Main">
           {nav.map((n) => (
             <a href={withBase(n.href)} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a>
           ))}
         </nav>
-        <button class="nav__toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
-          <span></span><span></span>
-        </button>
+        <button class="nav__toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">Menu</button>
       </div>
       <nav class="nav__mobile" id="mobile-menu" aria-label="Mobile" hidden>
-        {nav.map((n) => <a href={withBase(n.href)}>{n.label}</a>)}
+        {nav.map((n) => <a href={withBase(n.href)} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a>)}
       </nav>
     </header>
 
     <main><slot /></main>
 
     <footer class="footer">
-      <div class="container footer__inner">
-        <div class="footer__brand">
-          <img src={withBase('/sep-mark.svg')} alt="" width="52" height="32" />
-          <p>sigma eta pi @ unc<br /><span>unc's co-ed entrepreneurship fraternity · iota chapter</span></p>
+      <div class="container">
+        <hr class="rule" />
+        <div class="footer__inner">
+          <div class="footer__brand">
+            <img src={withBase('/sep-mark-ink.svg')} alt="" width="64" height="39" />
+            <p class="serif footer__name">Sigma Eta Pi at UNC</p>
+            <p class="meta">{site.tagline}. {site.chapter.chapterLetter}, founded {site.chapter.founded}.</p>
+          </div>
+          <nav class="footer__links" aria-label="Footer">
+            {nav.map((n) => <a href={withBase(n.href)}>{n.label}</a>)}
+          </nav>
+          <div class="footer__social">
+            <a href={site.socials.instagram} target="_blank" rel="noreferrer noopener"><SocialIcon name="instagram" size={15} /> Instagram</a>
+            <a href={site.socials.tiktok} target="_blank" rel="noreferrer noopener"><SocialIcon name="tiktok" size={15} /> TikTok</a>
+            <a href={site.socials.linkedin} target="_blank" rel="noreferrer noopener"><SocialIcon name="linkedin" size={15} /> LinkedIn</a>
+            <a href={`mailto:${site.email}`}><SocialIcon name="mail" size={15} /> {site.email}</a>
+          </div>
         </div>
-        <nav class="footer__links" aria-label="Footer">
-          <a href={withBase('/about/')}>About</a>
-          <a href={withBase('/brothers/')}>Brothers</a>
-          <a href={withBase('/recruitment/')}>Recruitment</a>
-          <a href={withBase('/contact/')}>Contact</a>
-        </nav>
-        <div class="footer__social">
-          <a href={site.socials.instagram} target="_blank" rel="noreferrer noopener"><SocialIcon name="instagram" size={16} /> Instagram</a>
-          <a href={site.socials.tiktok} target="_blank" rel="noreferrer noopener"><SocialIcon name="tiktok" size={16} /> TikTok</a>
-          <a href={site.socials.linkedin} target="_blank" rel="noreferrer noopener"><SocialIcon name="linkedin" size={16} /> LinkedIn</a>
-          <a href={`mailto:${site.email}`}><SocialIcon name="mail" size={16} /> {site.email}</a>
-        </div>
-      </div>
-      <div class="container footer__legal">
-        <p>© {new Date().getFullYear()} Sigma Eta Pi, Iota Chapter · UNC-Chapel Hill</p>
+        <hr class="rule rule--soft" />
+        <p class="footer__legal meta">© {new Date().getFullYear()} Sigma Eta Pi, Iota Chapter, UNC-Chapel Hill</p>
       </div>
     </footer>
 
@@ -107,99 +105,49 @@ const ogImage = new URL(withBase('/og.jpg'), Astro.site).href;
       toggle?.addEventListener('click', () => {
         const open = toggle.getAttribute('aria-expanded') === 'true';
         toggle.setAttribute('aria-expanded', String(!open));
+        toggle.textContent = open ? 'Menu' : 'Close';
         if (menu) menu.hidden = open;
       });
-      const io = new IntersectionObserver(
-        (entries) => entries.forEach((e) => {
-          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
-        }),
-        { threshold: 0.1, rootMargin: '0px 0px -30px' }
-      );
-      const els = Array.from(document.querySelectorAll('.reveal'));
-      els.forEach((el) => io.observe(el));
-      const revealInView = () => {
-        for (const el of els) {
-          if (el.classList.contains('is-visible')) continue;
-          const r = el.getBoundingClientRect();
-          if (r.top < innerHeight - 20 && r.bottom > 0) el.classList.add('is-visible');
-        }
-      };
-      revealInView();
-      // solid nav once the page has scrolled past the hero gradient
-      const navEl = document.querySelector('.nav');
-      const updateNav = () => navEl?.classList.toggle('is-scrolled', scrollY > 24);
-      updateNav();
-      let ticking = false;
-      addEventListener('scroll', () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => { revealInView(); updateNav(); ticking = false; });
-      }, { passive: true });
     </script>
 
     <style>
-      .nav {
-        position: fixed; inset-inline: 0; top: 0; z-index: 50;
-        background: linear-gradient(180deg, rgba(6, 18, 27, 0.82), rgba(6, 18, 27, 0));
-        backdrop-filter: blur(2px);
-        -webkit-backdrop-filter: blur(2px);
-        transition: background 0.25s ease, box-shadow 0.25s ease, backdrop-filter 0.25s ease;
-      }
-      /* once scrolled, page text runs under the bar — give it a real surface */
-      .nav.is-scrolled {
-        background: rgba(6, 18, 27, 0.88);
-        backdrop-filter: blur(14px) saturate(1.2);
-        -webkit-backdrop-filter: blur(14px) saturate(1.2);
-        box-shadow: 0 1px 0 var(--line);
-      }
-      .nav.is-scrolled .nav__inner { height: 68px; }
-      .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 86px; transition: height 0.25s ease; }
-      .nav__brand {
-        display: flex; align-items: center; gap: 0.9rem;
-        text-decoration: none; color: #fff;
-        font-family: var(--font-display); font-weight: 600;
-        font-size: 1.05rem; line-height: 1.15;
-      }
-      .nav__brand em { font-style: normal; color: var(--sky); }
-      .nav__links { display: flex; gap: clamp(1.6rem, 4vw, 3.5rem); }
-      .nav__links a {
-        font-family: var(--font-display); font-size: 0.95rem; font-weight: 500;
-        color: rgba(255, 255, 255, 0.85); text-decoration: none;
-        transition: color 0.15s;
-      }
-      .nav__links a:hover, .nav__links a[aria-current='page'] { color: var(--sky); }
+      .nav { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 1px solid var(--rule); }
+      .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+      .nav__brand { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+      .nav__name { font-family: var(--font-display); font-size: 1.25rem; letter-spacing: -0.01em; line-height: 1; font-variation-settings: 'opsz' 24; }
+      .nav__at { color: var(--ink-2); }
+      .nav__links { display: flex; gap: clamp(1.4rem, 3vw, 2.6rem); }
+      .nav__links a { font-size: 0.95rem; text-decoration: none; padding-block: 0.3rem; border-bottom: 1px solid transparent; }
+      .nav__links a:hover { border-bottom-color: var(--ink-3); }
+      .nav__links a[aria-current='page'] { border-bottom-color: var(--ink); }
       .nav__toggle { display: none; }
       .nav__mobile { display: none; }
 
       @media (max-width: 720px) {
-        .nav { background: rgba(6, 18, 27, 0.9); }
         .nav__links { display: none; }
-        .nav__toggle { display: grid; gap: 6px; background: none; border: 0; padding: 10px; cursor: pointer; }
-        .nav__toggle span { width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform 0.2s; }
-        .nav__toggle[aria-expanded='true'] span:first-child { transform: translateY(4px) rotate(45deg); }
-        .nav__toggle[aria-expanded='true'] span:last-child { transform: translateY(-4px) rotate(-45deg); }
-        .nav__mobile { display: grid; background: rgba(6, 18, 27, 0.97); border-top: 1px solid var(--line); }
+        .nav__toggle {
+          display: inline-block; font: inherit; font-size: 0.95rem;
+          background: none; border: 0; padding: 0.3rem 0; cursor: pointer; color: var(--ink);
+          border-bottom: 1px solid var(--ink);
+        }
+        .nav__mobile { display: grid; border-top: 1px solid var(--rule); }
         .nav__mobile[hidden] { display: none; }
         .nav__mobile a {
-          padding: 1rem var(--pad); text-decoration: none; color: #fff;
-          font-family: var(--font-display); font-weight: 500;
-          border-bottom: 1px solid var(--line);
+          padding: 1rem var(--pad); text-decoration: none;
+          font-family: var(--font-display); font-size: 1.4rem; border-bottom: 1px solid var(--rule-soft);
         }
+        .nav__mobile a[aria-current='page'] { color: var(--ink-2); }
       }
 
-      .footer { border-top: 1px solid var(--line); margin-top: var(--gap); }
-      .footer__inner { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 2.5rem; padding-block: 3.5rem; }
-      .footer__brand p {
-        margin: 1rem 0 0; font-family: var(--font-display); font-weight: 600; color: #fff;
-      }
-      .footer__brand p span { font-family: var(--font-body); font-weight: 400; color: var(--muted); font-size: 0.9rem; }
-      .footer__links, .footer__social { display: grid; gap: 0.55rem; align-content: start; }
-      .footer a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
-      .footer a:hover { color: var(--sky); }
-      .footer__social a { display: inline-flex; align-items: center; gap: 0.55rem; }
-      .footer__social svg { flex: none; opacity: 0.85; }
-      .footer__legal { border-top: 1px solid var(--line); padding-block: 1.2rem; }
-      .footer__legal p { margin: 0; font-size: 0.85rem; color: var(--muted); }
+      .footer { margin-top: var(--gap); }
+      .footer__inner { display: grid; grid-template-columns: 1.6fr 1fr 1.2fr; gap: var(--col-gap); padding-block: 2.6rem; }
+      .footer__name { margin: 1rem 0 0.3rem; font-size: 1.2rem; }
+      .footer__links, .footer__social { display: grid; gap: 0.5rem; align-content: start; }
+      .footer a { text-decoration: none; font-size: 0.95rem; }
+      .footer a:hover { text-decoration: underline; }
+      .footer__social a { display: inline-flex; align-items: center; gap: 0.5rem; }
+      .footer__social svg { flex: none; }
+      .footer__legal { padding-block: 1.1rem; }
       @media (max-width: 720px) { .footer__inner { grid-template-columns: 1fr; gap: 1.8rem; } }
     </style>
   </body>

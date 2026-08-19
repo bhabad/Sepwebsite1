@@ -1,98 +1,134 @@
 /* ============================================================
-   SEP UNC design tokens. Dark cinematic frame in the chapter's
-   own blues, sampled from uncsep.com branding:
-   sky #6ECFF6 · mid #3A88B6 · deep #2B5672.
-   Re-theme the whole site from this block.
+   SEP UNC — editorial design system.
+
+   The site is set like a printed chapter publication: white paper,
+   black ink, one serif for display (Literata), one grotesk for text
+   and interface (Archivo), hairline rules, a strict column grid, and
+   photographs with square corners. There are deliberately no
+   gradients, glows, shadows, blurs, badges, pills, accent colors,
+   or scroll animations anywhere. Re-theme from this block only.
    ============================================================ */
 :root {
-  --sky:   #6ECFF6;             /* chapter light blue, the accent */
-  --blue:  #3A88B6;             /* member-name blue on the original site */
-  --deep:  #2B5672;             /* deep chapter blue */
+  --paper: #FFFFFF;
+  --ink: #0B0B0B;
+  --ink-2: #5A5A5A;              /* secondary text, AA on white */
+  --ink-3: #8A8A8A;              /* tertiary: captions, meta */
+  --rule: #0B0B0B;               /* structural rules are ink, not grey */
+  --rule-soft: #DCDCDC;          /* row separators inside lists */
+  --tint: #F2F2F2;               /* the only fill: image placeholders, table header */
 
-  --bg:    #06121B;             /* blue-black base */
-  --panel: #0B1D2A;             /* raised surfaces */
-  --line:  rgba(110, 207, 246, 0.14);
+  --font-display: 'Literata', 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --font-text: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-  --text:  #EDF7FD;
-  --muted: #8FB2C6;
-
-  --font-display: 'Poppins', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-
-  --maxw: 1200px;
-  --pad: clamp(1.2rem, 4vw, 2.5rem);
-  --gap: clamp(4.5rem, 10vw, 8rem);
-  --r: 22px;                    /* the big rounded-photo radius */
+  --maxw: 1320px;
+  --pad: clamp(1.25rem, 4vw, 3rem);
+  --gap: clamp(4rem, 9vw, 7.5rem);          /* between sections */
+  --gap-s: clamp(2rem, 4.5vw, 3.5rem);      /* inside sections */
+  --col-gap: clamp(1.25rem, 2.5vw, 2.5rem);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; background: var(--bg); }
+html { background: var(--paper); }
 body {
   margin: 0;
-  overflow-x: clip;             /* never let a wide word/tile widen the mobile viewport */
-  font-family: var(--font-body);
-  color: var(--text);
-  background: var(--bg);
-  line-height: 1.65;
+  overflow-x: clip;
+  font-family: var(--font-text);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 img { max-width: 100%; display: block; }
-a { color: var(--sky); }
+a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.16em; }
+a:hover { text-decoration-color: var(--ink-3); }
+::selection { background: var(--ink); color: var(--paper); }
 
-h1, h2, h3 {
+/* ---- type ---- */
+h1, h2, h3, .display {
   font-family: var(--font-display);
-  color: #fff;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-  margin: 0 0 0.5em;
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0;
   text-wrap: balance;
+  font-variation-settings: 'opsz' 72;
 }
-h1 { font-size: clamp(2.8rem, 7vw, 5rem); font-weight: 700; }
-h2 { font-size: clamp(2rem, 4.5vw, 3.1rem); font-weight: 600; }
-h3 { font-size: 1.25rem; font-weight: 600; }
+h1 { font-size: clamp(3rem, 8.5vw, 7.5rem); line-height: 0.96; letter-spacing: -0.02em; }
+h2 { font-size: clamp(2rem, 4.2vw, 3.4rem); line-height: 1.02; letter-spacing: -0.015em; }
+h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); line-height: 1.15; letter-spacing: -0.005em; font-variation-settings: 'opsz' 24; }
 p { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
 
+.lede { font-size: clamp(1.15rem, 1.8vw, 1.45rem); line-height: 1.4; max-width: 34em; }
+.prose { max-width: 38em; }
+.prose p + p { margin-top: 1em; }
+.small { font-size: 0.9rem; }
+.meta { font-size: 0.9rem; color: var(--ink-2); }
+.label { font-size: 0.9rem; color: var(--ink-2); margin: 0; }      /* sentence case. never uppercase. */
+.serif { font-family: var(--font-display); }
+
+/* ---- layout ---- */
 .container { max-width: var(--maxw); margin-inline: auto; padding-inline: var(--pad); }
 .section { padding-block: var(--gap); }
+.section--tight { padding-block: var(--gap-s); }
+.rule { border: 0; border-top: 1px solid var(--rule); margin: 0; }
+.rule--soft { border-top-color: var(--rule-soft); }
 
-.eyebrow {
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--sky);
-  margin: 0 0 1rem;
+/* the page grid: 12 columns. Sidenote (label) left, content right. */
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); row-gap: var(--gap-s); }
+.span-3 { grid-column: span 3; }
+.span-4 { grid-column: span 4; }
+.span-5 { grid-column: span 5; }
+.span-6 { grid-column: span 6; }
+.span-7 { grid-column: span 7; }
+.span-8 { grid-column: span 8; }
+.span-9 { grid-column: span 9; }
+.span-12 { grid-column: 1 / -1; }
+.col-body { grid-column: 4 / -1; }     /* everything right of the label column */
+.col-right { grid-column: 5 / -1; }    /* a little narrower, for photos */
+@media (max-width: 860px) {
+  .grid > [class*="span-"], .grid > .col-body, .grid > .col-right { grid-column: 1 / -1; }
+  .grid { row-gap: 1.4rem; }
 }
-.lede { font-size: clamp(1.05rem, 1.7vw, 1.22rem); color: var(--muted); max-width: 42rem; }
 
+/* section head: label on the left, heading on the right */
+.head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--col-gap); align-items: baseline; }
+.head .label { grid-column: span 3; }
+.head h2 { grid-column: 4 / -1; }
+@media (max-width: 860px) { .head .label, .head h2 { grid-column: 1 / -1; } .head .label { margin-bottom: 0.5rem; } }
+
+/* ---- controls ---- */
 .btn {
-  display: inline-block;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.98rem;
-  padding: 0.85rem 2rem;
-  border-radius: 999px;
-  text-decoration: none;
-  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  display: inline-flex; align-items: center; gap: 0.6em;
+  font-family: var(--font-text); font-weight: 500; font-size: 0.95rem; line-height: 1;
+  padding: 0.9em 1.4em;
+  border: 1px solid var(--ink); border-radius: 0;
+  background: var(--paper); color: var(--ink);
+  text-decoration: none; cursor: pointer;
+  transition: background 0.12s linear, color 0.12s linear;
 }
-.btn--sky { background: var(--sky); color: #04121B; }
-.btn--sky:hover { background: #93DCF9; box-shadow: 0 0 34px rgba(110, 207, 246, 0.35); }
-.btn--ghost { border: 1px solid rgba(255, 255, 255, 0.35); color: #fff; }
-.btn--ghost:hover { border-color: var(--sky); color: var(--sky); }
+.btn:hover { background: var(--ink); color: var(--paper); }
+.btn--solid { background: var(--ink); color: var(--paper); }
+.btn--solid:hover { background: var(--paper); color: var(--ink); }
+.btn:disabled { opacity: 0.35; cursor: default; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 
-/* big rounded photo, the UCLA "People" treatment */
-.photo-xl { border-radius: var(--r); overflow: hidden; }
-.photo-xl img { width: 100%; object-fit: cover; }
+/* an arrowed text link, for "see all" style links */
+.more { display: inline-flex; align-items: baseline; gap: 0.4em; text-decoration: none; font-weight: 500; }
+.more::after { content: '→'; font-family: var(--font-text); }
+.more:hover { text-decoration: underline; }
 
-/* reveal on scroll */
-@media (prefers-reduced-motion: no-preference) {
-  html.js .reveal {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.7s cubic-bezier(0.22, 0.8, 0.3, 1), transform 0.7s cubic-bezier(0.22, 0.8, 0.3, 1);
-  }
-  html.js .reveal.is-visible { opacity: 1; transform: none; }
-}
+/* ---- photographs: square corners, always full width of their column ---- */
+.photo { margin: 0; }
+.photo img { width: 100%; object-fit: cover; background: var(--tint); }
+.photo figcaption { margin-top: 0.6rem; font-size: 0.875rem; color: var(--ink-2); }
+.bleed { width: 100vw; margin-inline: calc(50% - 50vw); }   /* full-bleed photo */
 
-::selection { background: var(--sky); color: #04121B; }
+/* ---- lists that read like a table: hairline rows ---- */
+.rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.rows > li { border-bottom: 1px solid var(--rule-soft); }
+.rows > li:last-child { border-bottom-color: var(--rule); }
+
+/* keyboard focus only */
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }

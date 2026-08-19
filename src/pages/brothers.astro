@@ -18,60 +18,58 @@ const alumni = (roster.classes as Cls[]).flatMap((c) =>
 const activeCount = classes.reduce((n, c) => n + c.members.length, 0);
 ---
 <Base title="Brothers" description={`Meet the ${activeCount} active brothers of Sigma Eta Pi at UNC, class by class, plus our alumni.`}>
-  <section class="hero-title">
+  <section class="title">
     <div class="container">
-      <h1 class="reveal">Brothers</h1>
-      <nav class="classnav reveal" aria-label="Jump to class">
-        {classes.map((c) => (
-          <a href={`#${slug(c.name)}`}><span class="classnav__letter" aria-hidden="true">{c.letter}</span>{c.name}</a>
-        ))}
-        {alumni.length > 0 && <a href="#alumni">Alumni</a>}
-      </nav>
+      <h1>Brothers</h1>
+      <div class="grid title__row">
+        <p class="label span-3">{activeCount} active brothers.<br />Newest class first.</p>
+        <nav class="classnav span-9" aria-label="Jump to class">
+          {classes.map((c) => (
+            <a href={`#${slug(c.name)}`}><span class="serif" aria-hidden="true">{c.letter}</span> {c.name}</a>
+          ))}
+          {alumni.length > 0 && <a href="#alumni">Alumni</a>}
+        </nav>
+      </div>
     </div>
   </section>
 
   <div class="container">
     {classes.map((c, ci) => (
       <section class="classblock" id={slug(c.name)} aria-label={`${c.name} class, ${c.semester}`}>
-        <header class="classblock__head reveal">
+        <hr class="rule" />
+        <div class="classblock__head">
           <span class="classblock__letter" aria-hidden="true">{c.letter}</span>
-          <div class="classblock__title">
+          <div>
             <h2>{c.name}</h2>
-            <p class="classblock__meta">
-              {c.semester}
-              {ci === 0 && <span class="classblock__badge">Newest class</span>}
-            </p>
+            <p class="meta">{c.semester}{ci === 0 ? '. The newest class.' : ''}</p>
           </div>
-        </header>
-        <div class="grid">
+        </div>
+        <div class="members">
           {c.members.map((m) => (
-            <div class="reveal">
-              <MemberCard name={m.name} linkedin={m.linkedin} headshot={m.headshot} />
-            </div>
+            <MemberCard name={m.name} linkedin={m.linkedin} headshot={m.headshot} />
           ))}
         </div>
       </section>
     ))}
 
     {alumni.length > 0 && (
-      <section class="classblock classblock--alumni" id="alumni" aria-label="Alumni">
-        <header class="classblock__head reveal">
-          <span class="classblock__letter classblock__letter--alumni" aria-hidden="true">ΣΗΠ</span>
-          <div class="classblock__title">
+      <section class="classblock" id="alumni" aria-label="Alumni">
+        <hr class="rule" />
+        <div class="classblock__head">
+          <span class="classblock__letter classblock__letter--word" aria-hidden="true">ΣΗΠ</span>
+          <div>
             <h2>Alumni</h2>
-            <p class="classblock__meta">Graduated brothers, by class</p>
+            <p class="meta">Graduated brothers, by class.</p>
           </div>
-        </header>
-        <div class="grid grid--alumni">
+        </div>
+        <div class="members members--alumni">
           {alumni.map((m) => (
-            <div class="reveal">
-              <MemberCard
-                name={m.name}
-                linkedin={m.linkedin}
-                headshot={m.headshot}
-                role={`${m.letter} ${m.className}${m.classOf ? ` · ’${String(m.classOf).slice(-2)}` : ''}`}
-              />
-            </div>
+            <MemberCard
+              name={m.name}
+              linkedin={m.linkedin}
+              headshot={m.headshot}
+              role={`${m.className}${m.classOf ? `, class of ${m.classOf}` : ''}`}
+            />
           ))}
         </div>
       </section>
@@ -80,41 +78,27 @@ const activeCount = classes.reduce((n, c) => n + c.members.length, 0);
 </Base>
 
 <style>
-  .hero-title { padding-top: clamp(7rem, 14vh, 9.5rem); text-align: center; }
-  .hero-title h1 { font-size: clamp(3rem, 8vw, 5.5rem); }
+  .title { padding-top: clamp(3rem, 8vw, 6rem); padding-bottom: var(--gap-s); }
+  .title__row { margin-top: clamp(1.6rem, 3.5vw, 3rem); }
+  .classnav { display: flex; flex-wrap: wrap; gap: 0.4rem 1.6rem; align-content: start; align-items: baseline; }
+  .classnav a { text-decoration: none; font-size: 0.95rem; border-bottom: 1px solid transparent; }
+  .classnav a:hover { border-bottom-color: var(--ink); }
+  .classnav .serif { font-size: 1.1em; }
 
-  .classnav { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; margin-top: 2rem; }
-  .classnav a {
-    font-family: var(--font-display); font-size: 0.9rem; font-weight: 500;
-    color: var(--muted); text-decoration: none;
-    padding-bottom: 2px; border-bottom: 2px solid transparent;
-    transition: color 0.15s, border-color 0.15s;
-  }
-  .classnav a:hover { color: var(--sky); border-bottom-color: var(--sky); }
-  .classnav__letter { color: var(--sky); margin-right: 0.35em; font-weight: 600; }
-
-  .classblock { padding-top: clamp(3.5rem, 7vw, 5.5rem); scroll-margin-top: 100px; }
-  .classblock__head { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.8rem; }
+  .classblock { scroll-margin-top: 80px; padding-bottom: var(--gap); }
+  .classblock__head { display: flex; align-items: flex-start; gap: var(--col-gap); padding-top: var(--gap-s); margin-bottom: var(--gap-s); }
   .classblock__letter {
-    font-family: var(--font-display); font-weight: 600; line-height: 1;
-    font-size: clamp(2.6rem, 5vw, 3.6rem); color: var(--sky);
-    min-width: 1.1em; text-align: center;
+    font-family: var(--font-display); font-variation-settings: 'opsz' 72;
+    font-size: clamp(4rem, 8vw, 7rem); line-height: 0.8; letter-spacing: -0.02em;
+    width: 1.2em; flex: none;
   }
-  .classblock__letter--alumni { font-size: clamp(1.4rem, 2.6vw, 1.9rem); letter-spacing: 0.04em; }
-  .classblock__title h2 { margin: 0; font-size: clamp(1.6rem, 3.2vw, 2.2rem); }
-  .classblock__meta {
-    margin: 0.15rem 0 0; font-family: var(--font-display); font-size: 0.92rem;
-    color: var(--muted); display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
-  }
-  .classblock__badge {
-    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-    color: #04121B; background: var(--sky); padding: 0.22rem 0.7rem; border-radius: 999px;
-  }
-  .classblock--alumni { margin-top: clamp(2rem, 5vw, 3.5rem); padding-top: clamp(3rem, 6vw, 4.5rem); border-top: 1px solid var(--line); }
+  .classblock__letter--word { font-size: clamp(2.2rem, 4vw, 3.2rem); width: auto; line-height: 1; padding-top: 0.2em; }
+  .classblock__head h2 { font-size: clamp(2rem, 4.2vw, 3.4rem); }
+  .classblock__head .meta { margin-top: 0.5rem; }
 
-  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2rem 1.3rem; }
-  .grid--alumni { grid-template-columns: repeat(6, 1fr); gap: 1.6rem 1.1rem; }
-  @media (max-width: 1080px) { .grid { grid-template-columns: repeat(4, 1fr); } .grid--alumni { grid-template-columns: repeat(5, 1fr); } }
-  @media (max-width: 860px)  { .grid { grid-template-columns: repeat(3, 1fr); } .grid--alumni { grid-template-columns: repeat(4, 1fr); } }
-  @media (max-width: 600px)  { .grid, .grid--alumni { grid-template-columns: repeat(2, 1fr); } }
+  .members { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--gap-s) var(--col-gap); }
+  .members--alumni { grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 1.8rem 1.2rem; }
+  @media (max-width: 1100px) { .members { grid-template-columns: repeat(4, 1fr); } .members--alumni { grid-template-columns: repeat(6, 1fr); } }
+  @media (max-width: 720px)  { .members { grid-template-columns: repeat(3, 1fr); gap: 1.6rem 0.9rem; } .members--alumni { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 480px)  { .members, .members--alumni { grid-template-columns: repeat(2, 1fr); } .classblock__head { gap: 1rem; } }
 </style>

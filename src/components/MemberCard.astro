@@ -8,45 +8,24 @@ interface Props {
 }
 const { name, linkedin, headshot: rawHeadshot, role } = Astro.props;
 const headshot = withBase(rawHeadshot);
+// One card shape for everyone: square photo, name, optional role line. The whole
+// card links to LinkedIn when we have one; otherwise it is plain text.
+const Tag = linkedin ? 'a' : 'div';
+const linkProps = linkedin ? { href: linkedin, target: '_blank', rel: 'noreferrer noopener', 'aria-label': `${name} on LinkedIn` } : {};
 ---
-{linkedin ? (
-  <a class="member" href={linkedin} target="_blank" rel="noreferrer noopener" aria-label={`${name} on LinkedIn`}>
-    <span class="member__photo">
-      <img src={headshot} alt={`Headshot of ${name}`} width="400" height="400" loading="lazy" decoding="async" />
-    </span>
-    <span class="member__name">{name}</span>
-    {role && <span class="member__role">{role}</span>}
-  </a>
-) : (
-  <span class="member member--static">
-    <span class="member__photo">
-      <img src={headshot} alt={`Headshot of ${name}`} width="400" height="400" loading="lazy" decoding="async" />
-    </span>
-    <span class="member__name">{name}</span>
-    {role && <span class="member__role">{role}</span>}
+<Tag class="member" {...linkProps}>
+  <span class="member__photo">
+    <img src={headshot} alt={`Headshot of ${name}`} width="400" height="400" loading="lazy" decoding="async" />
   </span>
-)}
+  <span class="member__name">{name}</span>
+  {role && <span class="member__role">{role}</span>}
+</Tag>
 
 <style>
-  /* same pattern as the original site: headshot, blue name, click through to LinkedIn */
-  .member { display: block; text-decoration: none; text-align: center; }
-  .member__photo {
-    display: block; aspect-ratio: 1; overflow: hidden;
-    border-radius: 12px; background: var(--panel);
-  }
-  .member__photo img {
-    width: 100%; height: 100%; object-fit: cover; object-position: center;
-    transition: transform 0.35s ease, filter 0.35s ease;
-    filter: saturate(0.96);
-  }
-  .member:hover .member__photo img { transform: scale(1.04); filter: saturate(1.05); }
-  .member__name {
-    display: block; margin-top: 0.65rem;
-    font-family: var(--font-display); font-weight: 500; font-size: 0.97rem;
-    color: var(--sky);
-  }
-  .member:hover .member__name { text-decoration: underline; text-underline-offset: 3px; }
-  .member--static:hover .member__photo img { transform: none; filter: saturate(0.96); }
-  .member--static:hover .member__name { text-decoration: none; }
-  .member__role { display: block; font-size: 0.83rem; color: var(--muted); }
+  .member { display: block; text-decoration: none; color: var(--ink); }
+  .member__photo { display: block; aspect-ratio: 1; overflow: hidden; background: var(--tint); }
+  .member__photo img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .member__name { display: block; margin-top: 0.55rem; font-size: 0.95rem; font-weight: 500; line-height: 1.3; }
+  a.member:hover .member__name { text-decoration: underline; text-underline-offset: 0.16em; }
+  .member__role { display: block; font-size: 0.85rem; color: var(--ink-2); margin-top: 0.1rem; }
 </style>
