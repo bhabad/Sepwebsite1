@@ -39,7 +39,6 @@ const activeCount = classes.reduce((n, c) => n + c.members.length, 0);
             <h2>{c.name}</h2>
             <p class="classblock__meta">
               {c.semester}
-              {ci === 0 && <span class="classblock__badge">Newest class</span>}
             </p>
           </div>
         </header>
@@ -90,14 +89,14 @@ const activeCount = classes.reduce((n, c) => n + c.members.length, 0);
     padding-bottom: 2px; border-bottom: 2px solid transparent;
     transition: color 0.15s, border-color 0.15s;
   }
-  .classnav a:hover { color: var(--sky); border-bottom-color: var(--sky); }
-  .classnav__letter { color: var(--sky); margin-right: 0.35em; font-weight: 600; }
+  .classnav a:hover { color: #fff; border-bottom-color: #fff; }
+  .classnav__letter { color: var(--muted); margin-right: 0.35em; font-weight: 600; }
 
   .classblock { padding-top: clamp(3.5rem, 7vw, 5.5rem); scroll-margin-top: 100px; }
   .classblock__head { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.8rem; }
   .classblock__letter {
     font-family: var(--font-display); font-weight: 600; line-height: 1;
-    font-size: clamp(2.6rem, 5vw, 3.6rem); color: var(--sky);
+    font-size: clamp(2.6rem, 5vw, 3.6rem); color: #fff;
     min-width: 1.1em; text-align: center;
   }
   .classblock__letter--alumni { font-size: clamp(1.4rem, 2.6vw, 1.9rem); letter-spacing: 0.04em; }
@@ -105,10 +104,6 @@ const activeCount = classes.reduce((n, c) => n + c.members.length, 0);
   .classblock__meta {
     margin: 0.15rem 0 0; font-family: var(--font-display); font-size: 0.92rem;
     color: var(--muted); display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
-  }
-  .classblock__badge {
-    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-    color: #04121B; background: var(--sky); padding: 0.22rem 0.7rem; border-radius: 999px;
   }
   .classblock--alumni { margin-top: clamp(2rem, 5vw, 3.5rem); padding-top: clamp(3rem, 6vw, 4.5rem); border-top: 1px solid var(--line); }
 

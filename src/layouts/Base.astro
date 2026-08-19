@@ -59,7 +59,8 @@ const ogImage = new URL(withBase('/og.jpg'), Astro.site).href;
       <div class="container nav__inner">
         <a href={withBase('/')} class="nav__brand" aria-label="SEP UNC home">
           <img src={withBase('/sep-mark.svg')} alt="Sigma Eta Pi eagle" width="46" height="28" />
-          <span>Sigma<br />Eta Pi <em>UNC</em></span>
+          <span>Sigma<br />Eta Pi</span>
+          <img class="nav__nc" src={withBase('/unc-nc.svg')} alt="UNC" width="34" height="27" />
         </a>
         <nav class="nav__links" aria-label="Main">
           {nav.map((n) => (
@@ -140,7 +141,7 @@ const ogImage = new URL(withBase('/og.jpg'), Astro.site).href;
     <style>
       .nav {
         position: fixed; inset-inline: 0; top: 0; z-index: 50;
-        background: linear-gradient(180deg, rgba(6, 18, 27, 0.82), rgba(6, 18, 27, 0));
+        background: rgba(6, 18, 27, 0.55);
         backdrop-filter: blur(2px);
         -webkit-backdrop-filter: blur(2px);
         transition: background 0.25s ease, box-shadow 0.25s ease, backdrop-filter 0.25s ease;
@@ -160,7 +161,7 @@ const ogImage = new URL(withBase('/og.jpg'), Astro.site).href;
         font-family: var(--font-display); font-weight: 600;
         font-size: 1.05rem; line-height: 1.15;
       }
-      .nav__brand em { font-style: normal; color: var(--sky); }
+      .nav__nc { margin-left: 0.15rem; }
       .nav__links { display: flex; gap: clamp(1.6rem, 4vw, 3.5rem); }
       .nav__links a {
         font-family: var(--font-display); font-size: 0.95rem; font-weight: 500;
@@ -195,7 +196,7 @@ const ogImage = new URL(withBase('/og.jpg'), Astro.site).href;
       .footer__brand p span { font-family: var(--font-body); font-weight: 400; color: var(--muted); font-size: 0.9rem; }
       .footer__links, .footer__social { display: grid; gap: 0.55rem; align-content: start; }
       .footer a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
-      .footer a:hover { color: var(--sky); }
+      .footer a:hover { color: #fff; }
       .footer__social a { display: inline-flex; align-items: center; gap: 0.55rem; }
       .footer__social svg { flex: none; opacity: 0.85; }
       .footer__legal { border-top: 1px solid var(--line); padding-block: 1.2rem; }

@@ -1,0 +1,209 @@
+---
+/**
+ * The SEP eagle as a real 3D object. The flat mark (public/sep-mark.svg) is
+ * extruded with Three.js, lit like brushed metal, and drifts on a slow idle spin.
+ * It leans toward the cursor, can be dragged to spin (with momentum), and settles
+ * back on its own. Before the script runs — and for no-JS / reduced-motion / WebGL
+ * failures — the plain SVG shows instead, so the hero never looks broken.
+ */
+import { withBase } from '../lib/url';
+
+interface Props { width?: number; height?: number; class?: string }
+const { width = 210, height = 128, class: cls = '' } = Astro.props;
+const src = withBase('/sep-mark.svg');
+---
+<div class={`eagle ${cls}`} data-eagle data-src={src} style={`--w:${width}px;--h:${height}px`}>
+  <img class="eagle__flat" src={src} alt="Sigma Eta Pi" width={width} height={height} />
+  <canvas class="eagle__gl" aria-hidden="true"></canvas>
+</div>
+
+<style>
+  .eagle {
+    position: relative;
+    width: var(--w); height: var(--h);
+    /* the canvas is oversized so the rotating eagle can overshoot the mark's box */
+    --bleed: 1.25;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .eagle__flat {
+    width: 100%; height: 100%;
+    filter: drop-shadow(0 6px 40px rgba(6, 18, 27, 0.8));
+    transition: opacity 0.5s ease;
+  }
+  .eagle__gl {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: calc(var(--w) * var(--bleed) * 1.6);
+    height: calc(var(--h) * var(--bleed) * 1.5);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    cursor: grab;
+    pointer-events: none;
+  }
+  .eagle.is-3d .eagle__flat { opacity: 0; }
+  .eagle.is-3d .eagle__gl { opacity: 1; pointer-events: auto; }
+  .eagle.is-3d .eagle__gl:active { cursor: grabbing; }
+</style>
+
+<script>
+  import * as THREE from 'three';
+  import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
+  import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  async function mount(root: HTMLElement) {
+    if (reduced) return;
+    const canvas = root.querySelector<HTMLCanvasElement>('.eagle__gl')!;
+    const src = root.dataset.src!;
+
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+    } catch { return; } // no WebGL → keep the flat mark
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+
+    const scene = new THREE.Scene();
+    // neutral studio reflections so the metal has something to catch
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    pmrem.dispose();
+
+    const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 100);
+    camera.position.set(0, 0, 9);
+
+    // --- build the eagle from the SVG path -------------------------------
+    const svg = await new SVGLoader().loadAsync(src);
+    const group = new THREE.Group();
+    const mat = new THREE.MeshPhysicalMaterial({
+      color: 0xf4fbff,
+      metalness: 0.92,
+      roughness: 0.28,
+      clearcoat: 0.6,
+      clearcoatRoughness: 0.25,
+      envMapIntensity: 1.15,
+    });
+    const depth = 9; // in SVG units (viewBox is 192×117)
+    for (const path of svg.paths) {
+      const shapes = SVGLoader.createShapes(path);
+      for (const shape of shapes) {
+        const geo = new THREE.ExtrudeGeometry(shape, {
+          depth, bevelEnabled: true, bevelThickness: 1.2, bevelSize: 0.9, bevelSegments: 3, curveSegments: 10,
+        });
+        group.add(new THREE.Mesh(geo, mat));
+      }
+    }
+    // center, flip Y (SVG y-down → three y-up), normalise to ~3.6 world units wide
+    group.scale.y = -1;
+    const box = new THREE.Box3().setFromObject(group);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    group.position.sub(center);
+    const pivot = new THREE.Group();
+    pivot.add(group);
+    const s = 3.6 / size.x;
+    pivot.scale.setScalar(s);
+    scene.add(pivot);
+
+    // light: a cool key from the top-left, warm-ish rim from behind-right, soft fill
+    const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-3, 4, 5);
+    const rim = new THREE.DirectionalLight(0x6ecff6, 3.0); rim.position.set(4, -1, -4);
+    const fill = new THREE.DirectionalLight(0x9fd9f5, 0.6); fill.position.set(3, 1, 4);
+    scene.add(key, rim, fill, new THREE.AmbientLight(0xffffff, 0.25));
+
+    // --- interaction ------------------------------------------------------
+    const state = {
+      rotY: 0, rotX: 0,             // current
+      velY: 0,                      // spin momentum from drag
+      targetTiltX: 0, targetTiltY: 0, // cursor lean
+      dragging: false, lastX: 0, lastY: 0, lastT: 0,
+      hovering: false,
+    };
+    const IDLE_SPEED = 0.0042;       // rad/frame at 60fps, slow drift
+
+    const onMove = (e: PointerEvent) => {
+      const r = root.getBoundingClientRect();
+      const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
+      const ny = ((e.clientY - r.top) / r.height) * 2 - 1;
+      if (state.dragging) {
+        const now = performance.now();
+        const dx = e.clientX - state.lastX;
+        state.rotY += dx * 0.012;
+        state.rotX += (e.clientY - state.lastY) * 0.006;
+        state.velY = dx * 0.012 / Math.max(1, (now - state.lastT) / 16.7);
+        state.lastX = e.clientX; state.lastY = e.clientY; state.lastT = now;
+      } else if (state.hovering) {
+        state.targetTiltY = THREE.MathUtils.clamp(nx, -1, 1) * 0.45;
+        state.targetTiltX = THREE.MathUtils.clamp(ny, -1, 1) * 0.28;
+      }
+    };
+    canvas.addEventListener('pointerenter', () => { state.hovering = true; });
+    canvas.addEventListener('pointerleave', () => { state.hovering = false; state.targetTiltX = 0; state.targetTiltY = 0; });
+    canvas.addEventListener('pointerdown', (e) => {
+      state.dragging = true; state.velY = 0;
+      state.lastX = e.clientX; state.lastY = e.clientY; state.lastT = performance.now();
+      canvas.setPointerCapture(e.pointerId);
+    });
+    const endDrag = () => { state.dragging = false; state.targetTiltX = 0; state.targetTiltY = 0; };
+    canvas.addEventListener('pointerup', endDrag);
+    canvas.addEventListener('pointercancel', endDrag);
+    canvas.addEventListener('pointermove', onMove);
+    // lean toward the cursor even when it's merely near the eagle (whole hero)
+    root.closest('section')?.addEventListener('pointermove', (e) => {
+      if (state.dragging) return;
+      const r = root.getBoundingClientRect();
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const nx = THREE.MathUtils.clamp((e.clientX - cx) / (innerWidth / 2), -1, 1);
+      const ny = THREE.MathUtils.clamp((e.clientY - cy) / (innerHeight / 2), -1, 1);
+      state.targetTiltY = nx * 0.5;
+      state.targetTiltX = ny * 0.3;
+    });
+
+    // --- sizing -----------------------------------------------------------
+    const resize = () => {
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      if (!w || !h) return;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    };
+    new ResizeObserver(resize).observe(canvas);
+    resize();
+
+    // --- loop -------------------------------------------------------------
+    let tiltX = 0, tiltY = 0, raf = 0, visible = true;
+    const io = new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible) tick(); }, { threshold: 0 });
+    io.observe(root);
+    const clock = new THREE.Clock();
+    function tick() {
+      if (!visible) { raf = 0; return; }
+      raf = requestAnimationFrame(tick);
+      const t = clock.getElapsedTime();
+      if (!state.dragging) {
+        // momentum decays into the idle drift
+        state.velY *= 0.94;
+        state.rotY += IDLE_SPEED + state.velY;
+        state.rotX *= 0.9; // pitch always relaxes back to level
+      }
+      tiltX += (state.targetTiltX - tiltX) * 0.08;
+      tiltY += (state.targetTiltY - tiltY) * 0.08;
+      pivot.rotation.y = state.rotY + tiltY;
+      pivot.rotation.x = state.rotX + tiltX + Math.sin(t * 0.9) * 0.04; // gentle breathing
+      pivot.position.y = Math.sin(t * 1.2) * 0.05;
+      renderer.render(scene, camera);
+    }
+    tick();
+    root.classList.add('is-3d');
+
+    // page navigation (Astro view transitions) / teardown
+    addEventListener('pagehide', () => { cancelAnimationFrame(raf); renderer.dispose(); }, { once: true });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-eagle]').forEach((el) => { mount(el).catch(() => {}); });
+</script>

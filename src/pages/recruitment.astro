@@ -1,13 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
 import site from '../data/site.json';
-import photos from '../data/photos.json';
 import rec from '../data/recruitment.json';
 import { withBase } from '../lib/url';
-import { describe, shortDate } from '../lib/events';
+import { describe, shortDate, clock, type EventView, type Local } from '../lib/events';
 
 const events = rec.events.map(describe);
-const phases = rec.phases as Record<string, string>;
 const opens = shortDate(rec.applicationWindow.opens);
 const closes = shortDate(rec.applicationWindow.closes);
 
@@ -18,110 +16,93 @@ const icsUrl = new URL(icsPath, Astro.site).href;
 const googleUrl = `https://calendar.google.com/calendar/render?cid=${encodeURIComponent(icsUrl.replace(/^https?:/, 'webcal:'))}`;
 
 const status = rec.applyUrl
-  ? `Applications are open and close ${closes}.`
+  ? `Applications close ${closes}.`
   : rec.datesConfirmed
     ? `Applications open ${opens} and close ${closes}.`
-    : 'Dates will be announced on Instagram and in the recruitment GroupMe.';
+    : 'Dates drop on Instagram and in the GroupMe.';
+
+// ---- month-grid calendar ---------------------------------------------------
+// Single-day occurrences land in their day box; long all-day spans (tabling)
+// are left off the grid entirely.
+const SHORT: Record<string, string> = {
+  'Speed Dating with Brothers': 'Speed Dating',
+  'Résumé Workshop & Networking Night': 'Résumé Night',
+  'Application opens': 'App opens',
+  'Application closes': 'App closes',
+  'Decisions sent': 'Decisions',
+};
+interface Chip { name: string; time: string; phase: string }
+const chips = new Map<string, Chip[]>(); // "m-d" -> chips
+for (const e of events) {
+  const isSpan = e.allDay && e.end && (e.end.m !== e.start.m || e.end.d !== e.start.d);
+  if (isSpan) continue; // long spans (tabling) stay off the grid
+  for (const o of e.occurrences) {
+    const k = `${o.start.m}-${o.start.d}`;
+    (chips.get(k) ?? chips.set(k, []).get(k)!).push({
+      name: SHORT[e.name] ?? e.name,
+      time: e.allDay ? '' : clock(o.start),
+      phase: e.phase,
+    });
+  }
+}
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const year = events[0].start.y;
+const months = [...new Set(events.flatMap((e) => e.occurrences.map((o) => o.start.m)))].sort((a, b) => a - b);
+const dow = (y: number, m: number, d: number) => new Date(Date.UTC(y, m - 1, d)).getUTCDay();
+const daysIn = (y: number, m: number) => new Date(Date.UTC(y, m, 0)).getUTCDate();
+const grids = months.map((m) => {
+  const cells: ({ d: number; chips: Chip[] } | null)[] = [];
+  for (let i = 0; i < dow(year, m, 1); i++) cells.push(null);
+  for (let d = 1; d <= daysIn(year, m); d++) cells.push({ d, chips: chips.get(`${m}-${d}`) ?? [] });
+  while (cells.length % 7) cells.push(null);
+  return { name: MONTH_NAMES[m - 1], cells };
+});
 ---
 <Base title="Recruitment" description={`Rush Sigma Eta Pi at UNC. ${rec.cycle} recruitment schedule and application dates.`}>
-  <!-- Plain hero -->
   <section class="hero-title">
     <div class="container">
       <p class="eyebrow reveal">{rec.cycle} recruitment</p>
       <h1 class="reveal">Rush SEP.</h1>
-      <p class="lede reveal">
-        Recruitment happens at the start of each semester: a run of relaxed interest events, a
-        short written application, and one evening of formal recruitment. {status}
-      </p>
+      <p class="lede reveal">{status}</p>
       <div class="hero-cta reveal">
         {rec.applyUrl
           ? <a class="btn btn--sky" href={rec.applyUrl} target="_blank" rel="noreferrer noopener">Apply</a>
           : <a class="btn btn--sky" href={site.socials.instagram} target="_blank" rel="noreferrer noopener">Follow @uncsep</a>}
-        {site.recruitmentGroupMe && <a class="btn btn--ghost" href={site.recruitmentGroupMe} target="_blank" rel="noreferrer noopener">Join the recruitment GroupMe</a>}
+        {site.recruitmentGroupMe && <a class="btn btn--ghost" href={site.recruitmentGroupMe} target="_blank" rel="noreferrer noopener">Recruitment GroupMe</a>}
+      </div>
+      <div class="cal__actions reveal">
+        <a class="cal-btn" href={googleUrl} target="_blank" rel="noreferrer noopener">Add to Google Calendar</a>
+        <a class="cal-btn" href={icsPath} download="sep-recruitment.ics">Apple / Outlook (.ics)</a>
       </div>
     </div>
   </section>
 
-  <!-- Horizontal schedule -->
-  <section class="section schedule" aria-labelledby="schedule-title">
-    <div class="container schedule__head reveal">
-      <div>
-        <h2 id="schedule-title">The schedule</h2>
-        <p class="schedule__sub">All times are Chapel Hill local. Scroll sideways to see the whole cycle.</p>
-      </div>
-      <div class="schedule__tools">
-        <div class="cal-links" aria-label="Add the schedule to your calendar">
-          <span class="cal-links__label">Add to your calendar</span>
-          <a class="cal-btn" href={googleUrl} target="_blank" rel="noreferrer noopener">Google Calendar</a>
-          <a class="cal-btn" href={icsPath} download="sep-recruitment.ics">Apple / Outlook (.ics)</a>
+  <section class="section cal" aria-label={`${rec.cycle} recruitment calendar`}>
+    <div class="container">
+      {grids.map((g) => (
+        <div class="cal__month reveal">
+          <div class="cal__monthhead">
+            <h2 class="cal__title">{g.name} {year}</h2>
+          </div>
+          <div class="cal__grid" role="grid" aria-label={`${g.name} ${year}`}>
+            {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map((d) => <div class="cal__dow">{d}</div>)}
+            {g.cells.map((c) => c ? (
+              <div class={`cal__day${c.chips.length ? ' has-events' : ''}`} role="gridcell">
+                <span class="cal__num">{c.d}</span>
+                {c.chips.map((ch) => (
+                  <span class={`cal__chip cal__chip--${ch.phase}`}>
+                    {ch.name}{ch.time && <em>{ch.time}</em>}
+                  </span>
+                ))}
+              </div>
+            ) : <div class="cal__day cal__day--pad" role="gridcell" aria-hidden="true"></div>)}
+          </div>
         </div>
-        <div class="schedule__nav" aria-hidden="true">
-          <button type="button" class="schedule__arrow" data-dir="-1" aria-label="Earlier events">←</button>
-          <button type="button" class="schedule__arrow" data-dir="1" aria-label="Later events">→</button>
-        </div>
-      </div>
+      ))}
+
     </div>
-
-    <div class="strip-wrap reveal">
-      <ol class="strip" id="strip" tabindex="0" aria-label={`${rec.cycle} recruitment events, in order`}>
-        {events.map((e, i) => (
-          <li class={`card card--${e.phase}`} data-phase={e.phase}>
-            <span class="card__phase">{phases[e.phase] ?? e.phase}</span>
-            <span class="card__dot" aria-hidden="true"></span>
-            <div class="card__date">
-              <strong>{e.dateLabel}</strong>
-              <span>{e.whenLabel}</span>
-            </div>
-            <h3 class="card__name">{e.name}</h3>
-            {e.meta && <p class="card__meta">{e.meta}</p>}
-            <p class="card__desc">{e.description}</p>
-            <span class="card__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-          </li>
-        ))}
-      </ol>
-    </div>
-
-    {!rec.datesConfirmed && (
-      <p class="container tbd-note reveal">This is the usual event lineup. Exact {rec.cycle} dates, times, and venues are coming soon.</p>
-    )}
   </section>
-
-  <!-- Photo -->
-  <section class="container end-photo">
-    <figure class="photo-xl reveal">
-      <img src={withBase(photos.recruitment.src)} alt={photos.recruitment.alt} loading="lazy" decoding="async" style="aspect-ratio: 21/9; object-position: center 35%;" />
-    </figure>
-  </section>
-
 </Base>
-
-<script>
-  // Arrow buttons scroll the strip one card at a time; keyboard arrows work when
-  // the strip is focused. Native horizontal scroll/drag/swipe still works.
-  const strip = document.getElementById('strip');
-  const step = () => {
-    const card = strip?.querySelector<HTMLElement>('.card');
-    return card ? card.offsetWidth + parseFloat(getComputedStyle(strip!).columnGap || '20') : 320;
-  };
-  document.querySelectorAll<HTMLButtonElement>('.schedule__arrow').forEach((b) => {
-    b.addEventListener('click', () => strip?.scrollBy({ left: Number(b.dataset.dir) * step(), behavior: 'smooth' }));
-  });
-  strip?.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') { strip.scrollBy({ left: step(), behavior: 'smooth' }); e.preventDefault(); }
-    if (e.key === 'ArrowLeft') { strip.scrollBy({ left: -step(), behavior: 'smooth' }); e.preventDefault(); }
-  });
-  // Disable arrows at the ends
-  const arrows = Array.from(document.querySelectorAll<HTMLButtonElement>('.schedule__arrow'));
-  const sync = () => {
-    if (!strip) return;
-    const max = strip.scrollWidth - strip.clientWidth - 1;
-    arrows[0].disabled = strip.scrollLeft <= 0;
-    arrows[1].disabled = strip.scrollLeft >= max;
-  };
-  strip?.addEventListener('scroll', sync, { passive: true });
-  addEventListener('resize', sync);
-  sync();
-</script>
 
 <style>
   .hero-title { padding-top: clamp(7rem, 14vh, 9.5rem); }
@@ -129,103 +110,63 @@ const status = rec.applyUrl
   .hero-title .lede { margin-top: 0.4rem; }
   .hero-cta { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 1.8rem; }
 
-  /* ---- schedule header ---- */
-  .schedule { padding-top: clamp(3rem, 6vw, 4.5rem); }
-  .schedule__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
-  .schedule__head h2 { margin-bottom: 0.2rem; }
-  .schedule__sub { margin: 0; color: var(--muted); font-size: 0.95rem; }
-  .schedule__tools { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
-  .cal-links { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-  .cal-links__label { font-family: var(--font-display); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 0.2rem; }
-  .cal-btn {
-    display: inline-flex; align-items: center; gap: 0.45rem;
-    font-family: var(--font-display); font-weight: 600; font-size: 0.88rem;
-    padding: 0.55rem 1rem; border-radius: 999px; text-decoration: none;
-    color: #fff; border: 1px solid rgba(255, 255, 255, 0.28); background: rgba(255, 255, 255, 0.03);
-    transition: border-color 0.15s, color 0.15s, background 0.15s;
-  }
-  .cal-btn::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--sky); box-shadow: 0 0 10px rgba(110, 207, 246, 0.8); }
-  .cal-btn:hover { border-color: var(--sky); color: var(--sky); background: rgba(110, 207, 246, 0.06); }
-  .schedule__nav { display: flex; gap: 0.4rem; }
-  .schedule__arrow {
-    width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.28); background: transparent; color: #fff; font-size: 1.05rem;
-    transition: border-color 0.15s, color 0.15s, opacity 0.15s;
-  }
-  .schedule__arrow:hover:not(:disabled) { border-color: var(--sky); color: var(--sky); }
-  .schedule__arrow:disabled { opacity: 0.3; cursor: default; }
+  .cal { padding-top: clamp(2.5rem, 5vw, 4rem); }
+  .cal__month { margin-bottom: clamp(2.4rem, 5vw, 3.6rem); }
+  .cal__monthhead { display: flex; align-items: baseline; justify-content: space-between; }
+  .cal__title { font-size: clamp(1.2rem, 2.4vw, 1.6rem); font-weight: 600; margin-bottom: 0.9rem; }
 
-  /* ---- the strip ---- */
-  .strip-wrap { position: relative; }
-  /* soft edges hint there is more to scroll */
-  .strip-wrap::before, .strip-wrap::after {
-    content: ''; position: absolute; top: 0; bottom: 0; width: clamp(1rem, 4vw, 3rem); pointer-events: none; z-index: 2;
+  .cal__grid {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+    background: var(--panel);
   }
-  .strip-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
-  .strip-wrap::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
-  .strip {
-    --card-w: clamp(250px, 24vw, 300px);
-    list-style: none; margin: 0; padding: 1.6rem 0 1.4rem;
-    display: grid; grid-auto-flow: column; grid-auto-columns: var(--card-w);
-    column-gap: 20px; overflow-x: auto; overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory; scroll-padding-inline: var(--edge);
-    --edge: max(var(--pad), calc((100vw - var(--maxw)) / 2 + var(--pad)));
-    padding-inline: var(--edge);
-    scrollbar-width: thin; scrollbar-color: rgba(110, 207, 246, 0.35) transparent;
-    position: relative;
-  }
-  .strip::-webkit-scrollbar { height: 6px; }
-  .strip::-webkit-scrollbar-thumb { background: rgba(110, 207, 246, 0.35); border-radius: 3px; }
-  .strip:focus-visible { outline: 2px solid var(--sky); outline-offset: -2px; }
-
-  .card {
-    position: relative; scroll-snap-align: start;
-    display: flex; flex-direction: column; gap: 0.35rem;
-    padding: 1.9rem 1.2rem 1.3rem; border-radius: 16px;
-    background: var(--panel); border: 1px solid var(--line);
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .card:hover { border-color: rgba(110, 207, 246, 0.35); transform: translateY(-2px); }
-  /* the rail: a line across the top of every card, with a dot on it */
-  .card::before {
-    content: ''; position: absolute; left: -20px; right: -20px; top: 0;
-    height: 1px; background: var(--line);
-  }
-  .card:first-child::before { left: 0; }
-  .card:last-child::before { right: 0; }
-  .card__dot {
-    position: absolute; top: -5px; left: 1.2rem;
-    width: 11px; height: 11px; border-radius: 50%; background: var(--sky);
-    box-shadow: 0 0 14px rgba(110, 207, 246, 0.8);
-  }
-  .card__phase {
-    align-self: flex-start;
+  .cal__dow {
+    padding: 0.55rem 0.6rem;
     font-family: var(--font-display); font-size: 0.68rem; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--sky);
-    padding: 0.2rem 0.6rem; border-radius: 999px; border: 1px solid rgba(110, 207, 246, 0.35);
-    margin-bottom: 0.4rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    border-bottom: 1px solid var(--line);
   }
-  .card--application .card__phase { color: #FFD08A; border-color: rgba(255, 208, 138, 0.4); }
-  .card--application .card__dot { background: #FFD08A; box-shadow: 0 0 14px rgba(255, 208, 138, 0.8); }
-  .card--formal .card__phase { color: #fff; border-color: rgba(255, 255, 255, 0.5); }
-  .card--formal .card__dot { background: #fff; box-shadow: 0 0 14px rgba(255, 255, 255, 0.8); }
-  .card--decision .card__phase { color: #9BE7B4; border-color: rgba(155, 231, 180, 0.4); }
-  .card--decision .card__dot { background: #9BE7B4; box-shadow: 0 0 14px rgba(155, 231, 180, 0.8); }
-  .card__date strong { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.75rem; line-height: 1.05; color: #fff; }
-  .card__date span { display: block; margin-top: 0.15rem; font-size: 0.86rem; color: var(--muted); }
-  .card__name { font-size: 1.12rem; margin: 0.5rem 0 0; line-height: 1.25; }
-  .card__meta { margin: 0; color: var(--sky); font-size: 0.86rem; }
-  .card__desc { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.92rem; line-height: 1.55; }
-  .card__index { position: absolute; right: 1rem; top: 1.1rem; font-family: var(--font-display); font-size: 0.75rem; color: rgba(143, 178, 198, 0.55); }
-
-  @media (max-width: 720px) {
-    .schedule__head { align-items: flex-start; }
-    .schedule__nav { display: none; }   /* swipe on touch */
-    .strip { --card-w: 78vw; column-gap: 14px; }
-    .card::before { left: -14px; right: -14px; }
+  .cal__day {
+    min-height: clamp(64px, 8.5vw, 104px);
+    padding: 0.45rem 0.5rem;
+    border-top: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 0.3rem;
   }
+  /* internal grid lines without doubling borders */
+  .cal__day:not(:nth-child(7n + 1)), .cal__dow:not(:nth-child(7n + 1)) { border-left: 1px solid var(--line); }
+  .cal__day--pad { background: rgba(6, 18, 27, 0.45); }
+  .cal__num { font-size: 0.74rem; color: var(--muted); line-height: 1; }
+  .cal__day.has-events .cal__num { color: #fff; font-weight: 600; }
 
-  .end-photo { margin-bottom: var(--gap); }
-  .tbd-note { margin-top: 1rem; color: var(--muted); font-size: 0.92rem; font-style: italic; }
+  .cal__chip {
+    display: block; font-size: 0.74rem; line-height: 1.25; font-weight: 500;
+    color: #fff; background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 6px; padding: 0.22rem 0.4rem;
+  }
+  .cal__chip em { display: block; font-style: normal; font-size: 0.66rem; color: var(--muted); }
+  .cal__chip--formal { background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.32); }
 
+  .cal__actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1rem; }
+  .cal-btn {
+    display: inline-flex; align-items: center;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.88rem;
+    padding: 0.55rem 1.1rem; border-radius: 999px; text-decoration: none;
+    color: #fff; border: 1px solid rgba(255, 255, 255, 0.28); background: transparent;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .cal-btn:hover { border-color: #fff; background: rgba(255, 255, 255, 0.06); }
+
+  /* phones: the 7-col grid gets cramped — show only days with events, as a tight list */
+  @media (max-width: 640px) {
+    .cal__grid { display: block; border: 0; background: none; border-radius: 0; }
+    .cal__dow, .cal__day--pad, .cal__day:not(.has-events) { display: none; }
+    .cal__day.has-events {
+      display: flex; flex-direction: row; align-items: center; gap: 0.7rem;
+      border: 1px solid var(--line) !important; border-radius: 10px; background: var(--panel);
+      margin-bottom: 0.55rem; min-height: 0; padding: 0.6rem 0.75rem;
+    }
+    .cal__day.has-events .cal__num { font-size: 1rem; min-width: 2ch; text-align: center; }
+    .cal__chip { flex: 1; }
+  }
 </style>

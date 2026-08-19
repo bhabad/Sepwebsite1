@@ -6,44 +6,37 @@ import execData from '../data/exec.json';
 import { withBase } from '../lib/url';
 ---
 <Base title="About" description="Sigma Eta Pi's history and mission, and the executive board leading UNC's Iota chapter.">
-  <!-- Big title + huge rounded photo, the UCLA People treatment -->
-  <section class="hero-title">
+  <!-- One frame: title + story at the top, both photos side by side beneath -->
+  <section class="intro">
     <div class="container">
       <h1 class="reveal">About</h1>
-    </div>
-    <div class="container">
-      <figure class="photo-xl hero-photo reveal">
-        <img src={withBase(photos.aboutHero.src)} alt={photos.aboutHero.alt} style={`object-position: ${photos.aboutHero.position}`} fetchpriority="high" />
-      </figure>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container story">
-      <div class="reveal">
-        <p class="eyebrow">Our history</p>
-        <p class="big-text">
-          Founded in 2010 at UCLA, Sigma Eta Pi is a co-ed professional fraternity dedicated
-          not to setting a path for you, but to supporting you on whatever path you carve.
-          The UNC chapter, the Iota chapter of Sigma Eta Pi, was established in Spring 2020.
-        </p>
+      <div class="story">
+        <div class="reveal">
+          <p class="eyebrow">Our history</p>
+          <p class="big-text">
+            Founded in 2010 at UCLA, Sigma Eta Pi is a co-ed professional fraternity dedicated
+            not to setting a path for you, but to supporting you on whatever path you carve.
+            The UNC chapter, the Iota chapter of Sigma Eta Pi, was established in Spring 2020.
+          </p>
+        </div>
+        <div class="reveal">
+          <p class="eyebrow">Our mission</p>
+          <p class="big-text">
+            To cultivate the next generation of entrepreneurs by building a strong community of
+            students passionate about starting ventures, solving real-world problems, and
+            making a lasting impact.
+          </p>
+        </div>
       </div>
-      <div class="reveal">
-        <p class="eyebrow">Our mission</p>
-        <p class="big-text">
-          To cultivate the next generation of entrepreneurs by building a strong community of
-          students passionate about starting ventures, solving real-world problems, and
-          making a lasting impact.
-        </p>
+      <div class="intro__photos reveal">
+        <figure class="photo-xl intro__photo">
+          <img src={withBase(photos.aboutHero.src)} alt={photos.aboutHero.alt} style={`object-position: ${photos.aboutHero.position}`} fetchpriority="high" />
+        </figure>
+        <figure class="photo-xl intro__photo">
+          <img src={withBase(photos.aboutBody.src)} alt={photos.aboutBody.alt} loading="eager" decoding="async" style={`object-position: ${photos.aboutBody.position};`} />
+        </figure>
       </div>
     </div>
-  </section>
-
-
-  <section class="container body-photo">
-    <figure class="photo-xl reveal">
-      <img src={withBase(photos.aboutBody.src)} alt={photos.aboutBody.alt} loading="lazy" decoding="async" style={`aspect-ratio: 21/9; object-position: ${photos.aboutBody.position};`} />
-    </figure>
   </section>
 
   <section class="section" id="exec">
@@ -62,16 +55,23 @@ import { withBase } from '../lib/url';
 </Base>
 
 <style>
-  .hero-title { padding-top: clamp(7rem, 14vh, 9.5rem); }
-  .hero-title h1 { text-align: center; font-size: clamp(3rem, 8vw, 5.5rem); }
-  .hero-photo img { aspect-ratio: 16 / 9; object-position: center 30%; }
+  .intro { padding-top: clamp(6rem, 12vh, 8rem); }
+  /* tighten the gap between the photos and the exec board */
+  #exec { padding-top: clamp(3rem, 6vw, 4.5rem); }
+  .intro h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); margin-bottom: clamp(1.2rem, 2.5vh, 2rem); }
 
-  .story { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 5rem); }
-  .big-text { font-size: clamp(1.1rem, 1.9vw, 1.35rem); line-height: 1.55; color: var(--text); margin: 0; }
-  @media (max-width: 840px) { .story { grid-template-columns: 1fr; } }
+  .story { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); }
+  .big-text { font-size: clamp(0.98rem, 1.4vw, 1.15rem); line-height: 1.55; color: var(--text); margin: 0; }
 
+  .intro__photos {
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.9rem, 1.8vw, 1.4rem);
+    margin-top: clamp(1.6rem, 3.5vh, 2.6rem);
+  }
+  .intro__photo img { aspect-ratio: 16 / 10; max-height: 44svh; width: 100%; }
 
-  .body-photo { margin-bottom: var(--gap); }
+  @media (max-width: 840px) {
+    .story { grid-template-columns: 1fr; gap: 1.4rem; }
+  }
   .exec-year { color: var(--muted); font-weight: 400; }
   .exec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.2rem 1.4rem; margin-top: 2.2rem; }
   @media (max-width: 1000px) { .exec-grid { grid-template-columns: repeat(3, 1fr); } }

@@ -4,85 +4,73 @@
   "title": "Summer 2026 internships and full-time roles",
   "companies": [
     {
-      "name": "J.P. Morgan"
+      "name": "J.P. Morgan",
+      "logo": "/logos/jpmorgan.svg"
     },
     {
-      "name": "Goldman Sachs"
+      "name": "Goldman Sachs",
+      "logo": "/logos/goldman-sachs.svg"
     },
     {
-      "name": "Morgan Stanley"
+      "name": "Morgan Stanley",
+      "logo": "/logos/morgan-stanley.svg"
     },
     {
-      "name": "Bank of America"
+      "name": "Bank of America",
+      "logo": "/logos/bank-of-america.svg"
     },
     {
-      "name": "Wells Fargo"
+      "name": "Wells Fargo",
+      "logo": "/logos/wells-fargo.svg",
+      "scale": 1.6
     },
     {
-      "name": "HSBC"
+      "name": "HSBC",
+      "logo": "/logos/hsbc.svg"
     },
     {
-      "name": "RBC"
+      "name": "RBC",
+      "logo": "/logos/rbc.svg"
     },
     {
-      "name": "KPMG"
+      "name": "KPMG",
+      "logo": "/logos/kpmg.svg"
     },
     {
-      "name": "Accenture"
+      "name": "Accenture",
+      "logo": "/logos/accenture.svg"
     },
     {
-      "name": "Protiviti"
+      "name": "Protiviti",
+      "logo": "/logos/protiviti.svg"
     },
     {
-      "name": "Pfizer"
+      "name": "Pfizer",
+      "logo": "/logos/pfizer.svg"
     },
     {
-      "name": "Roche"
+      "name": "Roche",
+      "logo": "/logos/roche.svg"
     },
     {
-      "name": "SAS"
+      "name": "SAS",
+      "logo": "/logos/sas.svg"
     },
     {
-      "name": "Veeva"
+      "name": "Zurich",
+      "logo": "/logos/zurich.svg"
     },
     {
-      "name": "Varonis"
+      "name": "Abercrombie & Fitch",
+      "logo": "/logos/abercrombie-fitch.svg"
     },
     {
-      "name": "Zurich"
+      "name": "Premier Lacrosse League",
+      "logo": "/logos/premier-lacrosse-league.svg"
     },
     {
-      "name": "ION"
-    },
-    {
-      "name": "Abercrombie & Fitch"
-    },
-    {
-      "name": "Morgan Creek Capital"
-    },
-    {
-      "name": "Aurora Energy Research"
-    },
-    {
-      "name": "Penta"
-    },
-    {
-      "name": "Premier Lacrosse League"
-    },
-    {
-      "name": "UNC Health"
-    },
-    {
-      "name": "Lafayette"
-    },
-    {
-      "name": "Greentech Renewables"
-    },
-    {
-      "name": "The African Climate Foundation"
-    },
-    {
-      "name": "City of Calgary"
+      "name": "UNC Health",
+      "logo": "/logos/unc-health.svg"
     }
   ]
 }

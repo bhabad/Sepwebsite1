@@ -55,13 +55,6 @@ const channels: { icon: IconName; label: string; value: string; href: string; no
     </div>
   </section>
 
-  <section class="section rush">
-    <div class="container">
-      <p class="eyebrow reveal">Interested in joining?</p>
-      <h2 class="reveal">Become a brother.</h2>
-      <a class="btn btn--sky reveal" href={withBase('/recruitment/')}>Recruitment details</a>
-    </div>
-  </section>
 </Base>
 
 <style>
@@ -71,19 +64,19 @@ const channels: { icon: IconName; label: string; value: string; href: string; no
     display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.4rem;
     max-width: 52rem; margin: 2.4rem auto 0; padding: 1.5rem 1.6rem;
     border-radius: var(--r); text-decoration: none;
-    background: linear-gradient(135deg, rgba(110, 207, 246, 0.14), rgba(110, 207, 246, 0.04));
+    background: var(--panel);
     border: 1px solid rgba(110, 207, 246, 0.35);
     transition: border-color 0.15s, box-shadow 0.2s, transform 0.2s;
   }
-  .groupme:hover { border-color: var(--sky); box-shadow: 0 0 40px rgba(110, 207, 246, 0.18); transform: translateY(-1px); }
+  .groupme:hover { border-color: rgba(255, 255, 255, 0.5); transform: translateY(-1px); }
   .groupme__icon {
     display: grid; place-items: center; width: 58px; height: 58px; border-radius: 14px;
-    background: var(--sky); color: #04121B;
+    background: #fff; color: #04121B;
   }
   .groupme__text { display: grid; gap: 0.1rem; }
   .groupme__label {
     font-family: var(--font-display); font-size: 0.78rem; font-weight: 600;
-    letter-spacing: 0.16em; text-transform: uppercase; color: var(--sky);
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
   }
   .groupme__title { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.15rem, 2.4vw, 1.5rem); color: #fff; line-height: 1.2; }
   .groupme__note { color: var(--muted); font-size: 0.92rem; }
@@ -105,18 +98,18 @@ const channels: { icon: IconName; label: string; value: string; href: string; no
   .channels__icon {
     grid-row: span 2; display: grid; place-items: center;
     width: 48px; height: 48px; border-radius: 12px;
-    background: var(--panel); border: 1px solid var(--line); color: var(--sky);
+    background: var(--panel); border: 1px solid var(--line); color: #fff;
     transition: background 0.15s, color 0.15s, border-color 0.15s;
   }
-  .channels a:hover .channels__icon { background: var(--sky); color: #04121B; border-color: var(--sky); }
+  .channels a:hover .channels__icon { background: #fff; color: #04121B; border-color: #fff; }
   .channels__label {
     font-family: var(--font-display); font-size: 0.78rem; font-weight: 600;
     letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); align-self: end;
   }
   .channels__value { font-family: var(--font-display); font-weight: 600; font-size: 1.2rem; color: #fff; align-self: end; }
-  .channels a:hover .channels__value { color: var(--sky); }
+  .channels a:hover .channels__value { color: #fff; }
   .channels__note { grid-column: 3; color: var(--muted); font-size: 0.92rem; align-self: start; }
-  .channels__arrow { grid-row: span 2; align-self: center; color: var(--sky); font-size: 1.3rem; }
+  .channels__arrow { grid-row: span 2; align-self: center; color: var(--muted); font-size: 1.3rem; }
   @media (max-width: 600px) {
     .channels a { grid-template-columns: 48px 1fr auto; gap: 0.15rem 1rem; }
     .channels__label { grid-column: 2; }
