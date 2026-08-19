@@ -23,7 +23,7 @@ const status = rec.applyUrl
     ? `Applications open ${opens} and close ${closes}.`
     : 'Dates will be announced on Instagram and in the recruitment GroupMe.';
 ---
-<Base title="Recruitment" description={`Rush Sigma Eta Pi at UNC. ${rec.cycle} recruitment schedule, application dates, and FAQ.`}>
+<Base title="Recruitment" description={`Rush Sigma Eta Pi at UNC. ${rec.cycle} recruitment schedule and application dates.`}>
   <!-- Plain hero -->
   <section class="hero-title">
     <div class="container">
@@ -87,26 +87,12 @@ const status = rec.applyUrl
   </section>
 
   <!-- Photo -->
-  <section class="container">
+  <section class="container end-photo">
     <figure class="photo-xl reveal">
       <img src={withBase(photos.recruitment.src)} alt={photos.recruitment.alt} loading="lazy" decoding="async" style="aspect-ratio: 21/9; object-position: center 35%;" />
     </figure>
   </section>
 
-  <!-- FAQ -->
-  <section class="section">
-    <div class="container">
-      <h2 class="reveal">Recruitment FAQ</h2>
-      <div class="faq">
-        {rec.faq.map((f) => (
-          <details class="reveal">
-            <summary>{f.q}</summary>
-            <p>{f.a}</p>
-          </details>
-        ))}
-      </div>
-    </div>
-  </section>
 </Base>
 
 <script>
@@ -239,22 +225,7 @@ const status = rec.applyUrl
     .card::before { left: -14px; right: -14px; }
   }
 
+  .end-photo { margin-bottom: var(--gap); }
   .tbd-note { margin-top: 1rem; color: var(--muted); font-size: 0.92rem; font-style: italic; }
 
-  /* ---- FAQ ---- */
-  .faq { max-width: 46rem; margin-top: 1.6rem; }
-  .faq details { border-top: 1px solid var(--line); }
-  .faq details:last-child { border-bottom: 1px solid var(--line); }
-  .faq summary {
-    cursor: pointer; padding: 1.05rem 2rem 1.05rem 0;
-    font-family: var(--font-display); font-weight: 600; font-size: 1rem; color: #fff;
-    list-style: none; position: relative;
-  }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after {
-    content: '+'; position: absolute; right: 0.2rem; top: 0.9rem;
-    color: var(--sky); font-size: 1.25rem; transition: transform 0.2s;
-  }
-  .faq details[open] summary::after { transform: rotate(45deg); }
-  .faq details p { margin: 0; padding: 0 0 1.1rem; color: var(--muted); }
 </style>

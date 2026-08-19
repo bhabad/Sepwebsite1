@@ -1,0 +1,88 @@
+{
+  "_comment": "Companies shown in the 'Where brothers have worked' marquee on the home page. Source: the chapter's 'Sigma Eta Pi's 2026 Summer Internships and Full-Time Jobs' Instagram post (30 Jul 2026). Add/remove freely — one object per company, in display order. `logo` is optional: a path under public/ (e.g. /logos/kpmg.svg, monochrome SVG, white or currentColor); without it the name renders as a wordmark. The marquee hides itself if fewer than 6 companies are listed.",
+  "eyebrow": "Where brothers have worked",
+  "title": "Summer 2026 internships and full-time roles",
+  "companies": [
+    {
+      "name": "J.P. Morgan"
+    },
+    {
+      "name": "Goldman Sachs"
+    },
+    {
+      "name": "Morgan Stanley"
+    },
+    {
+      "name": "Bank of America"
+    },
+    {
+      "name": "Wells Fargo"
+    },
+    {
+      "name": "HSBC"
+    },
+    {
+      "name": "RBC"
+    },
+    {
+      "name": "KPMG"
+    },
+    {
+      "name": "Accenture"
+    },
+    {
+      "name": "Protiviti"
+    },
+    {
+      "name": "Pfizer"
+    },
+    {
+      "name": "Roche"
+    },
+    {
+      "name": "SAS"
+    },
+    {
+      "name": "Veeva"
+    },
+    {
+      "name": "Varonis"
+    },
+    {
+      "name": "Zurich"
+    },
+    {
+      "name": "ION"
+    },
+    {
+      "name": "Abercrombie & Fitch"
+    },
+    {
+      "name": "Morgan Creek Capital"
+    },
+    {
+      "name": "Aurora Energy Research"
+    },
+    {
+      "name": "Penta"
+    },
+    {
+      "name": "Premier Lacrosse League"
+    },
+    {
+      "name": "UNC Health"
+    },
+    {
+      "name": "Lafayette"
+    },
+    {
+      "name": "Greentech Renewables"
+    },
+    {
+      "name": "The African Climate Foundation"
+    },
+    {
+      "name": "City of Calgary"
+    }
+  ]
+}

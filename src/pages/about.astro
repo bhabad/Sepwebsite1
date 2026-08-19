@@ -4,12 +4,8 @@ import MemberCard from '../components/MemberCard.astro';
 import photos from '../data/photos.json';
 import execData from '../data/exec.json';
 import { withBase } from '../lib/url';
-
-// The chapter's four values, as named on uncsep.com. No invented blurbs — the sentence
-// under the heading is the chapter's own.
-const values = ['Integrity', 'Creativity', 'Collaboration', 'Grit'];
 ---
-<Base title="About" description="Sigma Eta Pi's mission, history, and values, and the executive board leading UNC's Iota chapter.">
+<Base title="About" description="Sigma Eta Pi's history and mission, and the executive board leading UNC's Iota chapter.">
   <!-- Big title + huge rounded photo, the UCLA People treatment -->
   <section class="hero-title">
     <div class="container">
@@ -43,21 +39,8 @@ const values = ['Integrity', 'Creativity', 'Collaboration', 'Grit'];
     </div>
   </section>
 
-  <section class="section values-band">
-    <div class="container">
-      <p class="eyebrow reveal">Our values</p>
-      <h2 class="reveal">Integrity, creativity, collaboration, and grit.</h2>
-      <p class="big-text values-lede reveal">
-        Whether you're pitching a startup, leading a workshop, or volunteering in the community,
-        we hold ourselves to high standards and push one another to grow as innovators and people.
-      </p>
-      <ul class="values reveal" aria-label="Chapter values">
-        {values.map((v) => <li>{v}</li>)}
-      </ul>
-    </div>
-  </section>
 
-  <section class="container">
+  <section class="container body-photo">
     <figure class="photo-xl reveal">
       <img src={withBase(photos.aboutBody.src)} alt={photos.aboutBody.alt} loading="lazy" decoding="async" style={`aspect-ratio: 21/9; object-position: ${photos.aboutBody.position};`} />
     </figure>
@@ -66,7 +49,7 @@ const values = ['Integrity', 'Creativity', 'Collaboration', 'Grit'];
   <section class="section" id="exec">
     <div class="container">
       <p class="eyebrow reveal">Leadership</p>
-      <h2 class="reveal">Executive board</h2>
+      <h2 class="reveal">Executive board{execData.year && <span class="exec-year"> {execData.year}</span>}</h2>
       <div class="exec-grid">
         {execData.members.map((m) => (
           <div class="reveal">
@@ -87,18 +70,9 @@ const values = ['Integrity', 'Creativity', 'Collaboration', 'Grit'];
   .big-text { font-size: clamp(1.1rem, 1.9vw, 1.35rem); line-height: 1.55; color: var(--text); margin: 0; }
   @media (max-width: 840px) { .story { grid-template-columns: 1fr; } }
 
-  .values-band { border-block: 1px solid var(--line); }
-  .values-lede { max-width: 40rem; color: var(--muted); }
-  .values {
-    list-style: none; margin: 2.2rem 0 0; padding: 0;
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem;
-  }
-  .values li {
-    border-top: 2px solid var(--sky); padding-top: 0.9rem;
-    font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; color: #fff;
-  }
-  @media (max-width: 520px) { .values { grid-template-columns: 1fr 1fr; } }
 
+  .body-photo { margin-bottom: var(--gap); }
+  .exec-year { color: var(--muted); font-weight: 400; }
   .exec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2.2rem 1.4rem; margin-top: 2.2rem; }
   @media (max-width: 1000px) { .exec-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 720px) { .exec-grid { grid-template-columns: repeat(2, 1fr); } }

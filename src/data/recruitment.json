@@ -1,10 +1,13 @@
 {
-  "_comment": "Recruitment cycle data. Events render left-to-right on the Recruitment page in array order and are exported to /sep-recruitment.ics (Google/Apple/Outlook). Dates are local Chapel Hill time (America/New_York): 'start'/'end' as YYYY-MM-DDTHH:MM for timed events, or YYYY-MM-DD for all-day (end = last day, inclusive). 'alsoOn' repeats a timed event on extra dates (same times). Set 'calendar': false to keep an item off the .ics. Source for Fall 2026: 'SEP Master Recruitment Plan - Fall 2026'. See MAINTENANCE.md.",
+  "_comment": "Recruitment cycle data. Events render left-to-right on the Recruitment page in array order and are exported to /sep-recruitment.ics (Google/Apple/Outlook). Dates are local Chapel Hill time (America/New_York): 'start'/'end' as YYYY-MM-DDTHH:MM for timed events, or YYYY-MM-DD for all-day (end = last day, inclusive). 'alsoOn' repeats a timed event on extra dates (same times). Set 'calendar': false to keep an item off the .ics. Source for Fall 2026: 'SEP Master Recruitment Plan - Fall 2026'. No FAQ section — keep copy minimal. See MAINTENANCE.md.",
   "cycle": "Fall 2026",
   "datesConfirmed": true,
   "applyUrl": "",
   "_applyUrl_note": "Paste the application form link when it opens (Fri Aug 28); the Apply button hides while this is empty.",
-  "applicationWindow": { "opens": "2026-08-28", "closes": "2026-09-06" },
+  "applicationWindow": {
+    "opens": "2026-08-28",
+    "closes": "2026-09-06"
+  },
   "phases": {
     "interest": "Interest events",
     "application": "Application",
@@ -94,7 +97,9 @@
       "phase": "formal",
       "start": "2026-09-09T18:00",
       "end": "2026-09-09T20:30",
-      "alsoOn": ["2026-09-10"],
+      "alsoOn": [
+        "2026-09-10"
+      ],
       "venue": "McColl Building",
       "attire": "",
       "description": "Two identical nights — attend whichever works for you. Three rounds: a panel interview with exec, an elevator pitch, and a Shark-Tank-style pitch competition in pairs."
@@ -106,28 +111,6 @@
       "venue": "By email",
       "attire": "",
       "description": "Check your inbox. New members join the chapter at the first meeting on Thu Sep 17 in McColl."
-    }
-  ],
-  "faq": [
-    {
-      "q": "Who can rush SEP?",
-      "a": "Any UNC undergraduate, any major, any year. We're co-ed and interest in entrepreneurship matters more than experience."
-    },
-    {
-      "q": "Do I need a startup or business background?",
-      "a": "No. Applications are read for genuine interest in entrepreneurship and what you'd bring to the chapter, not for a résumé of ventures."
-    },
-    {
-      "q": "Do I have to come to every interest event?",
-      "a": "No. Interest events are relaxed and judgment-free — nothing there affects your application. Come to whichever ones fit your schedule."
-    },
-    {
-      "q": "What happens at formal recruitment?",
-      "a": "Three short rounds in one evening: a panel interview with the exec board, a 30-second elevator pitch, and a paired pitch competition for a random everyday item. Pick either Sep 9 or Sep 10 — the two nights are the same."
-    },
-    {
-      "q": "When will I hear back?",
-      "a": "Decisions go out by email on Sat Sep 12. New members meet the chapter at the first meeting on Thu Sep 17."
     }
   ]
 }

@@ -4,6 +4,7 @@ import site from '../data/site.json';
 import photos from '../data/photos.json';
 import roster from '../data/roster.json';
 import rec from '../data/recruitment.json';
+import LogoMarquee from '../components/LogoMarquee.astro';
 import { withBase } from '../lib/url';
 import { describe, shortDate } from '../lib/events';
 
@@ -16,7 +17,8 @@ const recruitLede = rec.applyUrl
     ? `Interest events start ${firstEvent.dateLabel.split(' – ')[0]}. Applications open ${opens} and close ${closes}.`
     : "Dates drop soon. Follow our Instagram and join the recruitment GroupMe so you don't miss them.";
 
-const memberCount = roster.classes.reduce((n, c) => n + c.members.length, 0);
+// active brothers only — members flagged `alumni` in roster.json don't count
+const memberCount = roster.classes.reduce((n, c) => n + c.members.filter((m: { alumni?: boolean }) => !m.alumni).length, 0);
 const stats = [
   { value: String(memberCount), label: 'active brothers' },
   { value: String(roster.classes.length), label: 'member classes' },
@@ -69,6 +71,9 @@ const rows = [
       </ul>
     </div>
   </section>
+
+  <!-- Where brothers have worked -->
+  <LogoMarquee />
 
   <!-- Big photo -->
   <section class="container home-photo">

@@ -3,27 +3,45 @@ import Base from '../layouts/Base.astro';
 import MemberCard from '../components/MemberCard.astro';
 import roster from '../data/roster.json';
 
-const memberCount = roster.classes.reduce((n, c) => n + c.members.length, 0);
+type Member = { name: string; linkedin: string; headshot: string; alumni?: boolean; classOf?: number };
+type Cls = { name: string; letter: string; semester: string; members: Member[] };
+
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+// Active classes keep their non-alumni members; everyone flagged `alumni` collects at the bottom.
+const classes = (roster.classes as Cls[])
+  .map((c) => ({ ...c, members: c.members.filter((m) => !m.alumni) }))
+  .filter((c) => c.members.length > 0);
+const alumni = (roster.classes as Cls[]).flatMap((c) =>
+  c.members.filter((m) => m.alumni).map((m) => ({ ...m, className: c.name, letter: c.letter })),
+);
+const activeCount = classes.reduce((n, c) => n + c.members.length, 0);
 ---
-<Base title="Brothers" description={`Meet the ${memberCount} brothers of Sigma Eta Pi at UNC, from the newest class to the founders.`}>
+<Base title="Brothers" description={`Meet the ${activeCount} active brothers of Sigma Eta Pi at UNC, class by class, plus our alumni.`}>
   <section class="hero-title">
     <div class="container">
       <h1 class="reveal">Brothers</h1>
       <nav class="classnav reveal" aria-label="Jump to class">
-        {roster.classes.map((c) => (
-          <a href={`#${slug(c.name)}`}>{c.name}</a>
+        {classes.map((c) => (
+          <a href={`#${slug(c.name)}`}><span class="classnav__letter" aria-hidden="true">{c.letter}</span>{c.name}</a>
         ))}
+        {alumni.length > 0 && <a href="#alumni">Alumni</a>}
       </nav>
     </div>
   </section>
 
   <div class="container">
-    {roster.classes.map((c, ci) => (
-      <section class="classblock" id={slug(c.name)} aria-label={`${c.name} class`}>
+    {classes.map((c, ci) => (
+      <section class="classblock" id={slug(c.name)} aria-label={`${c.name} class, ${c.semester}`}>
         <header class="classblock__head reveal">
-          <h2>{c.name} <span>Class</span></h2>
-          {ci === 0 && <span class="classblock__badge">Newest class</span>}
+          <span class="classblock__letter" aria-hidden="true">{c.letter}</span>
+          <div class="classblock__title">
+            <h2>{c.name}</h2>
+            <p class="classblock__meta">
+              {c.semester}
+              {ci === 0 && <span class="classblock__badge">Newest class</span>}
+            </p>
+          </div>
         </header>
         <div class="grid">
           {c.members.map((m) => (
@@ -34,13 +52,36 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
         </div>
       </section>
     ))}
+
+    {alumni.length > 0 && (
+      <section class="classblock classblock--alumni" id="alumni" aria-label="Alumni">
+        <header class="classblock__head reveal">
+          <span class="classblock__letter classblock__letter--alumni" aria-hidden="true">ΣΗΠ</span>
+          <div class="classblock__title">
+            <h2>Alumni</h2>
+            <p class="classblock__meta">Graduated brothers, by class</p>
+          </div>
+        </header>
+        <div class="grid grid--alumni">
+          {alumni.map((m) => (
+            <div class="reveal">
+              <MemberCard
+                name={m.name}
+                linkedin={m.linkedin}
+                headshot={m.headshot}
+                role={`${m.letter} ${m.className}${m.classOf ? ` · ’${String(m.classOf).slice(-2)}` : ''}`}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
   </div>
 </Base>
 
 <style>
   .hero-title { padding-top: clamp(7rem, 14vh, 9.5rem); text-align: center; }
   .hero-title h1 { font-size: clamp(3rem, 8vw, 5.5rem); }
-  .center { margin-inline: auto; }
 
   .classnav { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; margin-top: 2rem; }
   .classnav a {
@@ -50,20 +91,30 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     transition: color 0.15s, border-color 0.15s;
   }
   .classnav a:hover { color: var(--sky); border-bottom-color: var(--sky); }
+  .classnav__letter { color: var(--sky); margin-right: 0.35em; font-weight: 600; }
 
   .classblock { padding-top: clamp(3.5rem, 7vw, 5.5rem); scroll-margin-top: 100px; }
-  .classblock__head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.8rem; }
-  .classblock__head h2 { margin: 0; font-size: clamp(1.6rem, 3.2vw, 2.2rem); }
-  .classblock__head h2 span { color: var(--sky); }
-  .classblock__badge {
-    font-family: var(--font-display); font-size: 0.72rem; font-weight: 600;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: #04121B; background: var(--sky);
-    padding: 0.3rem 0.8rem; border-radius: 999px;
+  .classblock__head { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.8rem; }
+  .classblock__letter {
+    font-family: var(--font-display); font-weight: 600; line-height: 1;
+    font-size: clamp(2.6rem, 5vw, 3.6rem); color: var(--sky);
+    min-width: 1.1em; text-align: center;
   }
+  .classblock__letter--alumni { font-size: clamp(1.4rem, 2.6vw, 1.9rem); letter-spacing: 0.04em; }
+  .classblock__title h2 { margin: 0; font-size: clamp(1.6rem, 3.2vw, 2.2rem); }
+  .classblock__meta {
+    margin: 0.15rem 0 0; font-family: var(--font-display); font-size: 0.92rem;
+    color: var(--muted); display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
+  }
+  .classblock__badge {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #04121B; background: var(--sky); padding: 0.22rem 0.7rem; border-radius: 999px;
+  }
+  .classblock--alumni { margin-top: clamp(2rem, 5vw, 3.5rem); padding-top: clamp(3rem, 6vw, 4.5rem); border-top: 1px solid var(--line); }
 
   .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2rem 1.3rem; }
-  @media (max-width: 1080px) { .grid { grid-template-columns: repeat(4, 1fr); } }
-  @media (max-width: 860px)  { .grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 600px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+  .grid--alumni { grid-template-columns: repeat(6, 1fr); gap: 1.6rem 1.1rem; }
+  @media (max-width: 1080px) { .grid { grid-template-columns: repeat(4, 1fr); } .grid--alumni { grid-template-columns: repeat(5, 1fr); } }
+  @media (max-width: 860px)  { .grid { grid-template-columns: repeat(3, 1fr); } .grid--alumni { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 600px)  { .grid, .grid--alumni { grid-template-columns: repeat(2, 1fr); } }
 </style>

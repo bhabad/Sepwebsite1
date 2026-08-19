@@ -4,7 +4,7 @@ import SocialIcon from '../components/SocialIcon.astro';
 import site from '../data/site.json';
 import { withBase } from '../lib/url';
 
-type IconName = 'mail' | 'instagram' | 'linkedin' | 'tiktok';
+type IconName = 'mail' | 'instagram' | 'linkedin' | 'tiktok' | 'groupme';
 const channels: { icon: IconName; label: string; value: string; href: string; note: string }[] = [
   { icon: 'mail', label: 'Email', value: site.email, href: `mailto:${site.email}`, note: 'Recruitment, partnership, and sponsorship questions.' },
   { icon: 'instagram', label: 'Instagram', value: '@uncsep', href: site.socials.instagram, note: 'Recruitment dates and announcements are posted here first.' },
@@ -16,11 +16,24 @@ const channels: { icon: IconName; label: string; value: string; href: string; no
   <section class="hero-title">
     <div class="container">
       <h1 class="reveal">Contact</h1>
-      <p class="lede center reveal">Email is the best way to reach the chapter. For recruitment updates, follow the Instagram.</p>
     </div>
   </section>
 
-  <section class="section">
+  {site.recruitmentGroupMe && (
+    <section class="container">
+      <a class="groupme reveal" href={site.recruitmentGroupMe} target="_blank" rel="noreferrer noopener">
+        <span class="groupme__icon"><SocialIcon name="groupme" size={30} /></span>
+        <span class="groupme__text">
+          <span class="groupme__label">Rushing this semester?</span>
+          <span class="groupme__title">Join the recruitment GroupMe</span>
+          <span class="groupme__note">Every date, room, and reminder lands here first.</span>
+        </span>
+        <span class="btn btn--sky groupme__btn">Join</span>
+      </a>
+    </section>
+  )}
+
+  <section class="section channels-section">
     <div class="container">
       <ul class="channels">
         {channels.map((c) => (
@@ -54,8 +67,32 @@ const channels: { icon: IconName; label: string; value: string; href: string; no
 <style>
   .hero-title { padding-top: clamp(7rem, 14vh, 9.5rem); text-align: center; }
   .hero-title h1 { font-size: clamp(3rem, 8vw, 5.5rem); }
-  .center { margin-inline: auto; }
+  .groupme {
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.4rem;
+    max-width: 52rem; margin: 2.4rem auto 0; padding: 1.5rem 1.6rem;
+    border-radius: var(--r); text-decoration: none;
+    background: linear-gradient(135deg, rgba(110, 207, 246, 0.14), rgba(110, 207, 246, 0.04));
+    border: 1px solid rgba(110, 207, 246, 0.35);
+    transition: border-color 0.15s, box-shadow 0.2s, transform 0.2s;
+  }
+  .groupme:hover { border-color: var(--sky); box-shadow: 0 0 40px rgba(110, 207, 246, 0.18); transform: translateY(-1px); }
+  .groupme__icon {
+    display: grid; place-items: center; width: 58px; height: 58px; border-radius: 14px;
+    background: var(--sky); color: #04121B;
+  }
+  .groupme__text { display: grid; gap: 0.1rem; }
+  .groupme__label {
+    font-family: var(--font-display); font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--sky);
+  }
+  .groupme__title { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.15rem, 2.4vw, 1.5rem); color: #fff; line-height: 1.2; }
+  .groupme__note { color: var(--muted); font-size: 0.92rem; }
+  @media (max-width: 600px) {
+    .groupme { grid-template-columns: auto 1fr; }
+    .groupme__btn { grid-column: 1 / -1; justify-self: start; }
+  }
 
+  .channels-section { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
   .channels { list-style: none; margin: 0 auto; padding: 0; max-width: 52rem; }
   .channels li { border-top: 1px solid var(--line); }
   .channels li:last-child { border-bottom: 1px solid var(--line); }

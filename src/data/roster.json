@@ -1,8 +1,10 @@
 {
-  "_comment": "One entry per member. To promote new members: add a new class block at the top and update newestClassNote. See MAINTENANCE.md.",
+  "_comment": "Member roster. Classes newest-first; `letter` is the Greek letter, `semester` the term the class was initiated. A member with `\"alumni\": true` (and optional `classOf`) is shown in the Alumni section at the bottom of the Brothers page instead of in their class block. Source for alumni status: the SEP Brother Database sheet (Status = GRADUATED). See MAINTENANCE.md.",
   "classes": [
     {
       "name": "Iota",
+      "letter": "Ι",
+      "semester": "Spring 2026",
       "members": [
         {
           "name": "Leah Klaus",
@@ -108,6 +110,8 @@
     },
     {
       "name": "Theta",
+      "letter": "Θ",
+      "semester": "Fall 2025",
       "members": [
         {
           "name": "Tate Jackson",
@@ -213,6 +217,8 @@
     },
     {
       "name": "Eta",
+      "letter": "Η",
+      "semester": "Spring 2025",
       "members": [
         {
           "name": "Isabella Antunes",
@@ -290,6 +296,11 @@
           "headshot": "/headshots/layla-hunter.webp"
         },
         {
+          "name": "Burke Powers",
+          "linkedin": "https://www.linkedin.com/in/william-burke-powers/",
+          "headshot": "/headshots/burke-powers.webp"
+        },
+        {
           "name": "Dylan Gigler",
           "linkedin": "https://www.linkedin.com/in/dylan-gigler/",
           "headshot": "/headshots/dylan-gigler.webp"
@@ -313,6 +324,8 @@
     },
     {
       "name": "Zeta",
+      "letter": "Ζ",
+      "semester": "Fall 2024",
       "members": [
         {
           "name": "Jackson Crawford",
@@ -383,16 +396,22 @@
     },
     {
       "name": "Epsilon",
+      "letter": "Ε",
+      "semester": "Spring 2024",
       "members": [
         {
           "name": "Preston Aldridge",
           "linkedin": "https://www.linkedin.com/in/prestonaldridge/",
-          "headshot": "/headshots/preston-aldridge.webp"
+          "headshot": "/headshots/preston-aldridge.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Daniela Paris",
           "linkedin": "https://www.linkedin.com/in/daniela-i-paris/",
-          "headshot": "/headshots/daniela-paris.webp"
+          "headshot": "/headshots/daniela-paris.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Hayden LaRocque Green",
@@ -402,12 +421,16 @@
         {
           "name": "Gia Bondi",
           "linkedin": "https://www.linkedin.com/in/giavanna-bondi-lemoine/",
-          "headshot": "/headshots/gia-bondi-2.webp"
+          "headshot": "/headshots/gia-bondi-2.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Josh Paulson",
           "linkedin": "https://www.linkedin.com/in/joshbpaulson/",
-          "headshot": "/headshots/josh-paulson.webp"
+          "headshot": "/headshots/josh-paulson.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Elizabeth Wong",
@@ -427,7 +450,9 @@
         {
           "name": "Caden Ryan",
           "linkedin": "https://www.linkedin.com/in/caden-ryan/",
-          "headshot": "/headshots/caden-ryan-2.webp"
+          "headshot": "/headshots/caden-ryan-2.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Wesley Hanes",
@@ -437,7 +462,9 @@
         {
           "name": "Riley Sutter",
           "linkedin": "https://www.linkedin.com/in/riley-sutter/",
-          "headshot": "/headshots/riley-sutter.webp"
+          "headshot": "/headshots/riley-sutter.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Caroline Zedek",
@@ -452,12 +479,16 @@
         {
           "name": "Jacob Vergara",
           "linkedin": "https://www.linkedin.com/in/jacob-vergara-5145162b6/",
-          "headshot": "/headshots/jacob-vergara.webp"
+          "headshot": "/headshots/jacob-vergara.webp",
+          "alumni": true,
+          "classOf": 2026
         }
       ]
     },
     {
       "name": "Delta",
+      "letter": "Δ",
+      "semester": "Fall 2023",
       "members": [
         {
           "name": "Keira Berkaw",
@@ -467,7 +498,9 @@
         {
           "name": "Nihaanth Kaggere",
           "linkedin": "https://www.linkedin.com/in/nihaanthkaggere/",
-          "headshot": "/headshots/nihaanth-kaggere.webp"
+          "headshot": "/headshots/nihaanth-kaggere.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Oluwole Omolafe",
@@ -477,7 +510,9 @@
         {
           "name": "Corey Brandon",
           "linkedin": "https://www.linkedin.com/in/coreymbrandon/",
-          "headshot": "/headshots/corey-brandon.webp"
+          "headshot": "/headshots/corey-brandon.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Xander Luzniak",
@@ -492,12 +527,16 @@
         {
           "name": "Lauren Deering",
           "linkedin": "https://www.linkedin.com/in/laurendeering/",
-          "headshot": "/headshots/lauren-deering.webp"
+          "headshot": "/headshots/lauren-deering.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Megan Macdonald",
           "linkedin": "https://www.linkedin.com/in/megangmacdonald/",
-          "headshot": "/headshots/megan-macdonald.webp"
+          "headshot": "/headshots/megan-macdonald.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "India Thomas",
@@ -507,7 +546,9 @@
         {
           "name": "Luke Dunne",
           "linkedin": "https://www.linkedin.com/in/luke54/",
-          "headshot": "/headshots/luke-dunne.webp"
+          "headshot": "/headshots/luke-dunne.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Molly Malek",
@@ -517,42 +558,58 @@
         {
           "name": "Jacob Dyer",
           "linkedin": "https://www.linkedin.com/in/jacobldyer/",
-          "headshot": "/headshots/jacob-dyer.webp"
+          "headshot": "/headshots/jacob-dyer.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Max Marlow",
           "linkedin": "https://www.linkedin.com/in/max-marlow2003/",
-          "headshot": "/headshots/max-marlow.webp"
+          "headshot": "/headshots/max-marlow.webp",
+          "alumni": true,
+          "classOf": 2026
         }
       ]
     },
     {
       "name": "Gamma",
+      "letter": "Γ",
+      "semester": "Spring 2023",
       "members": [
         {
           "name": "Christie Chen",
           "linkedin": "https://www.linkedin.com/in/christiefchen/",
-          "headshot": "/headshots/christie-chen.webp"
+          "headshot": "/headshots/christie-chen.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Jackson Scullion",
           "linkedin": "https://www.linkedin.com/in/jax-scullion/",
-          "headshot": "/headshots/jackson-scullion.webp"
+          "headshot": "/headshots/jackson-scullion.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Max Slesinski",
           "linkedin": "https://www.linkedin.com/in/maxslesinski/",
-          "headshot": "/headshots/max-slesinski.webp"
+          "headshot": "/headshots/max-slesinski.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Christina Steiner",
           "linkedin": "https://www.linkedin.com/in/casteiner/",
-          "headshot": "/headshots/christina-steiner.webp"
+          "headshot": "/headshots/christina-steiner.webp",
+          "alumni": true,
+          "classOf": 2026
         },
         {
           "name": "Sam Thoma",
           "linkedin": "https://www.linkedin.com/in/sam-thoma-7a45a1252/",
-          "headshot": "/headshots/sam-thoma.webp"
+          "headshot": "/headshots/sam-thoma.webp",
+          "alumni": true,
+          "classOf": 2026
         }
       ]
     }
