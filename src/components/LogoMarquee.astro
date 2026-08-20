@@ -9,7 +9,7 @@
 import { withBase } from '../lib/url';
 import data from '../data/companies.json';
 
-type Company = { name: string; logo?: string; scale?: number };
+type Company = { name: string; logo?: string; scale?: number; mono?: boolean };
 const companies = data.companies as Company[];
 const enabled = companies.length >= 6;
 ---
@@ -22,7 +22,7 @@ const enabled = companies.length >= 6;
           {companies.map((c) => (
             <li class="logos__item" title={c.name}>
               {c.logo ? (
-                <img src={withBase(c.logo)} alt={c.name} loading="lazy" decoding="async" style={c.scale ? `height:${Math.round(26*c.scale)}px` : undefined} />
+                <img class={c.mono ? "mono" : undefined} src={withBase(c.logo)} alt={c.name} loading="lazy" decoding="async" style={c.scale ? `height:${Math.round(26*c.scale)}px` : undefined} />
               ) : (
                 <span class="logos__word">{c.name}</span>
               )}
@@ -58,7 +58,9 @@ const enabled = companies.length >= 6;
   }
   .logos__item { display: grid; place-items: center; height: 34px; white-space: nowrap; opacity: 0.72; transition: opacity 0.2s; }
   .logos__item:hover { opacity: 1; }
-  .logos__item img { height: 26px; width: auto; max-width: 150px; filter: brightness(0) invert(1); }
+  .logos__item img { height: 26px; width: auto; max-width: 150px; }
+  /* marks too dark for the background render white instead of brand color */
+  .logos__item img.mono { filter: brightness(0) invert(1); }
   .logos__word {
     font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em;
     font-size: 1.02rem; color: #fff;

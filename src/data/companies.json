@@ -5,24 +5,28 @@
   "companies": [
     {
       "name": "J.P. Morgan",
-      "logo": "/logos/jpmorgan.svg"
+      "logo": "/logos/jpmorgan.svg",
+      "mono": true
     },
     {
       "name": "Goldman Sachs",
-      "logo": "/logos/goldman-sachs.svg"
+      "logo": "/logos/goldman-sachs.svg",
+      "mono": true
     },
     {
       "name": "Morgan Stanley",
-      "logo": "/logos/morgan-stanley.svg"
+      "logo": "/logos/morgan-stanley.svg",
+      "mono": true
     },
     {
       "name": "Bank of America",
-      "logo": "/logos/bank-of-america.svg"
+      "logo": "/logos/bank-of-america.svg",
+      "mono": true
     },
     {
       "name": "Wells Fargo",
       "logo": "/logos/wells-fargo.svg",
-      "scale": 1.6
+      "scale": 1.35
     },
     {
       "name": "HSBC",
@@ -34,7 +38,8 @@
     },
     {
       "name": "KPMG",
-      "logo": "/logos/kpmg.svg"
+      "logo": "/logos/kpmg.svg",
+      "mono": true
     },
     {
       "name": "Accenture",
@@ -42,7 +47,8 @@
     },
     {
       "name": "Protiviti",
-      "logo": "/logos/protiviti.svg"
+      "logo": "/logos/protiviti.svg",
+      "mono": true
     },
     {
       "name": "Pfizer",
@@ -54,7 +60,8 @@
     },
     {
       "name": "SAS",
-      "logo": "/logos/sas.svg"
+      "logo": "/logos/sas.svg",
+      "mono": true
     },
     {
       "name": "Zurich",
@@ -62,15 +69,18 @@
     },
     {
       "name": "Abercrombie & Fitch",
-      "logo": "/logos/abercrombie-fitch.svg"
+      "logo": "/logos/abercrombie-fitch.svg",
+      "mono": true
     },
     {
       "name": "Premier Lacrosse League",
-      "logo": "/logos/premier-lacrosse-league.svg"
+      "logo": "/logos/premier-lacrosse-league.svg",
+      "mono": true
     },
     {
       "name": "UNC Health",
-      "logo": "/logos/unc-health.svg"
+      "logo": "/logos/unc-health.svg",
+      "mono": true
     }
   ]
 }
