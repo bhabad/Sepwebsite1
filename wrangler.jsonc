@@ -1,0 +1,9 @@
+// Cloudflare Workers deploy config. The dashboard's Git-connected build runs
+// `npm run build` then `npx wrangler deploy`, which serves ./dist as static assets.
+{
+  "name": "uncsep",
+  "compatibility_date": "2026-08-20",
+  "assets": {
+    "directory": "./dist"
+  }
+}
