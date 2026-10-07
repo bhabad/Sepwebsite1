@@ -520,6 +520,13 @@
           "headshot": "/headshots/xander-luzniak.webp"
         },
         {
+          "name": "Riva Kaneria",
+          "linkedin": "https://www.linkedin.com/in/rivakaneria/",
+          "headshot": "/headshots/riva-kaneria.webp",
+          "alumni": true,
+          "classOf": 2026
+        },
+        {
           "name": "Zoe Schruckmayr",
           "linkedin": "https://www.linkedin.com/in/zoe-schruckmayr/",
           "headshot": "/headshots/zoe-schruckmayr.webp"
